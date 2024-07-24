@@ -1,12 +1,16 @@
-import { Button } from "../components/UI/CommonUI";
 import { useNavigate } from "react-router-dom";
+
 const MainPage = () => {
   const navi = useNavigate();
+
+  const clickHandler = () => {
+    navi("/login");
+  };
   return (
-    <>
-      <h1>임시 메인</h1>
-      <Button onClick={() => navi("/login")}>Login</Button>
-    </>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+      <h1 className="text-4xl font-bold text-blue-600 mb-8">임시 메인</h1>
+      <button onClick={clickHandler}>Login</button>
+    </div>
   );
 };
 
