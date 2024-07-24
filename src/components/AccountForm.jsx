@@ -1,13 +1,4 @@
 import { useState } from "react";
-import {
-  FormContainer,
-  Form,
-  Title,
-  Button,
-  ErrorMessage,
-  LinkContainer,
-  FormInput,
-} from "../components/UI/CommonUI";
 import { Link } from "react-router-dom";
 
 const AccountForm = () => {
@@ -29,34 +20,70 @@ const AccountForm = () => {
   };
 
   return (
-    <FormContainer>
-      <Form onSubmit={handleSubmit}>
-        <Title>로그인</Title>
-        <FormInput
-          label="이메일"
-          id="email"
-          type="email"
-          placeholder="이메일 주소"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <FormInput
-          label="비밀번호"
-          id="password"
-          type="password"
-          placeholder="비밀번호"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
-        <Button type="submit">로그인</Button>
-        <LinkContainer>
-          계정이 없으신가요? <Link to="/Signup">새 계정 만들기</Link>
-        </LinkContainer>
-      </Form>
-    </FormContainer>
+    <div className="w-full max-w-md mx-auto">
+      <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">
+        로그인
+      </h2>
+      <form
+        onSubmit={handleSubmit}
+        className="space-y-6 bg-white p-8 shadow-lg rounded-lg"
+      >
+        <div>
+          <label
+            htmlFor="email"
+            className="block text-sm font-medium text-gray-700"
+          >
+            이메일
+          </label>
+          <input
+            id="email"
+            type="email"
+            placeholder="이메일 주소"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+          />
+        </div>
+        <div>
+          <label
+            htmlFor="password"
+            className="block text-sm font-medium text-gray-700"
+          >
+            비밀번호
+          </label>
+          <input
+            id="password"
+            type="password"
+            placeholder="비밀번호"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+          />
+        </div>
+        {errorMessage && (
+          <p className="text-red-500 text-sm text-center">{errorMessage}</p>
+        )}
+        <div>
+          <button
+            type="submit"
+            className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            로그인
+          </button>
+        </div>
+        <p className="mt-4 text-center text-sm text-gray-600">
+          계정이 없으신가요?{" "}
+          <Link
+            to="/signup"
+            className="font-medium text-indigo-600 hover:text-indigo-500"
+          >
+            새 계정 만들기
+          </Link>
+        </p>
+      </form>
+    </div>
   );
 };
 
