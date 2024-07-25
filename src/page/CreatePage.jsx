@@ -1,3 +1,4 @@
+import { FaPen } from "react-icons/fa";
 import CreateForm from "../components/CreateForm";
 
 const CreatePage = () => {
@@ -7,15 +8,19 @@ const CreatePage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-6">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 py-12">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-3xl font-bold text-center text-gray-900 mb-8">
-          새 글 작성
-        </h1>
-        <div className="bg-white shadow-lg rounded-lg overflow-hidden">
-          <div className="p-6">
-            <CreateForm onSubmit={handleSubmit} />
-          </div>
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold text-gray-900 flex items-center justify-center">
+            <FaPen className="mr-3 text-blue-500" size={36} />
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600">
+              임시 글쓰기
+            </span>
+          </h1>
+          <p className="mt-2 text-xl text-gray-600">임시 코멘트</p>
+        </div>
+        <div className="bg-white shadow-2xl rounded-lg overflow-hidden transition-all duration-300 hover:shadow-3xl">
+          <CreateForm onSubmit={handleSubmit} />
         </div>
       </div>
     </div>

@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Loading from "./Loading";
 
 const SignupForm = () => {
   const [name, setName] = useState("");
@@ -7,19 +8,27 @@ const SignupForm = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
+  const navi = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     if (password !== confirmPassword) {
       setErrorMessage("비밀번호가 일치하지 않습니다.");
+      setIsLoading(false);
       return;
     }
     try {
       // function : 회원가입 API 호출 //
-      console.log("Signup attempt with:", { name, email, password });
+      await new Promise((resolve) => setTimeout(resolve, 2000)); // 로딩 애니메이션 확인용 지연
+      console.log({ name, email, password });
+      navi("/");
     } catch (err) {
       console.error("Signup failed", err);
       setErrorMessage("회원가입에 실패했습니다. 다시 시도해 주세요.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -103,7 +112,7 @@ const SignupForm = () => {
             type="submit"
             className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
-            회원가입
+            {isLoading ? <Loading /> : "회원가입"}
           </button>
         </div>
       </form>
