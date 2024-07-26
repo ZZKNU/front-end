@@ -2,8 +2,11 @@ import { Link } from "react-router-dom";
 import Search from "./Search";
 import LikeButton from "./LikeBtn";
 import ShareBtn from "./ShareBtn";
+// import { useAuthStore } from "../store";
 
 const Navbar = () => {
+  // const { accessToken, clearToken } = useAuthStore();
+
   return (
     <nav className="w-full bg-indigo-300 flex justify-between items-center px-4 sm:px-8 py-4 sticky top-0 left-0 z-[1000]">
       <Link
@@ -17,6 +20,18 @@ const Navbar = () => {
         <NavLink to="/">홈</NavLink>
         <NavLink to="/login">로그인</NavLink>
         <NavLink to="/create">글쓰기</NavLink>
+        <NavLink to="/my">마이페이지</NavLink>
+        {/* {accessToken ? (
+          <>
+            <NavLink to="/create">글쓰기</NavLink>
+            <NavLink to="/my">마이페이지</NavLink>
+            <NavLink to="/" onClick={() => clearToken()}>
+              로그아웃
+            </NavLink>
+          </>
+        ) : (
+          <NavLink to="/login">로그인</NavLink>
+        )} */}
         <LikeButton />
         <ShareBtn />
       </div>
