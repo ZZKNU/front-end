@@ -47,7 +47,7 @@ const MyPage = () => {
   const handleSaveNickname = () => {
     setNickname(newNickname);
     setIsModalOpen(false);
-    // 여기에 실제 닉네임 변경 로직을 추가할 수 있습니다.
+    //닉네임 변경?
   };
 
   return (

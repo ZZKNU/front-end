@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Search from "./Search";
 import LikeButton from "./LikeBtn";
 import ShareBtn from "./ShareBtn";
+import FortuneModal from "./FortuneCookie";
 // import { useAuthStore } from "../store";
 
 const Navbar = () => {
@@ -32,6 +33,8 @@ const Navbar = () => {
         ) : (
           <NavLink to="/login">로그인</NavLink>
         )} */}
+
+        <FortuneModal />
         <LikeButton />
         <ShareBtn />
       </div>

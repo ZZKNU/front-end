@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
-import FortuneCookieModal from "../components/FortuneCookie";
+// import FortuneCookieModal from "../components/FortuneCookie";
 const AnimatedBackground = () => {
   const { scrollYProgress } = useScroll();
   const scale = useTransform(scrollYProgress, [0, 1], [1, 1.5]);
@@ -79,12 +79,12 @@ const MainPage = () => {
             로그인
           </Link>
         </ContentSection>
-        <ContentSection title="포춘쿠키">
+        {/* <ContentSection title="포춘쿠키">
           <AnimatedText className="text-xl mb-4 text-cream">
             쿠키 힘드렁
           </AnimatedText>
           <FortuneCookieModal />
-        </ContentSection>
+        </ContentSection> */}
       </div>
     </div>
   );

@@ -1,22 +1,30 @@
 // Modal.js
 /* eslint-disable react/prop-types */
+import { motion, AnimatePresence } from "framer-motion";
 
-const Modal = ({ isOpen, onClose, title, children }) => {
-  if (!isOpen) return null;
-
+const Modal = ({ isOpen, onClose, children }) => {
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-      <div className="bg-white p-6 rounded-lg">
-        <h2 className="text-xl font-bold mb-4">{title}</h2>
-        {children}
-        <button
-          className="mt-4 px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300"
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4"
           onClick={onClose}
         >
-          닫기
-        </button>
-      </div>
-    </div>
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            exit={{ scale: 0 }}
+            className="bg-white rounded-lg p-8 max-w-sm w-full relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {children}
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
 

@@ -10,7 +10,6 @@ const NameChange = ({ currentNickname, onSave }) => {
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
-    setNewNickname(currentNickname);
   };
 
   const handleCloseModal = () => {
@@ -27,12 +26,14 @@ const NameChange = ({ currentNickname, onSave }) => {
   };
 
   return (
-    <div className="flex items-center">
-      <h1 className="text-2xl font-bold">{currentNickname}</h1>
-      <FaPencilAlt
-        className="ml-2 text-gray-600 cursor-pointer"
-        onClick={handleOpenModal}
-      />
+    <>
+      <div className="flex items-center">
+        <h1 className="text-2xl font-bold">{currentNickname}</h1>
+        <FaPencilAlt
+          className="ml-2 text-gray-600 cursor-pointer"
+          onClick={handleOpenModal}
+        />
+      </div>
       <Modal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
@@ -54,7 +55,7 @@ const NameChange = ({ currentNickname, onSave }) => {
           </button>
         </div>
       </Modal>
-    </div>
+    </>
   );
 };
 

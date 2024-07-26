@@ -9,7 +9,7 @@ const fortunes = [
   "자신을 믿으세요. 당신은 생각보다 더 강합니다.",
 ];
 
-const FortuneModal = () => {
+const FortuneModal = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [fortune, setFortune] = useState("");
   const [isRevealed, setIsRevealed] = useState(false);
@@ -32,9 +32,9 @@ const FortuneModal = () => {
     <>
       <button
         onClick={openModal}
-        className="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-full shadow-lg transition duration-300"
+        // className="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-full shadow-lg transition duration-300"
       >
-        쿠키열기
+        🍪
       </button>
 
       <AnimatePresence>
@@ -59,7 +59,7 @@ const FortuneModal = () => {
                     onClick={revealFortune}
                     className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-4 px-6 rounded-lg shadow-lg transition duration-300"
                   >
-                    쿠키
+                    운세 확인하기
                   </motion.button>
                 ) : (
                   <motion.p
