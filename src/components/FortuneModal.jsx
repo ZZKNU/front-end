@@ -9,7 +9,7 @@ const fortunes = [
   "자신을 믿으세요. 당신은 생각보다 더 강합니다.",
 ];
 
-const FortuneModal = ({ children }) => {
+const FortuneModal = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [fortune, setFortune] = useState("");
   const [isRevealed, setIsRevealed] = useState(false);
