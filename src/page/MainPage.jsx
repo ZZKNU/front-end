@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
-
+import FortuneCookieModal from "../components/FortuneCookie";
 const AnimatedBackground = () => {
   const { scrollYProgress } = useScroll();
   const scale = useTransform(scrollYProgress, [0, 1], [1, 1.5]);
@@ -47,11 +47,13 @@ const MainPage = () => {
 
       <div className="relative z-10">
         <ContentSection title="Main">
-          <AnimatedText className="text-xl mb-8">스크롤</AnimatedText>
+          <AnimatedText className="text-xl mb-8 text-cream">
+            스크롤
+          </AnimatedText>
           <div className="space-x-4">
             <Link
               to="/alllist"
-              className="bg-white text-blue-600 px-6 py-2 rounded-full hover:bg-blue-100 transition"
+              className="bg-amber-600 text-cream px-6 py-2 rounded-full hover:bg-teal-700 transition"
             >
               게시글 보기
             </Link>
@@ -59,7 +61,7 @@ const MainPage = () => {
         </ContentSection>
 
         <ContentSection title="특징">
-          <AnimatedText className="text-lg">
+          <AnimatedText className="text-lg text-cream">
             <ul className="list-disc list-inside">
               <li>무슨 내용넣어야하죠</li>
             </ul>
@@ -67,13 +69,21 @@ const MainPage = () => {
         </ContentSection>
 
         <ContentSection title="시작하기">
-          <AnimatedText className="text-xl mb-4">지금 바로 시작</AnimatedText>
+          <AnimatedText className="text-xl mb-4 text-cream">
+            지금 바로 시작
+          </AnimatedText>
           <Link
             to="/login"
-            className="bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600 transition"
+            className="bg-amber-600 text-cream px-6 py-2 rounded-full hover:bg-amber-700 transition"
           >
             로그인
           </Link>
+        </ContentSection>
+        <ContentSection title="포춘쿠키">
+          <AnimatedText className="text-xl mb-4 text-cream">
+            쿠키 힘드렁
+          </AnimatedText>
+          <FortuneCookieModal />
         </ContentSection>
       </div>
     </div>
