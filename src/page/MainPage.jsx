@@ -55,12 +55,6 @@ const MainPage = () => {
             >
               게시글 보기
             </Link>
-            <Link
-              to="/login"
-              className="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition"
-            >
-              로그인
-            </Link>
           </div>
         </ContentSection>
 
@@ -75,10 +69,10 @@ const MainPage = () => {
         <ContentSection title="시작하기">
           <AnimatedText className="text-xl mb-4">지금 바로 시작</AnimatedText>
           <Link
-            to="/signup"
+            to="/login"
             className="bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600 transition"
           >
-            회원가입
+            로그인
           </Link>
         </ContentSection>
       </div>
