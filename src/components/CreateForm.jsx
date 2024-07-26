@@ -9,9 +9,9 @@ const CreateForm = ({ onSubmit }) => {
     e.preventDefault();
     onSubmit({ title, content });
   };
-
+  // w-full max-w-4xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden
   return (
-    <div className="w-full max-w-4xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
+    <div className="">
       <div className="bg-gradient-to-r from-blue-500 to-purple-600 p-6">
         <h2 className="text-2xl font-bold text-white flex items-center">
           <FaPen className="mr-2" />
