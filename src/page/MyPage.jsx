@@ -1,6 +1,16 @@
-import { FaListUl, FaHeart, FaUserFriends, FaCog } from "react-icons/fa";
+// MyPage.js
+/* eslint-disable react/prop-types */
+import { useState } from "react";
+import {
+  FaListUl,
+  FaHeart,
+  FaUserFriends,
+  FaCog,
+  FaPencilAlt,
+} from "react-icons/fa";
 import { FaComments } from "react-icons/fa6";
-// eslint-disable-next-line react/prop-types
+import Modal from "../components/Modal";
+
 const MenuItem = ({ icon, text, onClick }) => (
   <div
     className="flex items-center p-4 hover:bg-gray-100 cursor-pointer"
@@ -12,9 +22,32 @@ const MenuItem = ({ icon, text, onClick }) => (
 );
 
 const MyPage = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [nickname, setNickname] = useState("이름");
+  const [newNickname, setNewNickname] = useState("");
+
   const handleMenuClick = (item) => {
     console.log(`Clicked on ${item}`);
     // Add your logic here
+  };
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+    setNewNickname(nickname);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleNicknameChange = (e) => {
+    setNewNickname(e.target.value);
+  };
+
+  const handleSaveNickname = () => {
+    setNickname(newNickname);
+    setIsModalOpen(false);
+    //닉네임 변경?
   };
 
   return (
@@ -23,7 +56,13 @@ const MyPage = () => {
         <div className="bg-gray-400 text-black p-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold">이름</h1>
+              <div className="flex items-center">
+                <h1 className="text-2xl font-bold">{nickname}</h1>
+                <FaPencilAlt
+                  className="ml-2 text-gray-600 cursor-pointer"
+                  onClick={handleOpenModal}
+                />
+              </div>
               <p className="text-sm opacity-80">여기는 한 줄 소개?</p>
             </div>
             <img
@@ -62,6 +101,28 @@ const MyPage = () => {
           />
         </div>
       </div>
+
+      <Modal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        title="닉네임 변경"
+      >
+        <input
+          type="text"
+          value={newNickname}
+          onChange={handleNicknameChange}
+          placeholder="새 닉네임을 입력하세요"
+          className="w-full px-3 py-2 border rounded"
+        />
+        <div className="mt-4 flex justify-end">
+          <button
+            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mr-2"
+            onClick={handleSaveNickname}
+          >
+            저장
+          </button>
+        </div>
+      </Modal>
     </div>
   );
 };
