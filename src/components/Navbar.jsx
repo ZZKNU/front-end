@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import Search from "./Search";
 import LikeButton from "./LikeBtn";
 import ShareBtn from "./ShareBtn";
-import FortuneModal from "./FortuneCookie";
+import FortuneModal from "./FortuneModal";
 // import { useAuthStore } from "../store";
 
 const Navbar = () => {
