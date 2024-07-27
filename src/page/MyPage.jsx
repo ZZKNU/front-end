@@ -81,22 +81,22 @@ const MyPage = () => {
           />
           <MenuItem
             icon={<FaHeart className="text-gray-600" />}
-            text="즐겨찾기"
-            onClick={() => handleMenuClick("즐겨찾기")}
+            text="좋아요 누른 글"
+            onClick={() => handleMenuClick("좋아요 누른 글")}
           />
           <MenuItem
             icon={<FaUserFriends className="text-gray-600" />}
-            text="내 친구"
-            onClick={() => handleMenuClick("내 친구")}
+            text="친구 어디로 옮길지 고민"
+            onClick={() => handleMenuClick("친구")}
           />
           <MenuItem
             icon={<FaComments className="text-gray-600" />}
-            text="쪽지"
+            text="쪽지 어디로 옮길지 고민"
             onClick={() => handleMenuClick("쪽지")}
           />
           <MenuItem
             icon={<FaCog className="text-gray-600" />}
-            text="설정"
+            text="설정 누르면 회원탈퇴 나오게?"
             onClick={() => handleMenuClick("설정")}
           />
         </div>
