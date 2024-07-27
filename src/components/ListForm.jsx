@@ -14,7 +14,7 @@ const ListForm = ({ isBest = false, name }) => {
     handleClickPageButton,
     setNumberOfPosts,
   } = usePagination();
-  
+
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
 

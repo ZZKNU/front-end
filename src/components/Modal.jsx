@@ -1,8 +1,9 @@
 // Modal.js
 /* eslint-disable react/prop-types */
 import { motion, AnimatePresence } from "framer-motion";
+import { FaTimes } from "react-icons/fa";
 
-const Modal = ({ isOpen, onClose, children }) => {
+const Modal = ({ isOpen, onClose, title, children }) => {
   return (
     <AnimatePresence>
       {isOpen && (
@@ -20,6 +21,13 @@ const Modal = ({ isOpen, onClose, children }) => {
             className="bg-white rounded-lg p-8 max-w-sm w-full relative"
             onClick={(e) => e.stopPropagation()}
           >
+            <button
+              className="absolute top-2 right-2 text-gray-600 hover:text-gray-900"
+              onClick={onClose}
+            >
+              <FaTimes />
+            </button>
+            {title && <h2 className="text-xl font-semibold mb-4">{title}</h2>}
             {children}
           </motion.div>
         </motion.div>

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import styled from "styled-components";
 
@@ -36,10 +37,40 @@ const SearchIcon = styled(FaSearch)`
 `;
 
 const Search = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleInputChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  // event handler : 검색 이벤트 처리//
+  const handleSearch = () => {
+    try {
+      // function : 검색 API호출 //
+      console.log("Searching for:", searchTerm);
+      // 예: searchAPI(searchTerm).then(results => setSearchResults(results));
+      setSearchTerm("");
+      // navigate('/searchPage')
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  };
+
   return (
     <SearchContainer>
-      <SearchInput placeholder="Search..." />
-      <SearchIcon />
+      <SearchInput
+        placeholder="Search..."
+        value={searchTerm}
+        onChange={handleInputChange}
+        onKeyPress={handleKeyPress}
+      />
+      <SearchIcon onClick={handleSearch} />
     </SearchContainer>
   );
 };

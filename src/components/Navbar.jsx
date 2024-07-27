@@ -1,10 +1,8 @@
 import { Link } from "react-router-dom";
 import Search from "./Search";
-import LikeButton from "./LikeBtn";
-import ShareBtn from "./ShareBtn";
 import FortuneModal from "./FortuneModal";
 // import { useAuthStore } from "../store";
-
+import { FaUserFriends } from "react-icons/fa";
 const Navbar = () => {
   // const { accessToken, clearToken } = useAuthStore();
 
@@ -16,12 +14,15 @@ const Navbar = () => {
       >
         Quote
       </Link>
-      <div className="flex gap-2 sm:gap-6 items-center">
+      <div className="flex gap-4 sm:gap-6 items-center">
         <Search />
         <NavLink to="/">홈</NavLink>
         <NavLink to="/login">로그인</NavLink>
         <NavLink to="/create">글쓰기</NavLink>
         <NavLink to="/my">마이페이지</NavLink>
+        <NavLink to="/freind">
+          <FaUserFriends />
+        </NavLink>
         {/* {accessToken ? (
           <>
             <NavLink to="/create">글쓰기</NavLink>
@@ -33,10 +34,7 @@ const Navbar = () => {
         ) : (
           <NavLink to="/login">로그인</NavLink>
         )} */}
-
         <FortuneModal />
-        <LikeButton />
-        <ShareBtn />
       </div>
     </nav>
   );
