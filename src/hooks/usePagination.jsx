@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 
-export const usePagination = (limit = 4) => {
+export const usePagination = (limit) => {
     const navigate = useNavigate();
     const location = useLocation();
     const pageParam = new URLSearchParams(location.search).get("page");
