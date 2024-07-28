@@ -7,18 +7,18 @@ import { usePagination } from "../hooks/usePagination";
 import { Link } from "react-router-dom";
 
 const ListForm = ({ isBest = false, name }) => {
+  const limit = 5;
+
   const {
     currentPage,
     numberOfPages,
     setCurrentPage,
     handleClickPageButton,
     setNumberOfPosts,
-  } = usePagination();
+  } = usePagination(limit);
 
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  const limit = 5;
 
   const getPosts = useCallback(
     (page = 1) => {
