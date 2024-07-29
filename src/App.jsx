@@ -7,8 +7,8 @@ import CreatePage from "./page/CreatePage";
 import AllListPage from "./page/AllListPage";
 import BestListPage from "./page/BestListPage";
 import MyPage from "./page/MyPage";
-// import ShowPage from "./page/ShowPage";
-// import EditPage from "./page/EditPage";
+import ShowPage from "./page/ShowPage";
+import EditPage from "./page/EditPage";
 
 function App() {
   return (
@@ -22,8 +22,8 @@ function App() {
         <Route path="/alllist" element={<AllListPage />} />
         <Route path="/bestlist" element={<BestListPage />} />
         <Route path="/my" element={<MyPage />} />
-        {/* <Route path="/list/:id" element={<ShowPage />} />
-        <Route path="/list/:id/edit" element={<EditPage />} /> */}
+        <Route path="/list/:id" element={<ShowPage />} />
+        <Route path="/list/:id/edit" element={<EditPage />} />
       </Routes>
     </BrowserRouter>
   );

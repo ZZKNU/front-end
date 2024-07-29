@@ -59,13 +59,13 @@ const ListForm = ({ isBest = false, name }) => {
       <div className="flex items-center justify-center mt-4">
         <Link
           to="/alllist"
-          className="bg-indigo-300 text-white font-bold py-2 px-4 rounded w-32 h-12 mx-2 flex items-center justify-center no-underline"
+          className="bg-indigo-300 text-white font-bold py-2 px-4 rounded w-32 h-12 mx-2 flex items-center justify-center no-underline whitespace-nowrap"
         >
           전체
         </Link>
         <Link
           to="/bestlist"
-          className="bg-indigo-300 text-white font-bold py-2 px-4 rounded w-32 h-12 mx-2 flex items-center justify-center no-underline"
+          className="bg-indigo-300 text-white font-bold py-2 px-4 rounded w-32 h-12 mx-2 flex items-center justify-center no-underline whitespace-nowrap"
         >
           베스트 도전
         </Link>

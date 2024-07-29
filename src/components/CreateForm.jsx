@@ -1,14 +1,26 @@
 import { useState } from "react";
 import { FaPen } from "react-icons/fa";
+import { useNavigate, useParams } from "react-router-dom";
 
-const CreateForm = ({ onSubmit }) => {
+const CreateForm = ({ onSubmit, editing = false }) => {
+  const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const { id } = useParams();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit({ title, content });
   };
+
+  const goback = () => {
+    if (editing) {
+      navigate(-1);
+    } else {
+      navigate("/alllist");
+    }
+  };
+
   // w-full max-w-4xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden
   return (
     <div className="">
@@ -49,7 +61,7 @@ const CreateForm = ({ onSubmit }) => {
             onChange={(e) => setContent(e.target.value)}
             className="w-full px-3 py-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300 resize-none"
             placeholder="한 줄 작성"
-            rows="15"
+            rows="5"
             required
           />
         </div>
@@ -58,7 +70,14 @@ const CreateForm = ({ onSubmit }) => {
             type="submit"
             className="px-6 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-lg hover:from-blue-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300 transform hover:scale-105"
           >
-            포스트 발행
+            {editing ? "수정하기" : "포스트 발행"}
+          </button>
+          <button
+            type="button"
+            className="btn btn-danger ms-2"
+            onClick={goback}
+          >
+            Cancel
           </button>
         </div>
       </form>
