@@ -1,4 +1,4 @@
-const Pagination = ({ currentPage = 1, numberOfPages, onClick, limit = 3 }) => {
+const Pagination = ({ currentPage = 1, numberOfPages, onClick, limit = 5 }) => {
   const currentSet = Math.ceil(currentPage / limit);
   const lastSet = Math.ceil(numberOfPages / limit);
   const startPage = limit * (currentSet - 1) + 1;
