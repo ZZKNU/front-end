@@ -202,48 +202,72 @@ export const updateUserInfo = async (user_id, nickname, birthDate) => {
 /**
  * 특정 name을 가진 친구 검색
  * @param {string} name
+ * @param {number} page [default : 0]
+ * @param {number} size [default : 20]
  * @returns
  */
-export const searchFriends = async (name) => {
-  const response = await axiosInstance.get(`/friends/search/${name}`);
+export const searchFriends = async (name, page = 0, size = 20) => {
+  const response = await axiosInstance.get(`/friends/search/${name}`, {
+    params: {
+      page,
+      size,
+    },
+  });
   return response.data;
 };
 
 /**
- * user_id를 가진 친구에게 추가 요청
- * @param {number} user_id
+ * friend_id를 가진 친구에게 추가 요청
+ * @param {number} user_id [친구 추가를 요청하는 사용자ID]
+ * @param {number} friend_id [친구로 추가할 사용자ID]
  * @returns
  */
-export const addFriends = async (user_id) => {
-  const response = await axiosInstance.post(`/friends/${user_id}`);
+export const addFriends = async (user_id, friend_id) => {
+  const response = await axiosInstance.post(`/friends/${user_id}/${friend_id}`);
   return response.data;
 };
 
 /**
  * 유저(나)가 팔로우한 친구를 조회
+ * @param {number} user_id
+ * @param {number} page [default : 0]
+ * @param {number} size [default : 20]
  * @returns
  */
-export const getFollowList = async () => {
-  const response = await axiosInstance.get("/friends/follow");
+export const getFollowList = async (user_id, page = 0, size = 20) => {
+  const response = await axiosInstance.get(`/friends/follow/${user_id}`, {
+    params: {
+      page,
+      size,
+    },
+  });
   return response.data;
 };
 
 /**
  * 유저(나)를 팔로워한 친구를 조회
+ * @param {number} user_id
+ * @param {number} page [default : 0]
+ * @param {number} size [default : 20]
  * @returns
  */
-export const getFollowerList = async () => {
-  const response = await axiosInstance.get("/friends/follower");
+export const getFollowerList = async (user_id, page = 0, size = 20) => {
+  const response = await axiosInstance.get(`/friends/follower/${user_id}`, {
+    params: {
+      page,
+      size,
+    },
+  });
   return response.data;
 };
 
 /**
  * 친구 목록에서 특정 친구 삭제
- * @param {number} user_id 가 있어야 ?
+ * @param {number} user_id
  * @returns
  */
-export const deleteFriends = async () => {
-  const response = await axiosInstance.delete("/friends");
+export const deleteFriends = async (user_id) => {
+  const response = await axiosInstance.delete(`/friends/${user_id}`);
   return response.data;
 };
 
@@ -251,7 +275,8 @@ export const deleteFriends = async () => {
  * 메세지 전송
  */
 export const postMessage = async () => {
-  //todo
+  const response = await axiosInstance.post("/messages");
+  return response.data;
 };
 
 /**
