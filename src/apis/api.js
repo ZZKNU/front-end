@@ -32,10 +32,11 @@ export const getJoin = async (email, password, nickname) => {
 
 /**
  * 회원탈퇴 API
+ * @param {number} user_id
  * @returns
  */
-export const deleteUser = async () => {
-  const response = await axiosInstance.delete("/users");
+export const deleteUser = async (user_id) => {
+  const response = await axiosInstance.delete(`/users/${user_id}`);
   return response.data;
 };
 
@@ -156,21 +157,37 @@ export const likeNormalQuote = async () => {
 
 /**
  * 회원의 마이 페이지 조회
- * @returns
+ * @param {number} user_id
+ * @returns {
+ *  "id":number,
+ *  "email":string,
+ *  "nickname":string,
+ *  "birthDate":"YYYY-MM-DD",
+ *  "authority":string (USER)
+ * }
  */
-export const getUserInfo = async () => {
-  const response = await axiosInstance.get("/users/");
+export const getUserInfo = async (user_id) => {
+  const response = await axiosInstance.get(`/users/${user_id}`);
   return response.data;
 };
 
 /**
- * 개인 정보 수정 요청(수정할 개인 정보는 객체 형식)
- * @param {string{}} params
- * @returns
+ * @param {number} user_id
+ * @param {string} nickname
+ * @param {Date} birthDate
+ * @returns {
+ *  "id":number,
+ *  "email":string,
+ *  "nickname":string,
+ *  "birthDate":"YYYY-MM-DD",
+ *  "authority":string (USER)
+ *  }
  */
-export const updateUserInfo = async (params = {}) => {
-  //params는 메서드 호출 시 객체 형식으로 받음
-  const response = await axiosInstance.put("/users", params);
+export const updateUserInfo = async (user_id, nickname, birthDate) => {
+  const response = await axiosInstance.put(`/users/${user_id}`, {
+    nickname,
+    birthDate,
+  });
   return response.data;
 };
 

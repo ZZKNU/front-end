@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import LoadingSpinner from "./LoadingSpinner";
+// import { getFollowerList } from "../apis/api";
 
 const FriendList = () => {
   const [friends, setFriends] = useState([]);
@@ -13,6 +14,7 @@ const FriendList = () => {
   const fetchFriends = async () => {
     setIsLoading(true);
     try {
+      // const response = await getFollowerList();
       // function : 친구목록 불러오기API//
       const mockData = [
         { id: 1, name: "친구1" },
