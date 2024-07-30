@@ -4,16 +4,17 @@ import LoadingSpinner from "./LoadingSpinner";
 import RenderList from "./RenderList";
 import Pagination from "./Pagination";
 import { usePagination } from "../hooks/usePagination";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 const ListForm = ({ isBest = false, name }) => {
   const limit = 5;
+  const [searchParams, setSearchParams] = useSearchParams();
+  const initialPage = parseInt(searchParams.get("page")) || 1;
 
   const {
     currentPage,
     numberOfPages,
     setCurrentPage,
-    handleClickPageButton,
     setNumberOfPosts,
   } = usePagination(limit);
 
@@ -21,7 +22,7 @@ const ListForm = ({ isBest = false, name }) => {
   const [loading, setLoading] = useState(true);
 
   const getPosts = useCallback(
-    (page = 1) => {
+    (page) => {
       let params = {
         _page: page,
         _limit: limit,
@@ -47,12 +48,19 @@ const ListForm = ({ isBest = false, name }) => {
   );
 
   useEffect(() => {
-    getPosts(currentPage);
-  }, [getPosts, currentPage]);
+    setCurrentPage(initialPage); // URL에서 읽은 페이지로 상태 설정
+    getPosts(initialPage);
+  }, [getPosts, initialPage, setCurrentPage]);
 
   if (loading) {
     return <LoadingSpinner />;
   }
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    setSearchParams({ page }); // URL 쿼리 파라미터 업데이트
+    getPosts(page);
+  };
 
   return (
     <>
@@ -74,7 +82,7 @@ const ListForm = ({ isBest = false, name }) => {
         <h1 className="container d-flex justify-content-between">{name}</h1>
         <hr />
         {posts.length === 0 ? (
-          <div>No blog posts found</div>
+          <div>No posts found</div>
         ) : (
           <>
             <RenderList posts={posts} />
@@ -82,7 +90,8 @@ const ListForm = ({ isBest = false, name }) => {
               <Pagination
                 currentPage={currentPage}
                 numberOfPages={numberOfPages}
-                onClick={handleClickPageButton}
+                onClick={handlePageChange} // 페이지 변경 시 함수 호출
+                limit={3}
               />
             )}
           </>
