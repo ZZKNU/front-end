@@ -17,6 +17,7 @@ const Navbar = () => {
       <div className="flex gap-4 sm:gap-6 items-center">
         <Search />
         <NavLink to="/">홈</NavLink>
+        <NavLink to="/alllist">전체 게시글</NavLink>
         <NavLink to="/login">로그인</NavLink>
         <NavLink to="/create">글쓰기</NavLink>
         <NavLink to="/my">마이페이지</NavLink>
