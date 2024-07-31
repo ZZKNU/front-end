@@ -7,10 +7,12 @@ const SignupForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [birthDate, setBirthDate] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const navi = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -19,10 +21,15 @@ const SignupForm = () => {
       setIsLoading(false);
       return;
     }
+    if (!birthDate) {
+      setErrorMessage("생년월일을 선택해주세요.");
+      setIsLoading(false);
+      return;
+    }
     try {
       // function : 회원가입 API 호출 //
       await new Promise((resolve) => setTimeout(resolve, 2000)); // 로딩 애니메이션 확인용 지연
-      console.log({ name, email, password });
+      console.log({ name, email, password, birthDate });
       navi("/");
     } catch (err) {
       console.error("Signup failed", err);
@@ -102,6 +109,22 @@ const SignupForm = () => {
             placeholder="비밀번호 확인"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+            className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+          />
+        </div>
+        <div>
+          <label
+            htmlFor="birthDate"
+            className="block text-sm font-medium text-gray-700"
+          >
+            생년월일
+          </label>
+          <input
+            id="birthDate"
+            type="date"
+            value={birthDate}
+            onChange={(e) => setBirthDate(e.target.value)}
             required
             className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
           />
