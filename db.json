@@ -1,10 +1,12 @@
 {
   "posts": [
     {
-      "title": "수정되나ㅁㅁ",
-      "body": "이게되네대박ㅁㅁㅁ",
-      "createdAt": 1722388875869,
-      "id": "1"
+      "title": "1",
+      "body": "1",
+      "best": false,
+      "createdAt": 1721806265674,
+      "id": "1",
+      "like": false
     },
     {
       "title": "2(best)",
