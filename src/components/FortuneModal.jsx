@@ -26,10 +26,6 @@ const FortuneModal = ({ isOpen, onClose }) => {
 
   return (
     <>
-      <button onClick={onClose} className="text-white">
-        쿠키
-      </button>
-
       <AnimatePresence>
         {isOpen && (
           <motion.div

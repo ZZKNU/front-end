@@ -1,17 +1,15 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaComments, FaBars, FaTimes } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import Search from "./Search";
 import FortuneModal from "./FortuneModal";
 import MessageModal from "./MessageForm";
+import { useState } from "react";
 
-const Sidebar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+const Sidebar = ({ isOpen, toggleSidebar }) => {
   const [isMessageModalOpen, setIsMessageModalOpen] = useState(false);
   const [isFortuneModalOpen, setIsFortuneModalOpen] = useState(false);
 
-  const toggleSidebar = () => setIsOpen(!isOpen);
   const toggleMessageModal = () => setIsMessageModalOpen(!isMessageModalOpen);
   const toggleFortuneModal = () => setIsFortuneModalOpen(!isFortuneModalOpen);
 
