@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const fortunes = [
@@ -9,32 +9,24 @@ const fortunes = [
   "자신을 믿으세요. 당신은 생각보다 더 강합니다.",
 ];
 
-const FortuneModal = () => {
-  const [isOpen, setIsOpen] = useState(false);
+const FortuneModal = ({ isOpen, onClose }) => {
   const [fortune, setFortune] = useState("");
   const [isRevealed, setIsRevealed] = useState(false);
 
-  const openModal = () => {
-    setIsOpen(true);
-    setFortune(fortunes[Math.floor(Math.random() * fortunes.length)]);
-  };
+  useEffect(() => {
+    if (isOpen) {
+      setFortune(fortunes[Math.floor(Math.random() * fortunes.length)]);
+      setIsRevealed(false);
+    }
+  }, [isOpen]);
 
   const revealFortune = () => {
     setIsRevealed(true);
   };
 
-  const closeModal = () => {
-    setIsOpen(false);
-    setIsRevealed(false);
-  };
-
   return (
     <>
-      <button
-        onClick={openModal}
-        // className="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-full shadow-lg transition duration-300"
-        className="text-white"
-      >
+      <button onClick={onClose} className="text-white">
         쿠키
       </button>
 
@@ -45,7 +37,7 @@ const FortuneModal = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4"
-            onClick={closeModal}
+            onClick={onClose}
           >
             <motion.div
               initial={{ scale: 0 }}
@@ -75,7 +67,7 @@ const FortuneModal = () => {
               </div>
 
               <motion.button
-                onClick={closeModal}
+                onClick={onClose}
                 className="mt-6 bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-full shadow transition duration-300 w-full"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
