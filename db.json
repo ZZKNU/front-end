@@ -1,9 +1,9 @@
 {
   "posts": [
     {
-      "title": "수정되나",
-      "body": "이게되네대박",
-      "createdAt": 1722348083401,
+      "title": "수정되나ㅁㅁ",
+      "body": "이게되네대박ㅁㅁㅁ",
+      "createdAt": 1722388875869,
       "id": "1"
     },
     {
@@ -102,10 +102,8 @@
     {
       "title": "14(best)",
       "body": "14",
-      "best": true,
-      "createdAt": 1721843764344,
-      "id": "14",
-      "like": false
+      "createdAt": 1722388883685,
+      "id": "14"
     },
     {
       "title": "15",

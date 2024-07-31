@@ -32,17 +32,13 @@ const CreateForm = ({ onSubmit, editing = false }) => {
           body: content,
           createdAt: new Date().getTime(),
         });
-        navigate(`/bestlist`);
+        navigate(-1);
       } catch (error) {
         console.error("Error updating post:", error);
       }
     } else {
       onSubmit({ title, content });
     }
-  };
-
-  const goback = () => {
-    navigate(editing ? `/bestlist` : "/alllist");
   };
 
   return (
@@ -91,7 +87,7 @@ const CreateForm = ({ onSubmit, editing = false }) => {
         <div className="flex justify-end space-x-4">
           <button
             type="button"
-            onClick={goback}
+            onClick={() => navigate(-1)}
             className="px-6 py-2 bg-gray-200 text-gray-700 font-medium rounded-lg hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 transition duration-300"
           >
             취소
