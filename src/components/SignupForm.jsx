@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Loading from "./Loading";
+import { getJoin } from "../apis/api";
 
 const SignupForm = () => {
   const [name, setName] = useState("");
@@ -28,9 +29,9 @@ const SignupForm = () => {
     }
     try {
       // function : 회원가입 API 호출 //
-      await new Promise((resolve) => setTimeout(resolve, 2000)); // 로딩 애니메이션 확인용 지연
+      // await getJoin(email,password,name,birthDate);
       console.log({ name, email, password, birthDate });
-      navi("/");
+      navi("/login");
     } catch (err) {
       console.error("Signup failed", err);
       setErrorMessage("회원가입에 실패했습니다. 다시 시도해 주세요.");
