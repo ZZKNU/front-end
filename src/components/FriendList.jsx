@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import LoadingSpinner from "./LoadingSpinner";
 // import { getFollowerList } from "../apis/api";
 
-const FriendList = () => {
+const FriendList = ({ onFriendSelect }) => {
   const [friends, setFriends] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -44,7 +44,7 @@ const FriendList = () => {
             <li
               key={friend.id}
               className="p-2 bg-gray-100 rounded hover:bg-gray-200 transition-colors duration-200 cursor-pointer"
-              onClick={() => alert(friend.name)}
+              onClick={() => onFriendSelect(friend)}
             >
               <span className="font-semibold">{friend.name}</span>
             </li>
