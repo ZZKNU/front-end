@@ -17,13 +17,15 @@ export const getLogin = async (email, password) => {
  * @param {string} email
  * @param {string} password
  * @param {string} nickname
+ * @param {Date} birthDate
  * @returns
  */
-export const getJoin = async (email, password, nickname) => {
+export const getJoin = async (email, password, nickname, birthDate) => {
   const response = await axiosInstance.post("/auth/join", {
     email,
     password,
     nickname,
+    birthDate,
   });
   const { accessToken, refreshToken } = response.data;
   useAuthStore.getState().setTokens(accessToken, refreshToken);
