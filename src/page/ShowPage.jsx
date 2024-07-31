@@ -53,7 +53,7 @@ const ShowPage = () => {
             navigate(-1);
           }}
         >
-          Cancel
+          Back
         </button>
       </div>
     </>
