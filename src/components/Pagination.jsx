@@ -13,7 +13,7 @@ const Pagination = ({ currentPage = 1, numberOfPages, onClick, limit = 5 }) => {
         {currentSet !== 1 && (
           <li>
             <div
-              className="bg-indigo-300 text-white font-bold py-2 px-4 rounded cursor-pointer hover:bg-blue-600"
+              className="bg-indigo-300 text-white font-bold py-2 px-4 rounded cursor-pointer hover:hover:bg-gray-300"
               onClick={() => onClick(startPage - limit)}
             >
               Previous
@@ -44,7 +44,7 @@ const Pagination = ({ currentPage = 1, numberOfPages, onClick, limit = 5 }) => {
         {currentSet !== lastSet && (
           <li>
             <div
-              className="bg-indigo-300 text-white font-bold py-2 px-4 rounded cursor-pointer hover:bg-blue-600"
+              className="bg-indigo-300 text-white font-bold py-2 px-4 rounded cursor-pointer hover:hover:bg-gray-300"
               onClick={() => onClick(startPage + limit)}
             >
               Next
