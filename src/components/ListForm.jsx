@@ -11,12 +11,8 @@ const ListForm = ({ isBest = false, name }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const initialPage = parseInt(searchParams.get("page")) || 1;
 
-  const {
-    currentPage,
-    numberOfPages,
-    setCurrentPage,
-    setNumberOfPosts,
-  } = usePagination(limit);
+  const { currentPage, numberOfPages, setCurrentPage, setNumberOfPosts } =
+    usePagination(limit);
 
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
