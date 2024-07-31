@@ -22,8 +22,7 @@ const ListForm = ({ isBest = false, name }) => {
       let params = {
         _page: page,
         _limit: limit,
-        _sort: "id",
-        _order: "asc",
+        _sort: "createdAt",
       };
 
       if (isBest) {
