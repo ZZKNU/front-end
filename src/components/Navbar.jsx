@@ -1,11 +1,17 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import Search from "./Search";
 import FortuneModal from "./FortuneModal";
 // import { useAuthStore } from "../store";
-import { FaUserFriends } from "react-icons/fa";
+import { FaComments } from "react-icons/fa";
+import MessageModal from "./MessageForm";
 const Navbar = () => {
   // const { accessToken, clearToken } = useAuthStore();
+  const [isMessageModalOpen, setIsMessageModalOpen] = useState(false);
 
+  const toggleMessageModal = () => {
+    setIsMessageModalOpen(!isMessageModalOpen);
+  };
   return (
     <nav className="w-full bg-indigo-300 flex justify-between items-center px-4 sm:px-8 py-4 sticky top-0 left-0 z-[1000]">
       <Link
@@ -21,9 +27,12 @@ const Navbar = () => {
         <NavLink to="/login">로그인</NavLink>
         <NavLink to="/create">글쓰기</NavLink>
         <NavLink to="/my">마이페이지</NavLink>
-        <NavLink to="/freind">
-          <FaUserFriends />
-        </NavLink>
+        <button
+          onClick={toggleMessageModal}
+          className="text-white hover:text-indigo-200"
+        >
+          <FaComments />
+        </button>
         {/* {accessToken ? (
           <>
             <NavLink to="/create">글쓰기</NavLink>
@@ -37,6 +46,14 @@ const Navbar = () => {
         )} */}
         <FortuneModal />
       </div>
+      <MessageModal
+        isOpen={isMessageModalOpen}
+        onClose={toggleMessageModal}
+        onSendMessage={(messageData) => {
+          console.log("Sending message:", messageData);
+          toggleMessageModal();
+        }}
+      />
     </nav>
   );
 };
