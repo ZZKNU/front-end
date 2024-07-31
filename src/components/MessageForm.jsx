@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Modal from "./Modal";
+import { Link } from "react-router-dom";
 // import { getFollowList } from "../apis/api";
 
 const friendList = [
@@ -101,6 +102,15 @@ const MessageModal = ({
 }) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="쪽지 보내기">
+      <div className="flex justify-end">
+        <Link
+          className="bg-indigo-600 text-white rounded-full px-3 py-1 hover:bg-indigo-700 no-underline"
+          to='/messagelist'
+          onClick={() => {onClose()}}
+        >
+          메시지 목록
+        </Link>
+      </div>
       <MessageForm
         onSendMessage={onSendMessage}
         onClose={onClose}
