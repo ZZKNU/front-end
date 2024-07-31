@@ -24,7 +24,7 @@ const EditPage = () => {
             className="text-4xl font-bold text-gray-800 flex items-center justify-center"
           >
             <FaPen className="mr-3 text-indigo-600" size={32} />
-            <span>새로운 이야기 시작하기</span>
+            <span>더 좋은 생각이 떠올랐나요?</span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
@@ -32,7 +32,7 @@ const EditPage = () => {
             transition={{ delay: 0.3, duration: 0.5 }}
             className="mt-2 text-xl text-gray-600"
           >
-            당신의 생각을 자유롭게 펼쳐보세요
+            언제든지 수정할 수 있어요!
           </motion.p>
         </div>
         <motion.div
@@ -41,7 +41,7 @@ const EditPage = () => {
           transition={{ delay: 0.2, duration: 0.5 }}
           className="bg-white shadow-lg rounded-lg overflow-hidden"
         >
-          <CreateForm onSubmit={handleSubmit} />
+          <CreateForm onSubmit={handleSubmit} editing={true}/>
         </motion.div>
         <motion.div
           initial={{ opacity: 0 }}
