@@ -55,7 +55,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
               <NavLink to="/my" onClick={toggleSidebar}>
                 마이페이지
               </NavLink>
-              <button
+              {/* <button
                 onClick={() => {
                   toggleMessageModal();
                   toggleSidebar();
@@ -63,7 +63,10 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                 className="text-white hover:text-indigo-200 flex items-center gap-2"
               >
                 <FaComments /> 메시지
-              </button>
+              </button> */}
+              <NavLink to="/messagelist" onClick={toggleSidebar}>
+                쪽지
+              </NavLink>
               <button
                 onClick={toggleFortuneModal}
                 className="text-white hover:text-indigo-200"
