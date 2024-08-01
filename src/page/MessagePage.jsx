@@ -1,46 +1,174 @@
-import { useState } from 'react';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import { FiChevronLeft, FiEdit, FiChevronRight } from "react-icons/fi";
 
-const MessagePage = () => {
+const MessageListPage = () => {
+  const [activeTab, setActiveTab] = useState("received");
+  const navigate = useNavigate();
   // 샘플 데이터
-  const [sentMessages, setSentMessages] = useState([
-    { id: 1, content: "안녕하세요! 잘 지내고 계신가요?" },
-    { id: 2, content: "이번 주말에 만날까요?" },
-    { id: 3, content: "프로젝트 진행 상황은 어떠신가요?" }
-  ]);
+  const receivedMessages = [
+    {
+      id: 1,
+      username: "scissorsloveyou",
+      lastMessage: "View video from scisso...",
+      time: "now",
+      unread: true,
+      emoji: "🍕🍔🍟",
+    },
+    { id: 2, username: "paper_wins", lastMessage: "View photo", time: "2m" },
+    {
+      id: 3,
+      username: "eraser_1990",
+      lastMessage: "omg lol",
+      time: "2m",
+      emoji: "😂",
+    },
+    { id: 4, username: "paperxclip", lastMessage: "Delivered", time: "2h" },
+    {
+      id: 5,
+      username: "bday planning!!",
+      lastMessage: "Opened by 3",
+      time: "3h",
+    },
+  ];
 
-  const [receivedMessages, setReceivedMessages] = useState([
-    { id: 1, content: "안녕하세요! 저도 잘 지내고 있어요." },
-    { id: 2, content: "주말에 만나는 건 좋습니다!" },
-    { id: 3, content: "프로젝트는 순조롭게 진행되고 있습니다." }
-  ]);
+  const sentMessages = [
+    {
+      id: 1,
+      username: "big stapler",
+      lastMessage: "Hey, how's it going?",
+      time: "1h",
+    },
+    {
+      id: 2,
+      username: "pencil_sharp",
+      lastMessage: "Did you get my last message?",
+      time: "3h",
+    },
+    {
+      id: 3,
+      username: "notebook_lover",
+      lastMessage: "See you tomorrow!",
+      time: "5h",
+    },
+    {
+      id: 4,
+      username: "ink_master",
+      lastMessage: "Thanks for the help!",
+      time: "1d",
+    },
+  ];
+
+  const tabVariants = {
+    enter: (direction) => ({
+      x: direction > 0 ? "100%" : "-100%",
+      opacity: 0,
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+    },
+    exit: (direction) => ({
+      x: direction < 0 ? "100%" : "-100%",
+      opacity: 0,
+    }),
+  };
+
+  const [[page, direction], setPage] = useState([0, 0]);
+
+  const paginate = (newDirection) => {
+    setPage([page + newDirection, newDirection]);
+    setActiveTab(activeTab === "received" ? "sent" : "received");
+  };
 
   return (
-    <div className="container flex flex-col md:flex-row p-4 mt-10 space-x-4 justify-center items-start min-h-screen">
-      {/* 보낸 메시지 */}
-      <div className="flex-1 bg-blue-100 p-4 rounded-lg shadow-lg">
-        <h2 className="text-xl font-bold mb-4">보낸 메시지</h2>
-        <ul className="space-y-4">
-          {sentMessages.map((message) => (
-            <li key={message.id} className="border-b py-4">
-              {message.content}
-            </li>
-          ))}
-        </ul>
+    <div className="container mx-auto max-w-md bg-white h-screen flex flex-col">
+      <div className="border-b p-4 flex justify-between items-center">
+        <div className="flex items-center">
+          <FiChevronLeft
+            className="h-6 w-6 mr-2 cursor-pointer"
+            onClick={() => navigate(-1)}
+          />
+          <h1 className="text-xl font-semibold">메시지</h1>
+        </div>
+        <FiEdit
+          className="h-6 w-6 cursor-pointer"
+          onClick={() => alert("메세지 모달?")}
+        />
       </div>
 
-      {/* 받은 메시지 */}
-      <div className="flex-1 bg-green-100 p-4 rounded-lg shadow-lg">
-        <h2 className="text-xl font-bold mb-4">받은 메시지</h2>
-        <ul className="space-y-4">
-          {receivedMessages.map((message) => (
-            <li key={message.id} className="border-b py-4">
-              {message.content}
-            </li>
-          ))}
-        </ul>
+      <div className="flex border-b">
+        <button
+          className={`flex-1 py-2 px-4 text-center ${
+            activeTab === "received"
+              ? "border-b-2 border-blue-500 text-blue-500"
+              : "text-gray-500"
+          }`}
+          onClick={() => activeTab !== "received" && paginate(-1)}
+        >
+          받은 메시지
+        </button>
+        <button
+          className={`flex-1 py-2 px-4 text-center ${
+            activeTab === "sent"
+              ? "border-b-2 border-blue-500 text-blue-500"
+              : "text-gray-500"
+          }`}
+          onClick={() => activeTab !== "sent" && paginate(1)}
+        >
+          보낸 메시지
+        </button>
+      </div>
+
+      <div className="flex-1 overflow-hidden">
+        <AnimatePresence initial={false} custom={direction}>
+          <motion.div
+            key={page}
+            custom={direction}
+            variants={tabVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{
+              x: { type: "spring", stiffness: 300, damping: 30 },
+              opacity: { duration: 0.2 },
+            }}
+            className="h-full overflow-y-auto"
+          >
+            {(activeTab === "received" ? receivedMessages : sentMessages).map(
+              (message) => (
+                <div
+                  key={message.id}
+                  className="flex justify-between items-center p-4 border-b"
+                >
+                  <div className="flex-1">
+                    <p
+                      className={`font-semibold ${
+                        message.unread ? "text-black" : "text-gray-700"
+                      }`}
+                    >
+                      {message.username}
+                    </p>
+                    <div className="flex items-center text-gray-500 text-sm">
+                      <p className="mr-1">{message.lastMessage}</p>
+                      <p>· {message.time}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center">
+                    {message.emoji && (
+                      <span className="mr-2">{message.emoji}</span>
+                    )}
+                    <FiChevronRight className="h-5 w-5 text-gray-400" />
+                  </div>
+                </div>
+              )
+            )}
+          </motion.div>
+        </AnimatePresence>
       </div>
     </div>
   );
 };
 
-export default MessagePage;
+export default MessageListPage;
