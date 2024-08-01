@@ -28,9 +28,14 @@ const SignupForm = () => {
       return;
     }
     try {
+      const birthDateObj = new Date(birthDate);
+      const formattedBirthDate = birthDateObj.toISOString().split("T")[0];
       // function : 회원가입 API 호출 //
-      // await getJoin(email,password,name,birthDate);
-      console.log({ name, email, password, birthDate });
+      const res = await getJoin(email, password, name, formattedBirthDate);
+      console.log(
+        { name, email, password, birthDate: formattedBirthDate },
+        res
+      );
       navi("/login");
     } catch (err) {
       console.error("Signup failed", err);

@@ -1,11 +1,25 @@
 import { FaPen } from "react-icons/fa";
 import CreateForm from "../components/CreateForm";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import axiosInstance from "../apis/axiosInstance";
+import axios from "axios";
 
 const CreatePage = () => {
-  const handleSubmit = (formData) => {
-    // function : POST API작성 //
-    console.log("Form submitted:", formData);
+  const navigate = useNavigate();
+
+  const handleSubmit = async (formData) => {
+    try {
+      await axios.post("http://localhost:3001/posts", {
+        title: formData.title,
+        body: formData.content,
+        createdAt: new Date().getTime(),
+      });
+      console.log("Form submitted:", formData);
+      navigate("/"); // Assuming you want to navigate to the home page after submission
+    } catch (error) {
+      console.error("Error submitting post:", error);
+    }
   };
 
   return (

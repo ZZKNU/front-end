@@ -1,16 +1,19 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { getLogin } from "../apis/api";
 
 const AccountForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-
+  const navi = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       // function : 로그인 API 호출 //
+      getLogin(email, password);
       console.log("Login attempt with:", { email, password });
+      navi("/");
     } catch (err) {
       console.error("Login failed", err);
       setErrorMessage(
