@@ -10,6 +10,7 @@ import {
 } from "react-icons/fa";
 import { FaComments } from "react-icons/fa6";
 import Modal from "../components/Modal";
+import { getUserInfo } from "../apis/api";
 
 const MenuItem = ({ icon, text, onClick }) => (
   <div

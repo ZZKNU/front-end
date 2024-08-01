@@ -17,18 +17,18 @@ export const getLogin = async (email, password) => {
  * @param {string} email
  * @param {string} password
  * @param {string} nickname
- * @param {Date} birthDate
+ * @param {Date} birthdate
  * @returns
  */
-export const getJoin = async (email, password, nickname, birthDate) => {
+export const getJoin = async (email, password, nickname, birthdate) => {
   const response = await axiosInstance.post("/auth/join", {
     email,
     password,
     nickname,
-    birthDate,
+    birthdate,
   });
-  const { accessToken, refreshToken } = response.data;
-  useAuthStore.getState().setTokens(accessToken, refreshToken);
+  // const { accessToken, refreshToken } = response.data;
+  // useAuthStore.getState().setTokens(accessToken, refreshToken);
   return response.data;
 };
 
@@ -105,19 +105,12 @@ export const deleteQuote = async (quote_id) => {
 
 /**
  * 베스트 도전 / 일반 글귀에서 type과 title로 검색
- * @param {string,string} param{}
+ * @param {string} author
  * @returns
  */
-export const searchQuote = async ({ params = {} }) => {
-  const { type, title } = params;
-  const queryParams = new URLSearchParams();
-
+export const searchQuote = async (author) => {
   const response = await axiosInstance.get(
-    `/challenges/search?${queryParams.toString()}`,
-    {
-      type,
-      title,
-    }
+    `/challenges/search?author=${author}`
   );
   return response.data;
 };

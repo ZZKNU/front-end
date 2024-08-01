@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import styled from "styled-components";
-
+import { searchFriends } from "../apis/api";
 const SearchContainer = styled.div`
   display: flex;
   align-items: center;
@@ -44,11 +44,12 @@ const Search = () => {
   };
 
   // event handler : 검색 이벤트 처리//
-  const handleSearch = () => {
+  const handleSearch = async (e) => {
+    e.preventDefault();
     try {
       // function : 검색 API호출 //
-      console.log("Searching for:", searchTerm);
-      // 예: searchAPI(searchTerm).then(results => setSearchResults(results));
+      const res = await searchFriends(searchTerm);
+      console.log(res.content[0]);
       setSearchTerm("");
       // navigate('/searchPage')
     } catch (e) {
