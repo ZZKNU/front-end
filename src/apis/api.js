@@ -1,5 +1,4 @@
 import axiosInstance from "./axiosInstance";
-import { useAuthStore } from "../store";
 
 /**
  * 로그인 요청 API
@@ -34,11 +33,11 @@ export const getJoin = async (email, password, nickname, birthdate) => {
 
 /**
  * 회원탈퇴 API
- * @param {number} user_id
+ * @param {string} accessToken
  * @returns
  */
-export const deleteUser = async (user_id) => {
-  const response = await axiosInstance.delete(`/users/${user_id}`);
+export const deleteUser = async () => {
+  const response = await axiosInstance.delete(`/users`);
   return response.data;
 };
 
@@ -152,34 +151,35 @@ export const likeNormalQuote = async () => {
 
 /**
  * 회원의 마이 페이지 조회
- * @param {number} user_id
+ * @param {string} accessToken
  * @returns {
- *  "id":number,
+ *  "accessToken":string,
  *  "email":string,
  *  "nickname":string,
  *  "birthDate":"YYYY-MM-DD",
  *  "authority":string (USER)
  * }
  */
-export const getUserInfo = async (user_id) => {
-  const response = await axiosInstance.get(`/users/${user_id}`);
+export const getUserInfo = async () => {
+  const response = await axiosInstance.get(`/users`);
   return response.data;
 };
 
 /**
- * @param {number} user_id
+ * 회원의 개인정보 수정
+ * @param {string} accessToken
  * @param {string} nickname
  * @param {Date} birthDate
  * @returns {
- *  "id":number,
+ *  "accessToken":string,
  *  "email":string,
  *  "nickname":string,
  *  "birthDate":"YYYY-MM-DD",
  *  "authority":string (USER)
  *  }
  */
-export const updateUserInfo = async (user_id, nickname, birthDate) => {
-  const response = await axiosInstance.put(`/users/${user_id}`, {
+export const updateUserInfo = async (nickname, birthDate) => {
+  const response = await axiosInstance.put(`/users`, {
     nickname,
     birthDate,
   });
@@ -213,12 +213,12 @@ export const searchFriends = async (name, page = 0, size = 20) => {
 
 /**
  * friend_id를 가진 친구에게 추가 요청
- * @param {number} user_id [친구 추가를 요청하는 사용자ID]
+ *
  * @param {number} friend_id [친구로 추가할 사용자ID]
  * @returns
  */
-export const addFriends = async (user_id, friend_id) => {
-  const response = await axiosInstance.post(`/friends/${user_id}/${friend_id}`);
+export const addFriends = async (friend_id) => {
+  const response = await axiosInstance.post(`/friends/${friend_id}`);
   return response.data;
 };
 
@@ -276,21 +276,21 @@ export const postMessage = async () => {
 
 /**
  * 내가 받은 메세지 조회
- * @param {number} user_id
+ * @param {string} accessToken
  * @returns
  */
-export const getReceiveMessage = async (user_id) => {
-  const response = await axiosInstance.get(`/receive/${user_id}`);
+export const getReceiveMessage = async () => {
+  const response = await axiosInstance.get(`/receive`);
   return response.data;
 };
 
 /**
  * 내가 보낸 메세지 조회
- * @param {number} user_id
+ * @param {string} accessToken
  * @returns
  */
-export const getPostMessage = async (user_id) => {
-  const response = await axiosInstance.get(`/post/${user_id}`);
+export const getPostMessage = async () => {
+  const response = await axiosInstance.get(`/post`);
   return response.data;
 };
 
