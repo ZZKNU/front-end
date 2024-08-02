@@ -1,15 +1,16 @@
 import { Link } from "react-router-dom";
-import { FaComments, FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaTimes } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import Search from "./Search";
 import FortuneModal from "./FortuneModal";
 import MessageModal from "./MessageForm";
 import { useState } from "react";
+import { useAuthStore } from "../store";
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
   const [isMessageModalOpen, setIsMessageModalOpen] = useState(false);
   const [isFortuneModalOpen, setIsFortuneModalOpen] = useState(false);
-
+  const { accessToken, clearTokens } = useAuthStore();
   const toggleMessageModal = () => setIsMessageModalOpen(!isMessageModalOpen);
   const toggleFortuneModal = () => setIsFortuneModalOpen(!isFortuneModalOpen);
 
@@ -46,33 +47,32 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
               <NavLink to="/alllist" onClick={toggleSidebar}>
                 전체 게시글
               </NavLink>
-              <NavLink to="/login" onClick={toggleSidebar}>
-                로그인
-              </NavLink>
-              <NavLink to="/create" onClick={toggleSidebar}>
-                글쓰기
-              </NavLink>
-              <NavLink to="/my" onClick={toggleSidebar}>
-                마이페이지
-              </NavLink>
-              {/* <button
-                onClick={() => {
-                  toggleMessageModal();
-                  toggleSidebar();
-                }}
-                className="text-white hover:text-indigo-200 flex items-center gap-2"
-              >
-                <FaComments /> 메시지
-              </button> */}
-              <NavLink to="/messagelist" onClick={toggleSidebar}>
-                쪽지
-              </NavLink>
-              <button
-                onClick={toggleFortuneModal}
-                className="text-white hover:text-indigo-200"
-              >
-                운세 보기
-              </button>
+              {accessToken ? (
+                <>
+                  <NavLink to="/create" onClick={toggleSidebar}>
+                    글쓰기
+                  </NavLink>
+                  <NavLink to="/my" onClick={toggleSidebar}>
+                    마이페이지
+                  </NavLink>
+                  <NavLink to="/messagelist" onClick={toggleSidebar}>
+                    쪽지
+                  </NavLink>
+                  <NavLink to="/" onClick={() => clearTokens()}>
+                    로그아웃
+                  </NavLink>
+                  <button
+                    onClick={toggleFortuneModal}
+                    className="text-white hover:text-indigo-200"
+                  >
+                    운세 보기
+                  </button>
+                </>
+              ) : (
+                <NavLink to="/login" onClick={toggleSidebar}>
+                  로그인
+                </NavLink>
+              )}
             </div>
           </motion.div>
         )}

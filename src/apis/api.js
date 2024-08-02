@@ -1,5 +1,5 @@
 import axiosInstance from "./axiosInstance";
-
+import { useAuthStore } from "../store";
 /**
  * 로그인 요청 API
  * @param {string} email
@@ -8,6 +8,8 @@ import axiosInstance from "./axiosInstance";
  */
 export const getLogin = async (email, password) => {
   const response = await axiosInstance.post("/auth/login", { email, password });
+  const { accessToken } = response.data;
+  useAuthStore.getState().setTokens(accessToken);
   return response.data;
 };
 
@@ -26,8 +28,8 @@ export const getJoin = async (email, password, nickname, birthdate) => {
     nickname,
     birthdate,
   });
-  // const { accessToken, refreshToken } = response.data;
-  // useAuthStore.getState().setTokens(accessToken, refreshToken);
+  const { accessToken } = response.data;
+  useAuthStore.getState().setTokens(accessToken);
   return response.data;
 };
 
@@ -178,10 +180,10 @@ export const getUserInfo = async () => {
  *  "authority":string (USER)
  *  }
  */
-export const updateUserInfo = async (nickname, birthDate) => {
+export const updateUserInfo = async (nickname, birthdate) => {
   const response = await axiosInstance.put(`/users`, {
     nickname,
-    birthDate,
+    birthdate,
   });
   return response.data;
 };
