@@ -1,28 +1,24 @@
-/* eslint-disable react/prop-types */
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { motion, useScroll, useTransform } from "framer-motion";
-// import FortuneCookieModal from "../components/FortuneCookie";
-const AnimatedBackground = () => {
-  const { scrollYProgress } = useScroll();
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.5]);
-
-  return (
-    <motion.div
-      className="fixed inset-0 z-0"
-      style={{
-        scale,
-        background: "black",
-      }}
-    />
-  );
-};
+import {
+  motion,
+  useScroll,
+  useTransform,
+  AnimatePresence,
+} from "framer-motion";
+import { Sun, Heart, MessageCircle, ChevronDown } from "lucide-react";
 
 const AnimatedText = ({ children, className }) => {
   const { scrollYProgress } = useScroll();
-  const fontSize = useTransform(scrollYProgress, [0, 1], [1, 1.5]);
+  const fontSize = useTransform(scrollYProgress, [0, 1], [1, 1.2]);
 
   return (
-    <motion.div className={className} style={{ scale: fontSize }}>
+    <motion.div
+      className={className}
+      style={{ scale: fontSize }}
+      whileHover={{ scale: 1.1 }}
+      transition={{ type: "spring", stiffness: 300 }}
+    >
       {children}
     </motion.div>
   );
@@ -30,61 +26,124 @@ const AnimatedText = ({ children, className }) => {
 
 const ContentSection = ({ title, children }) => (
   <motion.section
-    className="min-h-screen flex flex-col items-center justify-center text-white relative z-10"
-    initial={{ opacity: 0, y: 100 }}
+    className="min-h-screen flex flex-col items-center justify-center text-amber-800 relative z-10 px-4"
+    initial={{ opacity: 0, y: 50 }}
     whileInView={{ opacity: 1, y: 0 }}
-    transition={{ duration: 1.1 }}
+    transition={{ duration: 0.8 }}
   >
-    <AnimatedText className="text-4xl font-bold mb-6">{title}</AnimatedText>
+    <AnimatedText className="text-5xl font-bold mb-6 text-center">
+      {title}
+    </AnimatedText>
     {children}
   </motion.section>
 );
 
+const FeatureCard = ({ icon, title, description }) => (
+  <motion.div
+    className="bg-white bg-opacity-70 rounded-lg p-6 shadow-lg max-w-sm mx-auto"
+    whileHover={{ scale: 1.05, boxShadow: "0px 10px 20px rgba(0,0,0,0.1)" }}
+    transition={{ type: "spring", stiffness: 300 }}
+  >
+    <motion.div
+      className="flex items-center justify-center mb-4"
+      whileHover={{ rotate: 360 }}
+      transition={{ duration: 0.5 }}
+    >
+      {icon}
+    </motion.div>
+    <h3 className="text-xl font-semibold mb-2">{title}</h3>
+    <p className="text-gray-600">{description}</p>
+  </motion.div>
+);
+
+const QuoteBox = ({ quote, author }) => (
+  <motion.div
+    className="bg-white bg-opacity-80 p-6 rounded-lg shadow-lg max-w-md mx-auto my-8"
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.5 }}
+  >
+    <p className="text-xl italic mb-4">"{quote}"</p>
+    <p className="text-right font-semibold">- {author}</p>
+  </motion.div>
+);
+
 const MainPage = () => {
+  const [showQuote, setShowQuote] = useState(false);
+
   return (
     <div className="relative">
-      <AnimatedBackground />
-
       <div className="relative z-10">
-        <ContentSection title="Main">
-          <AnimatedText className="text-xl mb-8 text-cream">
-            스크롤
+        <ContentSection title="일상의 작은 위로">
+          <AnimatedText className="text-3xl mb-8 text-amber-900 text-center max-w-2xl">
+            매일의 순간을 특별하게 만드는 따뜻한 메시지들
           </AnimatedText>
-          <div className="space-x-4">
+          <motion.div
+            className="space-y-4 flex flex-col items-center"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+          >
             <Link
               to="/alllist"
-              className="bg-amber-600 text-cream px-6 py-2 rounded-full hover:bg-teal-700 transition"
+              className="bg-gradient-to-r from-amber-300 to-orange-400 text-white px-8 py-3 rounded-full hover:from-amber-600 hover:to-orange-600 transition text-lg font-semibold shadow-lg"
             >
-              게시글 보기
+              오늘의 메시지 보기
             </Link>
+            <motion.button
+              onClick={() => setShowQuote(!showQuote)}
+              className="text-amber-700 flex items-center"
+              whileHover={{ scale: 1.1 }}
+            >
+              {showQuote ? "숨기기" : "오늘의 한마디 보기"}{" "}
+              <ChevronDown
+                className={`ml-1 transform ${showQuote ? "rotate-180" : ""}`}
+              />
+            </motion.button>
+          </motion.div>
+          <AnimatePresence>
+            {showQuote && (
+              <QuoteBox
+                quote="당신의 하루가 당신의 인생이 됩니다. 오늘을 알차게 보내세요."
+                author="짐 론"
+              />
+            )}
+          </AnimatePresence>
+        </ContentSection>
+
+        <ContentSection title="우리의 특징">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
+            <FeatureCard
+              icon={<Sun size={48} className="text-amber-500" />}
+              title="매일의 긍정"
+              description="하루를 밝게 시작할 수 있는 긍정적인 메시지를 제공합니다."
+            />
+            <FeatureCard
+              icon={<Heart size={48} className="text-red-500" />}
+              title="따뜻한 위로"
+              description="힘든 순간을 이겨낼 수 있는 따뜻한 위로의 말을 전합니다."
+            />
+            <FeatureCard
+              icon={<MessageCircle size={48} className="text-blue-500" />}
+              title="서로의 응원"
+              description="사용자들이 서로 응원하고 격려할 수 있는 커뮤니티를 제공합니다."
+            />
           </div>
         </ContentSection>
 
-        <ContentSection title="특징">
-          <AnimatedText className="text-lg text-cream">
-            <ul className="list-disc list-inside">
-              <li>무슨 내용넣어야하죠</li>
-            </ul>
+        <ContentSection title="함께 시작해요">
+          <AnimatedText className="text-2xl mb-6 text-amber-900 text-center">
+            지금 바로 당신의 하루를 밝혀줄 메시지를 만나보세요
           </AnimatedText>
+          <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+            <Link
+              to="/login"
+              className="bg-gradient-to-r from-amber-300 to-orange-400 text-white px-8 py-3 rounded-full hover:from-amber-600 hover:to-orange-600  transition text-lg font-semibold shadow-lg"
+            >
+              시작하기
+            </Link>
+          </motion.div>
         </ContentSection>
-
-        <ContentSection title="시작하기">
-          <AnimatedText className="text-xl mb-4 text-cream">
-            지금 바로 시작
-          </AnimatedText>
-          <Link
-            to="/login"
-            className="bg-amber-600 text-cream px-6 py-2 rounded-full hover:bg-amber-700 transition"
-          >
-            로그인
-          </Link>
-        </ContentSection>
-        {/* <ContentSection title="포춘쿠키">
-          <AnimatedText className="text-xl mb-4 text-cream">
-            쿠키 힘드렁
-          </AnimatedText>
-          <FortuneCookieModal />
-        </ContentSection> */}
       </div>
     </div>
   );

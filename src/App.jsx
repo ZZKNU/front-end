@@ -11,6 +11,7 @@ import MyPage from "./page/MyPage";
 import ShowPage from "./page/ShowPage";
 import EditPage from "./page/EditPage";
 import MessagePage from "./page/MessagePage";
+import AdminPage from "./page/AdminPage";
 
 function App() {
   // 사이드바 상태 관리
@@ -21,7 +22,11 @@ function App() {
   return (
     <BrowserRouter>
       <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
-      <div className={`flex-1 transition-all duration-300 ${isSidebarOpen ? 'ml-64' : 'ml-0'}`}>
+      <div
+        className={`flex-1 transition-all duration-300 ${
+          isSidebarOpen ? "ml-64" : "ml-0"
+        }`}
+      >
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/login" element={<LoginPage />} />
@@ -33,6 +38,7 @@ function App() {
           <Route path="/list/:id" element={<ShowPage />} />
           <Route path="/list/:id/edit" element={<EditPage />} />
           <Route path="/messagelist" element={<MessagePage />} />
+          <Route path="/admin" element={<AdminPage />} />
         </Routes>
       </div>
     </BrowserRouter>
