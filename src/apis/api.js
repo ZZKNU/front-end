@@ -34,6 +34,33 @@ export const getJoin = async (email, password, nickname, birthdate) => {
 };
 
 /**
+ * 닉네임 중복 체크
+ * @param {string} nickname
+ * @return {boolean} TRUE/FALSE
+ */
+export const getCheckNickname = async (nickname) => {
+  const response = await axiosInstance.get("/auth/nickname", {
+    params: {
+      nickname: nickname,
+    },
+  });
+  return response.data;
+};
+
+/**
+ * 이메일 중복 체크
+ * @param {string} email
+ * @return {boolean} TRUE/FALSE
+ */
+export const getCheckEmail = async (email) => {
+  const response = await axiosInstance.get("/auth/email", {
+    params: {
+      email: email,
+    },
+  });
+  return response.data;
+};
+/**
  * 회원탈퇴 API
  * @param {string} accessToken
  * @returns
