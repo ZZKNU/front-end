@@ -20,6 +20,10 @@ const SignupForm = () => {
   const navi = useNavigate();
 
   const handleNicknameCheck = async () => {
+    if (!name.trim()) {
+      setNicknameError("");
+      return;
+    }
     try {
       const isNicknameAvailable = await getCheckNickname(name);
       if (isNicknameAvailable) {
@@ -27,7 +31,7 @@ const SignupForm = () => {
         setIsNicknameChecked(false);
       } else {
         setIsNicknameChecked(true);
-        setNicknameError("");
+        setNicknameError("사용 가능한 닉네임입니다.");
       }
     } catch (err) {
       console.error("Nickname check failed", err);
@@ -36,6 +40,10 @@ const SignupForm = () => {
   };
 
   const handleEmailCheck = async () => {
+    if (!email.trim()) {
+      setEmailError("");
+      return;
+    }
     try {
       const isEmailAvailable = await getCheckEmail(email);
       if (isEmailAvailable) {
@@ -43,7 +51,7 @@ const SignupForm = () => {
         setIsEmailChecked(false);
       } else {
         setIsEmailChecked(true);
-        setEmailError("");
+        setEmailError("사용 가능한 이메일입니다.");
       }
     } catch (err) {
       console.error("Email check failed", err);
@@ -123,7 +131,9 @@ const SignupForm = () => {
               중복 확인
             </button>
           </div>
-          {nicknameError && (
+          {isNicknameChecked ? (
+            <p className="text-blue-500 text-sm">{nicknameError}</p>
+          ) : (
             <p className="text-red-500 text-sm">{nicknameError}</p>
           )}
         </div>
@@ -152,7 +162,11 @@ const SignupForm = () => {
               중복 확인
             </button>
           </div>
-          {emailError && <p className="text-red-500 text-sm">{emailError}</p>}
+          {isEmailChecked ? (
+            <p className="text-blue-500 text-sm">{emailError}</p>
+          ) : (
+            <p className="text-red-500 text-sm">{emailError}</p>
+          )}
         </div>
         <div>
           <label
@@ -208,7 +222,12 @@ const SignupForm = () => {
         <div>
           <button
             type="submit"
-            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            disabled={!isEmailChecked || !isNicknameChecked}
+            className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${
+              !isNicknameChecked || !isEmailChecked
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-indigo-600 hover:bg-indigo-700"
+            } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
           >
             {isLoading ? <LoadingSpinner /> : "회원가입"}
           </button>
