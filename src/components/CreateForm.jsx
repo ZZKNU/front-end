@@ -1,45 +1,34 @@
 import { useState, useEffect } from "react";
 import { FaPen } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
-import axiosInstance from "../apis/axiosInstance";
 
 const CreateForm = ({ onSubmit, editing = false }) => {
   const navigate = useNavigate();
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+  const [formData, setFormData] = useState({
+    title: "",
+    content: "",
+    quoteType: "NONE",
+  });
   const { id } = useParams();
 
   useEffect(() => {
     if (editing && id) {
-      axios
-        .get(`http://localhost:3001/posts/${id}`)
-        .then((res) => {
-          setTitle(res.data.title);
-          setContent(res.data.body);
-        })
-        .catch((error) => {
-          console.error("Error fetching post:", error);
-        });
+      console.log(`Fetching data for post with id: ${id}`);
+      // TODO: Fetch existing post data and update formData
     }
   }, [editing, id]);
 
-  const handleSubmit = async (e) => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (editing) {
-      try {
-        await axios.put(`http://localhost:3001/posts/${id}`, {
-          title,
-          body: content,
-          createdAt: new Date().getTime(),
-        });
-        navigate(-1);
-      } catch (error) {
-        console.error("Error updating post:", error);
-      }
-    } else {
-      onSubmit({ title, content });
-    }
+    onSubmit(formData);
   };
 
   return (
@@ -60,13 +49,33 @@ const CreateForm = ({ onSubmit, editing = false }) => {
           </label>
           <input
             id="title"
+            name="title"
             type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            value={formData.title}
+            onChange={handleChange}
             className="w-full px-4 py-2 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-300"
             placeholder="제목을 입력해주세요"
             required
           />
+        </div>
+        <div>
+          <label
+            htmlFor="quoteType"
+            className="block text-sm font-medium text-gray-700 mb-2"
+          >
+            인용 유형
+          </label>
+          <select
+            id="quoteType"
+            name="quoteType"
+            value={formData.quoteType}
+            onChange={handleChange}
+            className="w-full px-4 py-2 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-300"
+          >
+            <option value="NONE">선택안함</option>
+            <option value="BOOK">도서</option>
+            <option value="SONG">노래</option>
+          </select>
         </div>
         <div>
           <label
@@ -77,8 +86,9 @@ const CreateForm = ({ onSubmit, editing = false }) => {
           </label>
           <textarea
             id="content"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
+            name="content"
+            value={formData.content}
+            onChange={handleChange}
             className="w-full px-4 py-2 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-300 resize-none"
             placeholder="내용을 입력해주세요"
             rows="6"

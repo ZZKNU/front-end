@@ -7,13 +7,18 @@ const AccountForm = () => {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const navi = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       // function : 로그인 API 호출 //
-      getLogin(email, password);
+      const loginSuccess = await getLogin(email, password);
       console.log("Login attempt with:", { email, password });
-      navi("/");
+      if (loginSuccess) {
+        navi("/");
+      } else {
+        throw new Error("Login failed");
+      }
     } catch (err) {
       console.error("Login failed", err);
       setErrorMessage(
@@ -25,7 +30,7 @@ const AccountForm = () => {
   return (
     <div className="w-full max-w-md mx-auto">
       <h2 className="text-3xl font-bold text-gray-800 mb-8">로그인</h2>
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} method="POST" className="space-y-6">
         <div>
           <label
             htmlFor="email"

@@ -10,7 +10,7 @@ import { useAuthStore } from "../store";
 const Sidebar = ({ isOpen, toggleSidebar }) => {
   const [isMessageModalOpen, setIsMessageModalOpen] = useState(false);
   const [isFortuneModalOpen, setIsFortuneModalOpen] = useState(false);
-  const { accessToken, clearTokens } = useAuthStore();
+  const { accessToken, clearAuth } = useAuthStore();
   const toggleMessageModal = () => setIsMessageModalOpen(!isMessageModalOpen);
   const toggleFortuneModal = () => setIsFortuneModalOpen(!isFortuneModalOpen);
 
@@ -58,7 +58,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                   <NavLink to="/messagelist" onClick={toggleSidebar}>
                     쪽지
                   </NavLink>
-                  <NavLink to="/" onClick={() => clearTokens()}>
+                  <NavLink to="/" onClick={() => clearAuth()}>
                     로그아웃
                   </NavLink>
                   <button

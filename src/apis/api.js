@@ -47,10 +47,17 @@ export const deleteUser = async () => {
  * 베스트 도전 목록에서 글 작성
  * @param {string} title
  * @param {string} content
+ * @param {string} quoteType
+ * @param {string} author
  * @returns
  */
-export const writeBestQuote = async (title, content) => {
-  const response = await axiosInstance.post("/challenges", { title, content });
+export const writeBestQuote = async (title, quoteType, content, author) => {
+  const response = await axiosInstance.post("/challenges", {
+    title,
+    quoteType,
+    content,
+    author,
+  });
   return response.data;
 };
 
@@ -58,10 +65,17 @@ export const writeBestQuote = async (title, content) => {
  * 베스트 도전에서 작성한 글 수정
  * @param {string} title
  * @param {string} content
+ * @param {string} quoteType
+ * @param {string} author
  * @returns
  */
-export const editBestQuote = async (title, content) => {
-  const response = await axiosInstance.put("/challenges", { title, content });
+export const editBestQuote = async (title, quoteType, content, author) => {
+  const response = await axiosInstance.put("/challenges", {
+    title,
+    quoteType,
+    content,
+    author,
+  });
   return response.data;
 };
 
@@ -180,10 +194,10 @@ export const getUserInfo = async () => {
  *  "authority":string (USER)
  *  }
  */
-export const updateUserInfo = async (nickname, birthdate) => {
+export const updateUserInfo = async (nickName, birthDate) => {
   const response = await axiosInstance.put(`/users`, {
-    nickname,
-    birthdate,
+    nickName,
+    birthDate,
   });
   return response.data;
 };

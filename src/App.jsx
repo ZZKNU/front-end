@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
 import LoginPage from "./page/LoginPage";
 import JoinPage from "./page/JoinPage";
@@ -18,30 +19,32 @@ function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
-
+  const [queryClient] = useState(() => new QueryClient());
   return (
-    <BrowserRouter>
-      <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
-      <div
-        className={`flex-1 transition-all duration-300 ${
-          isSidebarOpen ? "ml-64" : "ml-0"
-        }`}
-      >
-        <Routes>
-          <Route path="/" element={<MainPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<JoinPage />} />
-          <Route path="/create" element={<CreatePage />} />
-          <Route path="/alllist" element={<AllListPage />} />
-          <Route path="/bestlist" element={<BestListPage />} />
-          <Route path="/my" element={<MyPage />} />
-          <Route path="/list/:id" element={<ShowPage />} />
-          <Route path="/list/:id/edit" element={<EditPage />} />
-          <Route path="/messagelist" element={<MessagePage />} />
-          <Route path="/admin" element={<AdminPage />} />
-        </Routes>
-      </div>
-    </BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+        <div
+          className={`flex-1 transition-all duration-300 ${
+            isSidebarOpen ? "ml-64" : "ml-0"
+          }`}
+        >
+          <Routes>
+            <Route path="/" element={<MainPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<JoinPage />} />
+            <Route path="/create" element={<CreatePage />} />
+            <Route path="/alllist" element={<AllListPage />} />
+            <Route path="/bestlist" element={<BestListPage />} />
+            <Route path="/my" element={<MyPage />} />
+            <Route path="/list/:id" element={<ShowPage />} />
+            <Route path="/list/:id/edit" element={<EditPage />} />
+            <Route path="/messagelist" element={<MessagePage />} />
+            <Route path="/admin" element={<AdminPage />} />
+          </Routes>
+        </div>
+      </BrowserRouter>
+    </QueryClientProvider>
   );
 }
 
