@@ -19,9 +19,9 @@ const SignupForm = () => {
 
   const navi = useNavigate();
 
-  const handleNicknameCheck = () => {
+  const handleNicknameCheck = async () => {
     try {
-      const isNicknameAvailable = getCheckNickname(name);
+      const isNicknameAvailable = await getCheckNickname(name);
       if (isNicknameAvailable) {
         setNicknameError("이미 사용 중인 닉네임입니다.");
         setIsNicknameChecked(false);
@@ -35,9 +35,9 @@ const SignupForm = () => {
     }
   };
 
-  const handleEmailCheck = () => {
+  const handleEmailCheck = async () => {
     try {
-      const isEmailAvailable = getCheckEmail(email);
+      const isEmailAvailable = await getCheckEmail(email);
       if (isEmailAvailable) {
         setEmailError("이미 사용 중인 이메일입니다.");
         setIsEmailChecked(false);
