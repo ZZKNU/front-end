@@ -44,8 +44,7 @@ const Search = () => {
   };
 
   // event handler : 검색 이벤트 처리//
-  const handleSearch = async (e) => {
-    e.preventDefault();
+  const handleSearch = async () => {
     try {
       // function : 검색 API호출 //
       const res = await searchFriends(searchTerm);
@@ -59,6 +58,7 @@ const Search = () => {
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
+      e.preventDefault();
       handleSearch();
     }
   };
