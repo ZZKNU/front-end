@@ -2,23 +2,32 @@ import { FaPen } from "react-icons/fa";
 import CreateForm from "../components/CreateForm";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import axiosInstance from "../apis/axiosInstance";
-import axios from "axios";
+import { writeBestQuote } from "../apis/api";
+import { useAuthStore } from "../store";
 
 const CreatePage = () => {
   const navigate = useNavigate();
+  const getUserInfo = useAuthStore((state) => state.getUserInfo);
 
   const handleSubmit = async (formData) => {
+    const userInfo = getUserInfo();
+    if (!userInfo) {
+      console.error("User not logged in");
+      // TODO: Handle case where user is not logged in
+      return;
+    }
     try {
-      await axios.post("http://localhost:3001/posts", {
-        title: formData.title,
-        body: formData.content,
-        createdAt: new Date().getTime(),
-      });
-      console.log("Form submitted:", formData);
-      navigate("/"); // Assuming you want to navigate to the home page after submission
+      const result = await writeBestQuote(
+        formData.title,
+        formData.quoteType,
+        formData.content,
+        userInfo.nickname
+      );
+      console.log("Form submitted:", result);
+      navigate("/");
     } catch (error) {
       console.error("Error submitting post:", error);
+      // TODO: Handle error (e.g., show error message to user)
     }
   };
 

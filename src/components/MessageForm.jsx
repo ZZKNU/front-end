@@ -1,36 +1,55 @@
 import { useState, useEffect } from "react";
 import Modal from "./Modal";
 import { Link } from "react-router-dom";
-// import { getFollowList } from "../apis/api";
+import { useQuery } from "@tanstack/react-query";
+import { getFollowList } from "../apis/api";
 
-const friendList = [
-  { id: 1, name: "친구1" },
-  { id: 2, name: "친구2" },
-  { id: 3, name: "친구3" },
-  { id: 4, name: "친구4" },
-  { id: 5, name: "친구5" },
-];
 // eslint-disable-next-line react/prop-types
-const MessageForm = ({ onSendMessage, onClose, initialRecipient }) => {
+const MessageForm = ({ onSendMessage, onClose, initialRecipient, userId }) => {
   const [recipient, setRecipient] = useState(initialRecipient || "");
   const [message, setMessage] = useState("");
-  //   const [friendList, setFriendList] = useState([]);
-  //   const [page, setPage] = useState(0);
-  //   const [hasMore, setHasMore] = useState(true);
-  //   useEffect(() => {
-  //     loadFriends();
-  //   }, []);
-  //   const loadFriends = async () => {
-  //     try {
-  //       const response = await getFollowList(user_id, page);
-  //       const newFriends = response.content;
-  //       setFriendList((prevList) => [...prevList, ...newFriends]);
-  //       setHasMore(!response.last);
-  //       setPage((prevPage) => prevPage + 1);
-  //     } catch (error) {
-  //       console.error("친구 목록을 불러오는 중 오류 발생:", error);
-  //     }
-  //   };
+  const [page, setPage] = useState(0);
+  const [allFriends, setAllFriends] = useState([]);
+
+  const { data, status, error } = useQuery({
+    queryKey: ["friends", userId, page],
+    queryFn: () => getFollowList(userId, page),
+    keepPreviousData: true,
+  });
+
+  useEffect(() => {
+    if (data) {
+      // 새로운 친구 데이터를 기존 리스트에 추가
+      setAllFriends((prevFriends) => {
+        const newFriends = data.content.filter(
+          (newFriend) =>
+            !prevFriends.some((friend) => friend.id === newFriend.id)
+        );
+        return [...prevFriends, ...newFriends];
+      });
+
+      // 총 페이지 수를 로컬 스토리지에 저장
+      localStorage.setItem("totalFriendsPages", data.totalPages);
+
+      // 마지막 페이지에 도달했는지 확인
+      if (data.last) {
+        console.log("모든 친구 데이터를 불러왔습니다.");
+      }
+
+      // 데이터 로딩이 완료되면 선택된 수신자가 없을 경우 첫 번째 친구를 기본값으로 설정
+      if (!recipient && data.content.length > 0) {
+        setRecipient(data.content[0].email);
+      }
+    }
+  }, [data, recipient]);
+
+  const hasMore = data ? !data.last : false;
+
+  const loadMore = () => {
+    if (hasMore) {
+      setPage((prevPage) => prevPage + 1);
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -43,7 +62,7 @@ const MessageForm = ({ onSendMessage, onClose, initialRecipient }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} method="POST" className="space-y-4">
       <div>
         <label
           htmlFor="recipient"
@@ -59,11 +78,17 @@ const MessageForm = ({ onSendMessage, onClose, initialRecipient }) => {
           required
         >
           <option value="">친구를 선택하세요</option>
-          {friendList.map((friend) => (
-            <option key={friend.id} value={friend.name}>
-              {friend.name}
-            </option>
-          ))}
+          {status === "loading" && allFriends.length === 0 ? (
+            <option>로딩 중...</option>
+          ) : status === "error" ? (
+            <option>오류 발생: {error.message}</option>
+          ) : (
+            allFriends.map((friend) => (
+              <option key={friend.id} value={friend.email}>
+                {friend.nickName}
+              </option>
+            ))
+          )}
         </select>
       </div>
       {/* content.body */}
@@ -89,6 +114,15 @@ const MessageForm = ({ onSendMessage, onClose, initialRecipient }) => {
       >
         쪽지 보내기
       </button>
+      {hasMore && (
+        <button
+          onClick={loadMore}
+          disabled={status === "loading"}
+          className="mt-4 w-full py-2 px-4 border border-transparent text-sm font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200"
+        >
+          {status === "loading" ? "로딩 중..." : "더 많은 친구 불러오기"}
+        </button>
+      )}
     </form>
   );
 };
@@ -105,8 +139,10 @@ const MessageModal = ({
       <div className="flex justify-end">
         <Link
           className="bg-indigo-600 text-white rounded-full px-3 py-1 hover:bg-indigo-700 no-underline"
-          to='/messagelist'
-          onClick={() => {onClose()}}
+          to="/messagelist"
+          onClick={() => {
+            onClose();
+          }}
         >
           메시지 목록
         </Link>

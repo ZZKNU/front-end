@@ -50,7 +50,7 @@ const SignupForm = () => {
       <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">
         회원가입
       </h2>
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} method="POST" className="space-y-6">
         <div>
           <label
             htmlFor="name"

@@ -1,10 +1,10 @@
-import ListForm from "../components/ListForm";
+import ListForm2 from "../components/ListForm2";
 
 const AllListPage = () => {
   return (
     <>
       <div>
-        <ListForm name={"전체 게시물"}/>
+        <ListForm2 name={"전체 게시물"} />
       </div>
     </>
   );

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   FaListUl,
   FaHeart,
@@ -11,6 +11,7 @@ import Modal from "../components/Modal";
 import { useNavigate } from "react-router-dom";
 import { deleteUser, getUserInfo, updateUserInfo } from "../apis/api";
 import { useAuthStore } from "../store";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 const MenuItem = ({ icon, text, onClick }) => (
   <div
@@ -24,39 +25,50 @@ const MenuItem = ({ icon, text, onClick }) => (
 
 const MyPage = () => {
   const navigate = useNavigate();
-  const { clearTokens } = useAuthStore();
+  const queryClient = useQueryClient();
+  const { clearAuth } = useAuthStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [userInfo, setUserInfo] = useState({
-    nickname: "",
-    email: "",
-    birthdate: "",
-  });
   const [newNickname, setNewNickname] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchUserInfo = async () => {
-      try {
-        setIsLoading(true);
-        const data = await getUserInfo();
-        setUserInfo(data);
-        setNewNickname(data.nickname);
-        setError(null);
-      } catch (error) {
-        console.error("Failed to fetch user info:", error);
-        setError("사용자 정보를 불러오는데 실패했습니다.");
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  const {
+    data: userInfo,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["userInfo"],
+    queryFn: getUserInfo,
+    onSuccess: (data) => {
+      setNewNickname(data.nickname);
+    },
+  });
 
-    fetchUserInfo();
-  }, []);
+  const updateNicknameMutation = useMutation({
+    mutationFn: (newNickname) =>
+      updateUserInfo(newNickname, userInfo.birthdate),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["userInfo"]);
+      setIsModalOpen(false);
+    },
+    onError: (error) => {
+      console.error("Failed to update nickname:", error);
+      // You can set a state here to show an error message in the UI
+    },
+  });
+
+  const deleteUserMutation = useMutation({
+    mutationFn: deleteUser,
+    onSuccess: () => {
+      clearAuth();
+      navigate("/");
+    },
+    onError: (error) => {
+      console.error("Failed to delete user:", error);
+      // You can set a state here to show an error message in the UI
+    },
+  });
 
   const handleMenuClick = (item) => {
     console.log(`Clicked on ${item}`);
-    // Add your logic here
   };
 
   const handleOpenModal = () => {
@@ -66,39 +78,31 @@ const MyPage = () => {
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    setNewNickname(userInfo.nickname); // 모달을 닫을 때 원래 닉네임으로 리셋
+    setNewNickname(userInfo.nickname);
   };
 
   const handleNicknameChange = (e) => {
     setNewNickname(e.target.value);
   };
 
-  const handleSaveNickname = async () => {
-    try {
-      setIsLoading(true);
-      const updatedInfo = await updateUserInfo(newNickname, userInfo.birthdate);
-      setUserInfo(updatedInfo);
-      setIsModalOpen(false);
-      setError(null);
-    } catch (error) {
-      console.error("Failed to update nickname:", error);
-      setError("닉네임 업데이트에 실패했습니다.");
-      navigate("/my");
-    } finally {
-      setIsLoading(false);
-    }
+  const handleSaveNickname = () => {
+    updateNicknameMutation.mutate(newNickname);
   };
-  const handleDeleteUser = async () => {
-    await deleteUser();
-    clearTokens();
-    navigate("/");
+
+  const handleDeleteUser = () => {
+    deleteUserMutation.mutate();
   };
+
   if (isLoading) {
     return <div className="text-center py-8">로딩 중...</div>;
   }
 
   if (error) {
-    return <div className="text-center py-8 text-red-500">{error}</div>;
+    return (
+      <div className="text-center py-8 text-red-500">
+        사용자 정보를 불러오는데 실패했습니다: {error.message}
+      </div>
+    );
   }
 
   return (
@@ -146,7 +150,7 @@ const MyPage = () => {
           <MenuItem
             icon={<FaComments className="text-gray-600" />}
             text="쪽지함"
-            onClick={() => handleMenuClick("쪽지")}
+            onClick={() => navigate("/messagelist")}
           />
           <MenuItem
             icon={<FaCog className="text-gray-600" />}
@@ -172,19 +176,24 @@ const MyPage = () => {
           <button
             className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mr-2"
             onClick={handleSaveNickname}
-            disabled={isLoading}
+            disabled={updateNicknameMutation.isLoading}
           >
-            {isLoading ? "저장 중..." : "저장"}
+            {updateNicknameMutation.isLoading ? "저장 중..." : "저장"}
           </button>
           <button
             className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
             onClick={handleCloseModal}
-            disabled={isLoading}
+            disabled={updateNicknameMutation.isLoading}
           >
             취소
           </button>
         </div>
-        {error && <p className="mt-2 text-red-500">{error}</p>}
+        {updateNicknameMutation.isError && (
+          <p className="mt-2 text-red-500">
+            닉네임 업데이트에 실패했습니다:{" "}
+            {updateNicknameMutation.error.message}
+          </p>
+        )}
       </Modal>
     </div>
   );

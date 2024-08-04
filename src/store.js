@@ -1,15 +1,21 @@
-// Login상태관리를 위한 Store //
+// src/store/authStore.js
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { decodeToken } from "./util/decodeToken";
 
 export const useAuthStore = create(
   persist(
-    (set) => ({
+    (set, get) => ({
       accessToken: "",
       refreshToken: "",
       setTokens: (accessToken, refreshToken) =>
         set({ accessToken, refreshToken }),
-      clearTokens: () => set({ accessToken: "", refreshToken: "" }),
+      clearAuth: () => set({ accessToken: "", refreshToken: "" }),
+      getUserInfo: () => {
+        const { accessToken } = get();
+        if (!accessToken) return null;
+        return decodeToken(accessToken);
+      },
     }),
     { name: "auth-storage", getStorage: () => sessionStorage }
   )
