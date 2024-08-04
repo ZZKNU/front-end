@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { deleteUser, getUserInfo, updateUserInfo } from "../apis/api";
 import { useAuthStore } from "../store";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import AdminPage from "./AdminPage";
 
 const MenuItem = ({ icon, text, onClick }) => (
   <div
@@ -110,7 +111,9 @@ const MyPage = () => {
     );
   }
 
-  return (
+  return userInfo.nickname === "admin" ? (
+    <AdminPage />
+  ) : (
     <div className="container mx-auto px-4 py-8">
       <div className="bg-white shadow-md rounded-lg overflow-hidden">
         <div className="bg-gray-400 text-black p-6">

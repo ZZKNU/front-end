@@ -11,7 +11,7 @@ export const useAuthStore = create(
       setTokens: (accessToken, refreshToken) =>
         set({ accessToken, refreshToken }),
       clearAuth: () => set({ accessToken: "", refreshToken: "" }),
-      getUserInfo: () => {
+      getUserDetail: () => {
         const { accessToken } = get();
         if (!accessToken) return null;
         return decodeToken(accessToken);
