@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { getJoin } from "../apis/api";
+import { getJoin, getCheckNickname, getCheckEmail } from "../apis/api";
 import LoadingSpinner from "./LoadingSpinner";
 
 const SignupForm = () => {
@@ -12,7 +12,44 @@ const SignupForm = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  const [isNicknameChecked, setIsNicknameChecked] = useState(false);
+  const [isEmailChecked, setIsEmailChecked] = useState(false);
+  const [nicknameError, setNicknameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+
   const navi = useNavigate();
+
+  const handleNicknameCheck = () => {
+    try {
+      const isNicknameAvailable = getCheckNickname(name);
+      if (isNicknameAvailable) {
+        setNicknameError("이미 사용 중인 닉네임입니다.");
+        setIsNicknameChecked(false);
+      } else {
+        setIsNicknameChecked(true);
+        setNicknameError("");
+      }
+    } catch (err) {
+      console.error("Nickname check failed", err);
+      setNicknameError("닉네임 중복 체크에 실패했습니다.");
+    }
+  };
+
+  const handleEmailCheck = () => {
+    try {
+      const isEmailAvailable = getCheckEmail(email);
+      if (isEmailAvailable) {
+        setEmailError("이미 사용 중인 이메일입니다.");
+        setIsEmailChecked(false);
+      } else {
+        setIsEmailChecked(true);
+        setEmailError("");
+      }
+    } catch (err) {
+      console.error("Email check failed", err);
+      setEmailError("이메일 중복 체크에 실패했습니다.");
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,6 +61,16 @@ const SignupForm = () => {
     }
     if (!birthDate) {
       setErrorMessage("생년월일을 선택해주세요.");
+      setIsLoading(false);
+      return;
+    }
+    if (!isNicknameChecked) {
+      setErrorMessage("닉네임 중복 체크를 해주세요.");
+      setIsLoading(false);
+      return;
+    }
+    if (!isEmailChecked) {
+      setErrorMessage("이메일 중복 체크를 해주세요.");
       setIsLoading(false);
       return;
     }
@@ -58,15 +105,27 @@ const SignupForm = () => {
           >
             이름
           </label>
-          <input
-            id="name"
-            type="text"
-            placeholder="이름"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-            className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-          />
+          <div className="flex space-x-2">
+            <input
+              id="name"
+              type="text"
+              placeholder="이름"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+              className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            />
+            <button
+              type="button"
+              onClick={handleNicknameCheck}
+              className="mt-1 px-1 py-0 bg-indigo-600 text-white rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              중복 확인
+            </button>
+          </div>
+          {nicknameError && (
+            <p className="text-red-500 text-sm">{nicknameError}</p>
+          )}
         </div>
         <div>
           <label
@@ -75,15 +134,25 @@ const SignupForm = () => {
           >
             이메일
           </label>
-          <input
-            id="email"
-            type="email"
-            placeholder="이메일 주소"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-          />
+          <div className="flex space-x-2">
+            <input
+              id="email"
+              type="email"
+              placeholder="이메일 주소"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            />
+            <button
+              type="button"
+              onClick={handleEmailCheck}
+              className="mt-1 px-1 py-0 bg-indigo-600 text-white rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              중복 확인
+            </button>
+          </div>
+          {emailError && <p className="text-red-500 text-sm">{emailError}</p>}
         </div>
         <div>
           <label
