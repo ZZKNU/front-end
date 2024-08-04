@@ -1,8 +1,8 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import LoadingSpinner from "../components/LoadingSpinner";
 import { Link, useNavigate } from "react-router-dom";
+import { getBestQuoteDetail } from "../apis/api";
 
 const ShowPage = () => {
   const navigate = useNavigate();
@@ -11,7 +11,7 @@ const ShowPage = () => {
   const [loading, setLoading] = useState(true);
 
   const getPost = (id) => {
-    axios.get(`http://localhost:3001/posts/${id}`).then((res) => {
+    getBestQuoteDetail(id).then((res) => {
       setPost(res.data);
       setLoading(false);
     });

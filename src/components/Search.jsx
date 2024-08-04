@@ -49,7 +49,7 @@ const Search = () => {
     try {
       // function : 검색 API호출 //
       const res = await searchFriends(searchTerm);
-      console.log(res.content[0]);
+      console.log(res[0]);
       setSearchTerm("");
       // navigate('/searchPage')
     } catch (e) {

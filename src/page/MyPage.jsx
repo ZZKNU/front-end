@@ -90,7 +90,12 @@ const MyPage = () => {
   };
 
   const handleDeleteUser = () => {
-    deleteUserMutation.mutate();
+    const userConfirmed = window.confirm("회원 탈퇴를 하시겠습니깡?");
+    if (userConfirmed) {
+      deleteUserMutation.mutate();
+    } else {
+      console.log("User canceled the deletion");
+    }
   };
 
   if (isLoading) {
