@@ -96,8 +96,9 @@ export const writeBestQuote = async (title, quoteType, content, author) => {
  * @param {string} author
  * @returns
  */
-export const editBestQuote = async (title, quoteType, content, author) => {
+export const editBestQuote = async (id, title, quoteType, content, author) => {
   const response = await axiosInstance.put("/challenges", {
+    id,
     title,
     quoteType,
     content,
