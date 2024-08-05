@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import Modal from "./Modal";
 import { Link } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getFollowList } from "../apis/api";
 
 // eslint-disable-next-line react/prop-types
 const MessageForm = ({ onSendMessage, onClose, initialRecipient, userId }) => {
   const [recipient, setRecipient] = useState(initialRecipient || "");
+  const queryClient = useQueryClient();
   const [message, setMessage] = useState("");
   const [page, setPage] = useState(0);
   const [allFriends, setAllFriends] = useState([]);
@@ -27,7 +28,7 @@ const MessageForm = ({ onSendMessage, onClose, initialRecipient, userId }) => {
         );
         return [...prevFriends, ...newFriends];
       });
-
+      queryClient.invalidateQueries(["friends"]);
       // 총 페이지 수를 로컬 스토리지에 저장
       localStorage.setItem("totalFriendsPages", data.totalPages);
 
@@ -41,7 +42,7 @@ const MessageForm = ({ onSendMessage, onClose, initialRecipient, userId }) => {
         setRecipient(data.content[0].email);
       }
     }
-  }, [data, recipient]);
+  }, [data, queryClient, recipient]);
 
   const hasMore = data ? !data.last : false;
 

@@ -1,11 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiChevronLeft, FiEdit, FiChevronRight } from "react-icons/fi";
+import MessageModal from "../components/MessageForm";
+import { getUserInfo } from "../apis/api";
 
 const MessageListPage = () => {
   const [activeTab, setActiveTab] = useState("received");
+  const [user, setUser] = useState("");
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const getUser = async () => {
+    try {
+      const res = await getUserInfo();
+      setUser(res);
+    } catch (e) {
+      alert(e);
+    }
+  };
+  useEffect(() => {
+    getUser();
+  }, []);
   // 샘플 데이터
   const receivedMessages = [
     {
@@ -74,14 +90,18 @@ const MessageListPage = () => {
       opacity: 0,
     }),
   };
-
   const [[page, direction], setPage] = useState([0, 0]);
 
   const paginate = (newDirection) => {
     setPage([page + newDirection, newDirection]);
     setActiveTab(activeTab === "received" ? "sent" : "received");
   };
-
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+  const handleSendMessage = (data) => {
+    console.log(data);
+    closeModal();
+  };
   return (
     <div className="container mx-auto max-w-md bg-white h-screen flex flex-col">
       <div className="border-b p-4 flex justify-between items-center">
@@ -92,10 +112,7 @@ const MessageListPage = () => {
           />
           <h1 className="text-xl font-semibold">메시지</h1>
         </div>
-        <FiEdit
-          className="h-6 w-6 cursor-pointer"
-          onClick={() => alert("메세지 모달?")}
-        />
+        <FiEdit className="h-6 w-6 cursor-pointer" onClick={openModal} />
       </div>
 
       <div className="flex border-b">
@@ -167,6 +184,12 @@ const MessageListPage = () => {
           </motion.div>
         </AnimatePresence>
       </div>
+      <MessageModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        onSendMessage={handleSendMessage}
+        userId={user.id}
+      />
     </div>
   );
 };

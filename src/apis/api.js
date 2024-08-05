@@ -265,7 +265,11 @@ export const searchFriends = async (name, page = 0, size = 20) => {
  * @returns
  */
 export const addFriends = async (friend_id) => {
-  const response = await axiosInstance.post(`/friends/${friend_id}`);
+  const response = await axiosInstance.post(`/friends/${friend_id}`, {
+    params: {
+      friend_id,
+    },
+  });
   return response.data;
 };
 
