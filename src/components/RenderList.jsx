@@ -1,15 +1,8 @@
-import { useNavigate } from "react-router-dom";
 import Card from "./Card";
 
-const RenderList = ({ posts }) => {
-  const navigate = useNavigate();
-
+const RenderList = ({ posts, onClick }) => {
   return posts.map((post) => (
-    <Card
-      key={post.id}
-      title={post.title}
-      onClick={() => navigate(`/list/${post.id}`)}
-    />
+    <Card key={post.id} title={post.title} onClick={() => onClick(post.id)} />
   ));
 };
 
