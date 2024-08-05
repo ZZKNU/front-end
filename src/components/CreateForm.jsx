@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { FaPen } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
-import { getQuoteDetail } from "../apis/api";
+import { getBestQuoteDetail } from "../apis/api";
 
 const CreateForm = ({ onSubmit, editing = false, userInfo }) => {
   const navigate = useNavigate();
@@ -19,11 +19,11 @@ const CreateForm = ({ onSubmit, editing = false, userInfo }) => {
       console.log(`Fetching data for post with id: ${id}`);
       const fetchData = async () => {
         try {
-          const data = await getQuoteDetail(id); // API 호출
+          const data = await getBestQuoteDetail(id); // API 호출
           setFormData({
             title: data.title,
             content: data.content,
-            quoteType: data.quoteType || "NONE", // 기본값 설정
+            quoteType: data.type || "NONE", // 기본값 설정
             author: data.author || userInfo.nickname, // 사용자 정보로 설정
           });
         } catch (error) {
