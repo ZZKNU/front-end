@@ -336,7 +336,7 @@ export const postMessage = async (to_id, quote_id, title) => {
  * @returns
  */
 export const getReceiveMessage = async () => {
-  const response = await axiosInstance.get(`/receive`);
+  const response = await axiosInstance.get(`/messages/receive`);
   return response.data;
 };
 
@@ -346,7 +346,7 @@ export const getReceiveMessage = async () => {
  * @returns
  */
 export const getPostMessage = async () => {
-  const response = await axiosInstance.get(`/post`);
+  const response = await axiosInstance.get(`/messages/post`);
   return response.data;
 };
 
