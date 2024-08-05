@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import LoadingSpinner from "./LoadingSpinner";
-// import { getFollowerList } from "../apis/api";
+import { getFollowerList, getFollowList } from "../apis/api";
 
 const FriendList = ({ onFriendSelect }) => {
-  const [friends, setFriends] = useState([]);
+  const [follow, setFollow] = useState([]);
+  const [follower, setFollower] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -14,88 +15,46 @@ const FriendList = ({ onFriendSelect }) => {
   const fetchFriends = async () => {
     setIsLoading(true);
     try {
-      // const response = await getFollowerList();
-      // function : 친구목록 불러오기API//
-      const mockData = [
-        { id: 1, name: "친구1" },
-        { id: 2, name: "친구2" },
-        { id: 3, name: "친구3" },
-      ];
-      setTimeout(() => {
-        setFriends(mockData);
-        setIsLoading(false);
-      }, 100);
+      const resFollow = await getFollowList();
+      const resFollower = await getFollowerList();
+      setFollow(resFollow);
+      setFollower(resFollower);
     } catch (err) {
       setError("친구 목록을 불러오는 데 실패했습니다.");
+    } finally {
       setIsLoading(false);
     }
   };
-  if (isLoading) return <LoadingSpinner />;
-  if (error) return <div className="text-red-500">{error}</div>;
 
-  return (
-    <div className="friend-list w-full">
+  if (isLoading) return <LoadingSpinner />;
+  if (error) return <div>{error}</div>;
+
+  const renderFriendList = (friends, title) => (
+    <div>
+      <h3>{title}</h3>
       {friends.length === 0 ? (
-        <p className="text-gray-500 text-center">친구가 없습니다.</p>
+        <p>목록이 비어 있습니다.</p>
       ) : (
-        <ul className="space-y-2 p-0">
+        <ul>
           {friends.map((friend) => (
-            <li
-              key={friend.id}
-              className="p-2 bg-gray-100 rounded hover:bg-gray-200 transition-colors duration-200 cursor-pointer"
-              onClick={() => onFriendSelect(friend)}
-            >
-              <span className="font-semibold">{friend.name}</span>
+            <li key={friend.id} onClick={() => onFriendSelect(friend)}>
+              {friend.nickName}
             </li>
           ))}
         </ul>
       )}
     </div>
   );
+
+  console.log("Follow:", follow);
+  console.log("Follower:", follower);
+
+  return (
+    <div>
+      {renderFriendList(follow, "팔로우")}
+      {renderFriendList(follower, "팔로워")}
+    </div>
+  );
 };
 
 export default FriendList;
-
-// import { useQuery } from '@tanstack/react-query';
-// import LoadingSpinner from "./LoadingSpinner";
-// import { getFollowerList } from "../apis/api";
-
-// const FriendList = ({ onFriendSelect }) => {
-//   const {
-//     data: friends,
-//     isLoading,
-//     error
-//   } = useQuery(['friends'], getFollowerList, {
-//     staleTime: 300000, // 5분
-//     cacheTime: 3600000, // 1시간
-//     retry: 3, // 실패 시 3번까지 재시도
-//     onError: (error) => {
-//       console.error("친구 목록을 불러오는 데 실패했습니다:", error);
-//     },
-//   });
-
-//   if (isLoading) return <LoadingSpinner />;
-//   if (error) return <div className="text-red-500">친구 목록을 불러오는 데 실패했습니다.</div>;
-
-//   return (
-//     <div className="friend-list w-full">
-//       {friends && friends.length === 0 ? (
-//         <p className="text-gray-500 text-center">친구가 없습니다.</p>
-//       ) : (
-//         <ul className="space-y-2 p-0">
-//           {friends && friends.map((friend) => (
-//             <li
-//               key={friend.id}
-//               className="p-2 bg-gray-100 rounded hover:bg-gray-200 transition-colors duration-200 cursor-pointer"
-//               onClick={() => onFriendSelect(friend)}
-//             >
-//               <span className="font-semibold">{friend.name}</span>
-//             </li>
-//           ))}
-//         </ul>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default FriendList;

@@ -275,13 +275,13 @@ export const addFriends = async (friend_id) => {
 
 /**
  * 유저(나)가 팔로우한 친구를 조회
- * @param {number} user_id
+ *
  * @param {number} page [default : 0]
  * @param {number} size [default : 20]
  * @returns
  */
-export const getFollowList = async (user_id, page = 0, size = 20) => {
-  const response = await axiosInstance.get(`/friends/follow/${user_id}`, {
+export const getFollowList = async (page = 0, size = 20) => {
+  const response = await axiosInstance.get(`/friends/follow`, {
     params: {
       page,
       size,
@@ -292,13 +292,13 @@ export const getFollowList = async (user_id, page = 0, size = 20) => {
 
 /**
  * 유저(나)를 팔로워한 친구를 조회
- * @param {number} user_id
+ *
  * @param {number} page [default : 0]
  * @param {number} size [default : 20]
  * @returns
  */
-export const getFollowerList = async (user_id, page = 0, size = 20) => {
-  const response = await axiosInstance.get(`/friends/follower/${user_id}`, {
+export const getFollowerList = async (page = 0, size = 20) => {
+  const response = await axiosInstance.get(`/friends/follower`, {
     params: {
       page,
       size,
