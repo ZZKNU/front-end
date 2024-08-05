@@ -10,7 +10,6 @@ const Card = ({ title, liked, onClick = () => {}, children = null }) => {
         <div className="px-1">{liked}</div>
         <div className="flex items-center" onClick={(e) => e.stopPropagation()}>
           <FaHeart className="text-red-600" />
-          <ShareBtn />
         </div>
       </div>
       {children && <div onClick={(e) => e.stopPropagation()}>{children}</div>}

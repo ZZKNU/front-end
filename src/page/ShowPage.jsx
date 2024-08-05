@@ -5,6 +5,7 @@ import LoadingSpinner from "../components/LoadingSpinner";
 import { deleteQuote, getBestQuoteDetail, getUserInfo } from "../apis/api";
 import LikeButton from "../components/LikeBtn";
 import { useQueryClient } from "@tanstack/react-query";
+import ShareBtn from "../components/ShareBtn";
 
 const ShowPage = () => {
   const navigate = useNavigate();
@@ -90,6 +91,7 @@ const ShowPage = () => {
       <p>{post.content}</p>
       <div className="mt-4 d-flex align-items-center">
         <LikeButton challenge_id={id} />
+
         <button
           className="btn btn-secondary ml-3"
           onClick={() => {
@@ -98,6 +100,7 @@ const ShowPage = () => {
         >
           Back
         </button>
+        <ShareBtn id={id} />
       </div>
     </div>
   );

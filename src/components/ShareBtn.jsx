@@ -2,8 +2,9 @@ import { useState } from "react";
 import { FaShareAlt } from "react-icons/fa";
 import FriendList from "./FriendList";
 import MessageModal from "./MessageForm";
+import { postMessage } from "../apis/api";
 
-const ShareBtn = () => {
+const ShareBtn = ({ id }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isMessageModalOpen, setIsMessageModalOpen] = useState(false);
   const [selectedFriend, setSelectedFriend] = useState(null);
@@ -16,8 +17,9 @@ const ShareBtn = () => {
     setIsOpen(false);
   };
 
-  const handleSendMessage = (messageData) => {
-    // function : 메세지 전송API//
+  const handleSendMessage = async (messageData) => {
+    // Function to handle sending a message, e.g., sending via an API
+    await postMessage(selectedFriend.id, id, "dfads");
     console.log("Sending message to:", selectedFriend, "Message:", messageData);
     setIsMessageModalOpen(false);
   };
@@ -53,7 +55,8 @@ const ShareBtn = () => {
         isOpen={isMessageModalOpen}
         onClose={() => setIsMessageModalOpen(false)}
         onSendMessage={handleSendMessage}
-        initialRecipient={selectedFriend ? selectedFriend.name : ""}
+        initialRecipient={selectedFriend ? selectedFriend.email : ""}
+        userId={id}
       />
     </div>
   );
