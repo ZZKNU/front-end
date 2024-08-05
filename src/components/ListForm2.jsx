@@ -21,11 +21,9 @@ const ListForm2 = ({ isBest = false, name }) => {
   const getAllPosts = async () => {
     isBest
       ? await axiosInstance.get("/challenges").then((res) => {
-          console.log(res.data);
           setNumberOfPosts(res.data.length);
         })
       : await axiosInstance.get("/quotes").then((res) => {
-          console.log(res.data);
           setNumberOfPosts(res.data.length);
         });
   };
