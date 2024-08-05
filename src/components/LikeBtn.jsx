@@ -3,9 +3,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { likeBestQuote } from "../apis/api";
 import { useParams } from "react-router-dom";
-
+import { useQueryClient } from "@tanstack/react-query";
 const LikeButton = () => {
   const [liked, setLiked] = useState(false);
+  const queryClient = useQueryClient();
   const [isAnimating, setIsAnimating] = useState(false);
   const { id } = useParams();
 
@@ -15,6 +16,7 @@ const LikeButton = () => {
       setIsAnimating(true);
       try {
         await likeBestQuote(id);
+        queryClient.invalidateQueries(["quotes"]);
         console.log(id);
       } catch (e) {
         console.error(e);

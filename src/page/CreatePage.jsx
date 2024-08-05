@@ -4,9 +4,11 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { getUserInfo, writeBestQuote } from "../apis/api";
 import { useState, useEffect } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 
 const CreatePage = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const [userInfo, setUserInfo] = useState(null);
 
   useEffect(() => {
@@ -36,7 +38,8 @@ const CreatePage = () => {
         userInfo.nickname
       );
       console.log("Form submitted:", result);
-      navigate("/");
+      queryClient.invalidateQueries(["quotes"]);
+      navigate("/bestlist");
     } catch (error) {
       console.error("Error submitting post:", error);
       // TODO: Handle error (e.g., show error message to user)
