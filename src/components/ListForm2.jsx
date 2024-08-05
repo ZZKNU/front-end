@@ -6,15 +6,37 @@ import Pagination from "./Pagination";
 import { usePagination } from "../hooks/usePagination";
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { getAllQuoteList, getBestQuoteList } from "../apis/api";
-
+import axiosInstance from "../apis/axiosInstance";
+import { useQueryClient } from "@tanstack/react-query";
 const ListForm2 = ({ isBest = false, name }) => {
   const navigate = useNavigate();
-  const limit = 5;
+  const queryClient = useQueryClient();
+  const limit = 3;
   const [searchParams, setSearchParams] = useSearchParams();
   const initialPage = parseInt(searchParams.get("page")) || 1;
 
   const { currentPage, numberOfPages, setCurrentPage, setNumberOfPosts } =
     usePagination(limit);
+
+  const getAllPosts = async () => {
+    isBest
+      ? await axiosInstance.get("/challenges").then((res) => {
+          console.log(res.data);
+          setNumberOfPosts(res.data.length);
+        })
+      : await axiosInstance.get("/quotes").then((res) => {
+          console.log(res.data);
+          setNumberOfPosts(res.data.length);
+        });
+  };
+
+  useEffect(() => {
+    getAllPosts();
+  });
+
+  useEffect(() => {
+    setCurrentPage(initialPage);
+  }, [initialPage, setCurrentPage]);
 
   const {
     data: posts = [],
@@ -23,20 +45,16 @@ const ListForm2 = ({ isBest = false, name }) => {
   } = useQuery({
     queryKey: ["quotes", currentPage, limit, isBest],
     queryFn: async () => {
+      const adjustedPage = currentPage - 1;
       const data = isBest
-        ? await getBestQuoteList({ page: currentPage, limit })
-        : await getAllQuoteList({ page: currentPage, limit });
+        ? await getBestQuoteList({ page: adjustedPage, size: limit })
+        : await getAllQuoteList({ page: adjustedPage, size: limit });
       return data;
     },
     keepPreviousData: true,
     staleTime: 60000,
     gcTime: 300000,
   });
-
-  useEffect(() => {
-    setCurrentPage(initialPage);
-    setNumberOfPosts(posts.length);
-  }, [initialPage, setCurrentPage, posts.length, setNumberOfPosts]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
