@@ -1,6 +1,8 @@
 import axiosInstance from "./axiosInstance";
 import { useAuthStore } from "../store";
+
 /**
+ * @post
  * 로그인 요청 API
  * @param {string} email
  * @param {string} password
@@ -14,6 +16,7 @@ export const getLogin = async (email, password) => {
 };
 
 /**
+ * @post
  * 회원가입 API
  * @param {string} email
  * @param {string} password
@@ -34,12 +37,13 @@ export const getJoin = async (email, password, nickname, birthdate) => {
 };
 
 /**
+ * @get
  * 닉네임 중복 체크
  * @param {string} nickname
  * @return {boolean} TRUE/FALSE
  */
 export const getCheckNickname = async (nickname) => {
-  const response = await axiosInstance.get("/auth/nickname", {
+  const response = await axiosInstance.get(`/auth/nickname/${nickname}`, {
     params: {
       nickname: nickname,
     },
@@ -48,12 +52,13 @@ export const getCheckNickname = async (nickname) => {
 };
 
 /**
+ * @get
  * 이메일 중복 체크
  * @param {string} email
  * @return {boolean} TRUE/FALSE
  */
 export const getCheckEmail = async (email) => {
-  const response = await axiosInstance.get("/auth/email", {
+  const response = await axiosInstance.get(`/auth/email/${email}`, {
     params: {
       email: email,
     },
@@ -61,6 +66,7 @@ export const getCheckEmail = async (email) => {
   return response.data;
 };
 /**
+ * @delete
  * 회원탈퇴 API
  * @param {string} accessToken
  * @returns
@@ -71,6 +77,7 @@ export const deleteUser = async () => {
 };
 
 /**
+ * @post
  * 베스트 도전 목록에서 글 작성
  * @param {string} title
  * @param {string} content
@@ -89,6 +96,7 @@ export const writeBestQuote = async (title, quoteType, content, author) => {
 };
 
 /**
+ * @put
  * 베스트 도전에서 작성한 글 수정
  * @param {string} title
  * @param {string} content
@@ -108,6 +116,7 @@ export const editBestQuote = async (id, title, quoteType, content, author) => {
 };
 
 /**
+ * @get
  * 베스트 도전 글 조회
  * @returns
  */
@@ -119,6 +128,7 @@ export const getBestQuoteList = async (params) => {
 };
 
 /**
+ * @put
  * 베스트 도전 좋아요 요청
  * @param {number} id
  * @returns
@@ -129,6 +139,7 @@ export const likeBestQuote = async (id) => {
 };
 
 /**
+ * @get
  * 베스트 도전 quote_id를 가진 글 조회
  * @param {number} quote_id
  * @returns
@@ -139,6 +150,7 @@ export const getBestQuoteDetail = async (quote_id) => {
 };
 
 /**
+ * @delete
  * 베스트 도전 quote_id를 가진 글 삭제
  * @param {number} quote_id
  * @returns
@@ -149,6 +161,7 @@ export const deleteQuote = async (quote_id) => {
 };
 
 /**
+ * @get
  * 베스트 도전 / 일반 글귀에서 type과 title로 검색
  * @param {string} author
  * @returns
@@ -161,6 +174,7 @@ export const searchQuote = async (author) => {
 };
 
 /**
+ * @get
  * 모든 일반 글귀 조회
  * @returns
  */
@@ -172,6 +186,7 @@ export const getAllQuoteList = async (params) => {
 };
 
 /**
+ * @get
  * 일반 글귀 중 quote_id를 가진 글 조회
  * @param {number} quote_id
  * @returns
@@ -182,6 +197,7 @@ export const getQuoteDetail = async (quote_id) => {
 };
 
 /**
+ * @put
  * 일반 글귀 좋아요 요청
  * @param {number} quote_id??
  * @returns
@@ -198,6 +214,7 @@ export const likeNormalQuote = async (id) => {
 // };
 
 /**
+ * @get
  * 회원의 마이 페이지 조회
  * @param {string} accessToken
  * @returns {
@@ -214,6 +231,7 @@ export const getUserInfo = async () => {
 };
 
 /**
+ * @put
  * 회원의 개인정보 수정
  * @param {string} accessToken
  * @param {string} nickname
@@ -237,12 +255,18 @@ export const updateUserInfo = async (nickName, birthDate) => {
 // 운세?
 // todo
 
-// 좋아한 글귀 보기 ??
-// export const getUserLike = async (user_id) => {
-//   const response = await axiosInstance.get("/");
-// };
+/**
+ * @get
+ * 유저가 좋아요한 글 목록
+ * @return
+ */
+export const getUserLike = async () => {
+  const response = await axiosInstance.get("/users/liked");
+  return response.data;
+};
 
 /**
+ * @get
  * 특정 name을 가진 친구 검색
  * @param {string} name
  * @param {number} page [default : 0]
@@ -260,6 +284,7 @@ export const searchFriends = async (name, page = 0, size = 20) => {
 };
 
 /**
+ * @post
  * friend_id를 가진 친구에게 추가 요청
  *
  * @param {number} friend_id [친구로 추가할 사용자ID]
@@ -275,8 +300,8 @@ export const addFriends = async (friend_id) => {
 };
 
 /**
+ * @get
  * 유저(나)가 팔로우한 친구를 조회
- *
  * @param {number} page [default : 0]
  * @param {number} size [default : 20]
  * @returns
@@ -292,6 +317,7 @@ export const getFollowList = async (page = 0, size = 20) => {
 };
 
 /**
+ * @get
  * 유저(나)를 팔로워한 친구를 조회
  *
  * @param {number} page [default : 0]
@@ -309,6 +335,7 @@ export const getFollowerList = async (page = 0, size = 20) => {
 };
 
 /**
+ * @delete
  * 친구 목록에서 특정 친구 삭제
  * @param {number} id
  * @returns
@@ -319,6 +346,7 @@ export const deleteFriends = async (id) => {
 };
 
 /**
+ * @post
  * 메세지 전송
  * @param {number} to_id
  */
@@ -331,6 +359,7 @@ export const postMessage = async (to_id, quote_id, title) => {
 };
 
 /**
+ * @get
  * 내가 받은 메세지 조회
  * @param {string} accessToken
  * @returns
@@ -341,6 +370,7 @@ export const getReceiveMessage = async () => {
 };
 
 /**
+ * @get
  * 내가 보낸 메세지 조회
  * @param {string} accessToken
  * @returns
@@ -351,6 +381,7 @@ export const getPostMessage = async () => {
 };
 
 /**
+ * @get
  * 특정 메세지 조회
  * @param {number} message_id
  * @returns
@@ -361,11 +392,54 @@ export const getSpecificMessage = async (message_id) => {
 };
 
 /**
+ * @delete
  * 메세지 삭제
  * @param {number} message_id
  * @returns
  */
 export const deleteMessage = async (message_id) => {
   const response = await axiosInstance.delete(`/messages/${message_id}`);
+  return response.data;
+};
+
+/**
+ * @put
+ * 베스트 도전 글을 일반 글로 승격
+ * @param {number} quote_id
+ * @returns
+ */
+export const promoteQuote = async (quote_id) => {
+  const response = await axiosInstance.put(`/admin/promotion/${quote_id}`);
+  return response.data;
+};
+
+/**
+ * @put
+ * 일반 유저를 관리자로 승격
+ * @param {number} user_id
+ * @returns
+ */
+export const authorityUser = async (user_id) => {
+  const response = await axiosInstance.put(`/admin/authority/${user_id}`);
+  return response.data;
+};
+
+/**
+ * @get
+ * 존재하는 사용자의 목록 가져오기
+ * @returns
+ */
+export const getUserList = async () => {
+  const response = await axiosInstance.get(`/admin/userList`);
+  return response.data;
+};
+
+/**
+ * @get
+ * 승격 가능한 글 목록 가져오기
+ * @returns
+ */
+export const possiblePromoteList = async () => {
+  const response = await axiosInstance.get(`/admin/challenges`);
   return response.data;
 };
