@@ -17,26 +17,27 @@ const ListForm2 = ({ isBest = false, name }) => {
     usePagination(limit);
 
   const {
-    data: posts,
+    data: posts = [],
     isLoading,
     error,
   } = useQuery({
     queryKey: ["quotes", currentPage, limit, isBest],
     queryFn: () =>
       isBest
-        ? getBestQuoteList({ page: currentPage, limit })
-        : getAllQuoteList({ page: currentPage, limit }),
+        ? getBestQuoteList({ _page: currentPage, _limit: limit, isBest: true })
+        : getAllQuoteList({ _page: currentPage, _limit: limit }),
     keepPreviousData: true,
     staleTime: 60000,
     gcTime: 300000,
-    onSuccess: (data) => {
-      setNumberOfPosts(data.length);
-    },
   });
 
   useEffect(() => {
     setCurrentPage(initialPage);
   }, [initialPage, setCurrentPage]);
+
+  useEffect(() => {
+    setNumberOfPosts(posts.length);
+  }, [posts.length, setNumberOfPosts]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
