@@ -16,7 +16,7 @@ const AdminPage = () => {
     const fetchData = async () => {
       const userList = await getUserList();
       const promoteList = await possiblePromoteList();
-      // 가정: posts는 이미 서버에서 가져온 데이터로 설정됨
+
       setUsers(userList);
       setPromotablePosts(promoteList);
     };
@@ -42,12 +42,17 @@ const AdminPage = () => {
     }
   };
 
-  const handleAuthorityUser = async (id) => {
+  const handleAuthorityChange = async (id, newAuthority) => {
     try {
-      await authorityUser(id);
-      console.log(`User ${id} granted AUTHOR role successfully`);
+      await authorityUser(id, newAuthority);
+      console.log(`User ${id} authority changed to ${newAuthority}`);
+      setUsers(
+        users.map((user) =>
+          user.id === id ? { ...user, authority: newAuthority } : user
+        )
+      );
     } catch (error) {
-      console.error(`Failed to grant AUTHOR role to user ${id}`, error);
+      console.error(`Failed to change authority for user ${id}`, error);
     }
   };
 
@@ -251,9 +256,9 @@ const AdminPage = () => {
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 권한
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              {/* <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 작업
-              </th>
+              </th> */}
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
@@ -266,16 +271,30 @@ const AdminPage = () => {
                   {user.birthdate}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  {user.authority}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <button
-                    onClick={() => handleAuthorityUser(user.id)}
-                    className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-1 px-2 rounded"
+                  <select
+                    value={user.authority}
+                    onChange={(e) =>
+                      handleAuthorityChange(user.id, e.target.value)
+                    }
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   >
-                    관리자 권한 부여
-                  </button>
+                    <option value="USER">USER</option>
+                    <option value="AUTHOR">AUTHOR</option>
+                    <option value="ADMIN">ADMIN</option>
+                  </select>
                 </td>
+                {/* <td className="px-6 py-4 whitespace-nowrap">
+                  {user.authority === "USER" ? (
+                    <button
+                      onClick={() => handleAuthorityChange(user.id, "AUTHOR")}
+                      className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-1 px-2 rounded"
+                    >
+                      관리자 권한 부여
+                    </button>
+                  ) : (
+                    <p />
+                  )}
+                </td> */}
               </tr>
             ))}
           </tbody>

@@ -419,8 +419,16 @@ export const promoteQuote = async (quote_id) => {
  * @param {number} user_id
  * @returns
  */
-export const authorityUser = async (user_id) => {
-  const response = await axiosInstance.put(`/admin/authority/${user_id}`);
+export const authorityUser = async (user_id, auth) => {
+  const response = await axiosInstance.put(
+    `/admin/authority/${user_id}`,
+    JSON.stringify(auth),
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
   return response.data;
 };
 
