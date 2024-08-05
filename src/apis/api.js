@@ -186,8 +186,8 @@ export const getQuoteDetail = async (quote_id) => {
  * @param {number} quote_id??
  * @returns
  */
-export const likeNormalQuote = async () => {
-  const response = await axiosInstance.put("/quotes");
+export const likeNormalQuote = async (id) => {
+  const response = await axiosInstance.put(`/quotes/${id}`);
   return response.data;
 };
 
