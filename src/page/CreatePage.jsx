@@ -2,15 +2,27 @@ import { FaPen } from "react-icons/fa";
 import CreateForm from "../components/CreateForm";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { writeBestQuote } from "../apis/api";
-import { useAuthStore } from "../store";
+import { getUserInfo, writeBestQuote } from "../apis/api";
+import { useState, useEffect } from "react";
 
 const CreatePage = () => {
   const navigate = useNavigate();
-  const getUserInfo = useAuthStore((state) => state.getUserInfo);
+  const [userInfo, setUserInfo] = useState(null);
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        const info = await getUserInfo();
+        setUserInfo(info);
+      } catch (error) {
+        console.error("Error fetching user info:", error);
+        // TODO: Handle error (e.g., redirect to login page)
+      }
+    };
+    fetchUserInfo();
+  }, []);
 
   const handleSubmit = async (formData) => {
-    const userInfo = getUserInfo();
     if (!userInfo) {
       console.error("User not logged in");
       // TODO: Handle case where user is not logged in
