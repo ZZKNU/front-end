@@ -100,7 +100,7 @@ const ShowPage = () => {
         >
           Back
         </button>
-        <ShareBtn id={id} />
+        <ShareBtn id={id} title={post.title} />
       </div>
     </div>
   );

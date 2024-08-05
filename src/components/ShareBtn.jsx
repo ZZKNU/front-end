@@ -4,7 +4,7 @@ import FriendList from "./FriendList";
 import MessageModal from "./MessageForm";
 import { postMessage } from "../apis/api";
 
-const ShareBtn = ({ id }) => {
+const ShareBtn = ({ id, title }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isMessageModalOpen, setIsMessageModalOpen] = useState(false);
   const [selectedFriend, setSelectedFriend] = useState(null);
@@ -19,7 +19,7 @@ const ShareBtn = ({ id }) => {
 
   const handleSendMessage = async (messageData) => {
     // Function to handle sending a message, e.g., sending via an API
-    await postMessage(selectedFriend.id, id, "dfads");
+    await postMessage(selectedFriend.id, id, title);
     console.log("Sending message to:", selectedFriend, "Message:", messageData);
     setIsMessageModalOpen(false);
   };
