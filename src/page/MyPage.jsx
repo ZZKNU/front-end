@@ -9,7 +9,12 @@ import {
 import { FaComments } from "react-icons/fa6";
 import Modal from "../components/Modal";
 import { useNavigate } from "react-router-dom";
-import { deleteUser, getUserInfo, updateUserInfo } from "../apis/api";
+import {
+  deleteUser,
+  getUserInfo,
+  updateUserInfo,
+  getUserLike,
+} from "../apis/api";
 import { useAuthStore } from "../store";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import AdminPage from "./AdminPage";
@@ -74,7 +79,14 @@ const MyPage = () => {
       console.log(`Clicked on ${item}`);
     }
   };
-
+  const handleLikeList = async () => {
+    try {
+      const res = await getUserLike();
+      console.log(res);
+    } catch (err) {
+      console.error(err);
+    }
+  };
   const handleOpenModal = () => {
     setIsModalOpen(true);
     setNewNickname(userInfo.nickname);
@@ -151,7 +163,7 @@ const MyPage = () => {
           <MenuItem
             icon={<FaHeart className="text-gray-600" />}
             text="좋아요 누른 글"
-            onClick={() => handleMenuClick("좋아요 누른 글")}
+            onClick={handleLikeList}
           />
           <MenuItem
             icon={<FaUserFriends className="text-gray-600" />}

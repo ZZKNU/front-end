@@ -1,22 +1,28 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
+import { FiCheckCircle, FiXCircle, FiClock, FiFileText } from "react-icons/fi";
 import {
-  FiCheckCircle,
-  FiXCircle,
-  FiClock,
-  FiUsers,
-  FiFileText,
-  FiAward,
-} from "react-icons/fi";
+  promoteQuote,
+  authorityUser,
+  getUserList,
+  possiblePromoteList,
+} from "../apis/api";
 
 const AdminPage = () => {
-  // 더미 데이터
-  const [posts, setPosts] = useState([
-    { id: 1, title: "첫 번째 도전", category: "일상", status: "PENDING" },
-    { id: 2, title: "두 번째 도전", category: "요리", status: "ACCEPT" },
-    { id: 3, title: "세 번째 도전", category: "여행", status: "REJECT" },
-    { id: 4, title: "네 번째 도전", category: "스포츠", status: "PENDING" },
-    { id: 5, title: "다섯 번째 도전", category: "기술", status: "ACCEPT" },
-  ]);
+  const [posts, setPosts] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [promotablePosts, setPromotablePosts] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const userList = await getUserList();
+      const promoteList = await possiblePromoteList();
+      // 가정: posts는 이미 서버에서 가져온 데이터로 설정됨
+      setUsers(userList);
+      setPromotablePosts(promoteList);
+    };
+
+    fetchData();
+  }, []);
 
   const handleStatusChange = (id, newStatus) => {
     console.log(`Post ${id} status changed to ${newStatus}`);
@@ -25,6 +31,24 @@ const AdminPage = () => {
         post.id === id ? { ...post, status: newStatus } : post
       )
     );
+  };
+
+  const handlePromoteQuote = async (id) => {
+    try {
+      await promoteQuote(id);
+      console.log(`Quote ${id} promoted successfully`);
+    } catch (error) {
+      console.error(`Failed to promote quote ${id}`, error);
+    }
+  };
+
+  const handleAuthorityUser = async (id) => {
+    try {
+      await authorityUser(id);
+      console.log(`User ${id} granted AUTHOR role successfully`);
+    } catch (error) {
+      console.error(`Failed to grant AUTHOR role to user ${id}`, error);
+    }
   };
 
   const getStatusBadge = (status) => {
@@ -98,7 +122,7 @@ const AdminPage = () => {
         </div>
       </div>
 
-      <div className="bg-white rounded-lg shadow overflow-hidden">
+      <div className="bg-white rounded-lg shadow overflow-hidden mb-6">
         <table className="min-w-full">
           <thead className="bg-gray-50">
             <tr>
@@ -142,6 +166,114 @@ const AdminPage = () => {
                     disabled={post.status === "REJECT"}
                   >
                     거절
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="bg-white rounded-lg shadow overflow-hidden mb-6">
+        <h2 className="text-2xl font-bold mb-4">승격 가능한 글 목록</h2>
+        <table className="min-w-full">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                ID
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                제목
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                유형
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                내용
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                작가
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                인증됨
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                좋아요
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                작업
+              </th>
+            </tr>
+          </thead>
+          <tbody className="bg-white divide-y divide-gray-200">
+            {promotablePosts.map((post) => (
+              <tr key={post.id}>
+                <td className="px-6 py-4 whitespace-nowrap">{post.id}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{post.title}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{post.type}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{post.content}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{post.author}</td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {post.certified ? "Yes" : "No"}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">{post.liked}</td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <button
+                    onClick={() => handlePromoteQuote(post.id)}
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
+                  >
+                    승격
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="bg-white rounded-lg shadow overflow-hidden">
+        <h2 className="text-2xl font-bold mb-4">사용자 목록</h2>
+        <table className="min-w-full">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                ID
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                이메일
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                닉네임
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                생년월일
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                권한
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                작업
+              </th>
+            </tr>
+          </thead>
+          <tbody className="bg-white divide-y divide-gray-200">
+            {users.map((user) => (
+              <tr key={user.id}>
+                <td className="px-6 py-4 whitespace-nowrap">{user.id}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{user.email}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{user.nickname}</td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {user.birthdate}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {user.authority}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <button
+                    onClick={() => handleAuthorityUser(user.id)}
+                    className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-1 px-2 rounded"
+                  >
+                    관리자 권한 부여
                   </button>
                 </td>
               </tr>

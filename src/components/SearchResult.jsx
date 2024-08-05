@@ -4,7 +4,7 @@ import Modal from "./Modal";
 const SearchResult = ({ isOpen, onClose, searchResults }) => {
   const addFriendHandler = async (id) => {
     try {
-      await addFriends(id);
+      const res = await addFriends(id);
       onClose();
     } catch (err) {
       console.log(err);
