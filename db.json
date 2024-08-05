@@ -5,7 +5,7 @@
       "body": "1",
       "best": false,
       "createdAt": 1721806265674,
-      "id": "1",
+      "id": 1,
       "like": false
     },
     {
@@ -13,7 +13,7 @@
       "body": "2",
       "best": true,
       "createdAt": 1721806265674,
-      "id": "2",
+      "id": 2,
       "like": false
     },
     {
@@ -21,7 +21,7 @@
       "body": "3",
       "best": false,
       "createdAt": 1721806270841,
-      "id": "3",
+      "id": 3,
       "like": false
     },
     {
@@ -29,7 +29,7 @@
       "body": "4",
       "best": false,
       "createdAt": 1721806273640,
-      "id": "4",
+      "id": 4,
       "like": false
     },
     {
@@ -37,7 +37,7 @@
       "body": "5",
       "best": true,
       "createdAt": 1721806276972,
-      "id": "5",
+      "id": 5,
       "like": false
     },
     {
@@ -45,7 +45,7 @@
       "body": "6",
       "best": true,
       "createdAt": 1721806497929,
-      "id": "6",
+      "id": 6,
       "like": false
     },
     {
@@ -53,7 +53,7 @@
       "body": "7",
       "best": true,
       "createdAt": 1721806502775,
-      "id": "7",
+      "id": 7,
       "like": false
     },
     {
@@ -61,7 +61,7 @@
       "body": "8",
       "best": false,
       "createdAt": 1721806506576,
-      "id": "8",
+      "id": 8,
       "like": false
     },
     {
@@ -69,20 +69,20 @@
       "body": "9",
       "best": false,
       "createdAt": 1721806510029,
-      "id": "9",
+      "id": 9,
       "like": false
     },
     {
       "title": "10(best)!",
       "body": "10!",
-      "id": "10"
+      "id": 10
     },
     {
       "title": "11",
       "body": "11",
       "best": false,
       "createdAt": 1721806523464,
-      "id": "11",
+      "id": 11,
       "like": false
     },
     {
@@ -90,7 +90,7 @@
       "body": "12",
       "best": false,
       "createdAt": 1721806700126,
-      "id": "12",
+      "id": 12,
       "like": false
     },
     {
@@ -98,21 +98,21 @@
       "body": "13",
       "best": false,
       "createdAt": 1721806704228,
-      "id": "13",
+      "id": 13,
       "like": false
     },
     {
       "title": "14(best)",
       "body": "14",
       "createdAt": 1722388883685,
-      "id": "14"
+      "id": 14
     },
     {
       "title": "15",
       "body": "15",
       "best": false,
       "createdAt": 1721843769276,
-      "id": "15",
+      "id": 15,
       "like": false
     },
     {
@@ -120,7 +120,7 @@
       "body": "16",
       "best": true,
       "createdAt": 1721907313888,
-      "id": "16",
+      "id": 16,
       "like": false
     },
     {
@@ -128,7 +128,7 @@
       "body": "17",
       "best": true,
       "createdAt": 1721907313888,
-      "id": "17",
+      "id": 17,
       "like": false
     }
   ]
