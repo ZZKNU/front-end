@@ -13,6 +13,7 @@ import ShowPage from "./page/ShowPage";
 import EditPage from "./page/EditPage";
 import MessagePage from "./page/MessagePage";
 import AdminPage from "./page/AdminPage";
+import MessageDetailPage from "./page/MessageDetailPage";
 
 function App() {
   // 사이드바 상태 관리
@@ -40,6 +41,7 @@ function App() {
             <Route path="/list/:id" element={<ShowPage />} />
             <Route path="/list/:id/edit" element={<EditPage />} />
             <Route path="/messagelist" element={<MessagePage />} />
+            <Route path="/message/:id" element={<MessageDetailPage />} />
             <Route path="/admin" element={<AdminPage />} />
           </Routes>
         </div>
