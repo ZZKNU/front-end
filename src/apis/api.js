@@ -310,11 +310,11 @@ export const getFollowerList = async (page = 0, size = 20) => {
 
 /**
  * 친구 목록에서 특정 친구 삭제
- * @param {number} user_id
+ * @param {number} id
  * @returns
  */
-export const deleteFriends = async (user_id) => {
-  const response = await axiosInstance.delete(`/friends/${user_id}`);
+export const deleteFriends = async (id) => {
+  const response = await axiosInstance.delete(`/friends/${id}`);
   return response.data;
 };
 
@@ -356,7 +356,7 @@ export const getPostMessage = async () => {
  * @returns
  */
 export const getSpecificMessage = async (message_id) => {
-  const response = await axiosInstance.get(`/${message_id}`);
+  const response = await axiosInstance.get(`/messages/${message_id}`);
   return response.data;
 };
 
@@ -366,6 +366,6 @@ export const getSpecificMessage = async (message_id) => {
  * @returns
  */
 export const deleteMessage = async (message_id) => {
-  const response = await axiosInstance.delete(`/${message_id}`);
+  const response = await axiosInstance.delete(`/messages/${message_id}`);
   return response.data;
 };

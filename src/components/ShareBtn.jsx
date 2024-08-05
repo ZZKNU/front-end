@@ -18,7 +18,6 @@ const ShareBtn = ({ id, title }) => {
   };
 
   const handleSendMessage = async (messageData) => {
-    // Function to handle sending a message, e.g., sending via an API
     await postMessage(selectedFriend.id, id, title);
     console.log("Sending message to:", selectedFriend, "Message:", messageData);
     setIsMessageModalOpen(false);
@@ -38,7 +37,10 @@ const ShareBtn = ({ id, title }) => {
         <div className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-xl z-10">
           <div className="p-4">
             <h3 className="text-lg font-semibold mb-2">공유</h3>
-            <FriendList onFriendSelect={handleFriendSelect} />
+            <FriendList
+              onFriendSelect={handleFriendSelect}
+              showUnfollowButton={false}
+            />
           </div>
           <div className="border-t px-4 py-2">
             <button

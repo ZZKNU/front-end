@@ -13,7 +13,7 @@ import { deleteUser, getUserInfo, updateUserInfo } from "../apis/api";
 import { useAuthStore } from "../store";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import AdminPage from "./AdminPage";
-
+import FriendList from "../components/FriendList";
 const MenuItem = ({ icon, text, onClick }) => (
   <div
     className="flex items-center p-4 hover:bg-gray-100 cursor-pointer"
@@ -30,6 +30,7 @@ const MyPage = () => {
   const { clearAuth } = useAuthStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newNickname, setNewNickname] = useState("");
+  const [isFriendsModalOpen, setIsFriendsModalOpen] = useState(false);
 
   const {
     data: userInfo,
@@ -52,7 +53,6 @@ const MyPage = () => {
     },
     onError: (error) => {
       console.error("Failed to update nickname:", error);
-      // You can set a state here to show an error message in the UI
     },
   });
 
@@ -64,12 +64,15 @@ const MyPage = () => {
     },
     onError: (error) => {
       console.error("Failed to delete user:", error);
-      // You can set a state here to show an error message in the UI
     },
   });
 
   const handleMenuClick = (item) => {
-    console.log(`Clicked on ${item}`);
+    if (item === "친구") {
+      setIsFriendsModalOpen(true);
+    } else {
+      console.log(`Clicked on ${item}`);
+    }
   };
 
   const handleOpenModal = () => {
@@ -91,7 +94,7 @@ const MyPage = () => {
   };
 
   const handleDeleteUser = () => {
-    const userConfirmed = window.confirm("회원 탈퇴를 하시겠습니깡?");
+    const userConfirmed = window.confirm("회원 탈퇴를 하시겠습니까?");
     if (userConfirmed) {
       deleteUserMutation.mutate();
     } else {
@@ -157,7 +160,7 @@ const MyPage = () => {
           />
           <MenuItem
             icon={<FaComments className="text-gray-600" />}
-            text="쪽지함"
+            text="메시지함"
             onClick={() => navigate("/messagelist")}
           />
           <MenuItem
@@ -202,6 +205,13 @@ const MyPage = () => {
             {updateNicknameMutation.error.message}
           </p>
         )}
+      </Modal>
+      <Modal
+        isOpen={isFriendsModalOpen}
+        onClose={() => setIsFriendsModalOpen(false)}
+        title="친구 목록"
+      >
+        <FriendList showUnfollowButton={true} />
       </Modal>
     </div>
   );
