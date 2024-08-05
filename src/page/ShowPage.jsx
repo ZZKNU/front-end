@@ -3,6 +3,7 @@ import { useParams } from "react-router";
 import LoadingSpinner from "../components/LoadingSpinner";
 import { Link, useNavigate } from "react-router-dom";
 import { getBestQuoteDetail } from "../apis/api";
+import LikeButton from "../components/LikeBtn";
 
 const ShowPage = () => {
   const navigate = useNavigate();
@@ -27,10 +28,6 @@ const ShowPage = () => {
     getPost(id);
   }, [id]);
 
-  const printDate = (timestamp) => {
-    return new Date(timestamp).toLocaleString();
-  };
-
   if (loading) {
     return <LoadingSpinner />;
   }
@@ -50,9 +47,10 @@ const ShowPage = () => {
       글쓴이 : <small className="text-muted">{post.author}</small>
       <hr />
       <p>{post.content}</p>
-      <div className="mt-4">
+      <div className="mt-4 d-flex align-items-center">
+        <LikeButton challenge_id={id} /> {/* Add LikeButton here */}
         <button
-          className="btn btn-secondary"
+          className="btn btn-secondary ml-3"
           onClick={() => {
             navigate(-1);
           }}

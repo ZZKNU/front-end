@@ -117,11 +117,11 @@ export const getBestQuoteList = async () => {
 
 /**
  * 베스트 도전 좋아요 요청
- * @param {number} challenge_id
+ * @param {number} id
  * @returns
  */
-export const likeBestQuote = async (challenge_id) => {
-  const response = await axiosInstance.put(`/challenges/${challenge_id}`);
+export const likeBestQuote = async (id) => {
+  const response = await axiosInstance.put(`/challenges/${id}`);
   return response.data;
 };
 
