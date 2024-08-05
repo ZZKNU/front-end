@@ -126,7 +126,7 @@ const MyPage = () => {
     );
   }
 
-  return userInfo.nickname === "admin" ? (
+  return userInfo.nickname === "dummyAdmin" ? (
     <AdminPage />
   ) : (
     <div className="container mx-auto px-4 py-8">
