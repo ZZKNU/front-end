@@ -1,15 +1,25 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { likeBestQuote } from "../apis/api";
+import { useParams } from "react-router-dom";
 
 const LikeButton = () => {
   const [liked, setLiked] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
+  const { id } = useParams();
 
-  const toggleLike = () => {
+  const toggleLike = async () => {
     setLiked(!liked);
     if (!liked) {
       setIsAnimating(true);
+      try {
+        await likeBestQuote(id);
+        console.log(id);
+      } catch (e) {
+        console.error(e);
+        setLiked(false);
+      }
     }
   };
 
