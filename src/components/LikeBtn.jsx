@@ -1,21 +1,22 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
-import { likeBestQuote } from "../apis/api";
+import { likeBestQuote, likeNormalQuote } from "../apis/api";
 import { useParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
-const LikeButton = () => {
+
+const LikeButton = ({ isLiked }) => {
   const [liked, setLiked] = useState(false);
   const queryClient = useQueryClient();
   const [isAnimating, setIsAnimating] = useState(false);
   const { id } = useParams();
 
   const toggleLike = async () => {
-    setLiked(!liked);
+    setLiked(!isLiked);
     if (!liked) {
       setIsAnimating(true);
       try {
-        await likeBestQuote(id);
+        await likeNormalQuote(id);
         queryClient.invalidateQueries(["quotes"]);
         console.log(id);
       } catch (e) {

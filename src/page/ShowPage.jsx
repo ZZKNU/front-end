@@ -90,8 +90,7 @@ const ShowPage = () => {
       <hr />
       <p>{post.content}</p>
       <div className="mt-4 d-flex align-items-center">
-        <LikeButton challenge_id={id} />
-
+        <LikeButton isLiked={post.isLiked} challenge_id={id} />
         <button
           className="btn btn-secondary ml-3"
           onClick={() => {
