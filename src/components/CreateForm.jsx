@@ -2,12 +2,14 @@ import { useState, useEffect } from "react";
 import { FaPen } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
 
-const CreateForm = ({ onSubmit, editing = false }) => {
+const CreateForm = ({ onSubmit, editing = false, userInfo }) => {
   const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     title: "",
     content: "",
     quoteType: "NONE",
+    author: "",
   });
   const { id } = useParams();
 
@@ -15,8 +17,13 @@ const CreateForm = ({ onSubmit, editing = false }) => {
     if (editing && id) {
       console.log(`Fetching data for post with id: ${id}`);
       // TODO: Fetch existing post data and update formData
+    } else if (userInfo) {
+      setFormData((prevData) => ({
+        ...prevData,
+        author: userInfo.nickname,
+      }));
     }
-  }, [editing, id]);
+  }, [editing, id, userInfo]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -94,6 +101,7 @@ const CreateForm = ({ onSubmit, editing = false }) => {
             rows="6"
             required
           />
+          <input type="hidden" name="author" value={formData.author} />
         </div>
         <div className="flex justify-end space-x-4">
           <button
