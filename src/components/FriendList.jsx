@@ -37,7 +37,11 @@ const FriendList = ({ onFriendSelect }) => {
       ) : (
         <ul>
           {friends.map((friend) => (
-            <li key={friend.id} onClick={() => onFriendSelect(friend)}>
+            <li
+              key={friend.id}
+              onClick={() => onFriendSelect(friend)}
+              className="cursor-pointer"
+            >
               {friend.nickName}
             </li>
           ))}

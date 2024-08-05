@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getFollowList } from "../apis/api";
 
-// eslint-disable-next-line react/prop-types
 const MessageForm = ({ onSendMessage, onClose, initialRecipient, userId }) => {
   const [recipient, setRecipient] = useState(initialRecipient || "");
   const queryClient = useQueryClient();
@@ -14,12 +13,13 @@ const MessageForm = ({ onSendMessage, onClose, initialRecipient, userId }) => {
 
   const { data, status, error } = useQuery({
     queryKey: ["friends", userId, page],
-    queryFn: () => getFollowList(userId, page),
+    queryFn: () => getFollowList(),
     keepPreviousData: true,
   });
 
   useEffect(() => {
-    if (data) {
+    setAllFriends(data);
+    if (data && data.content) {
       // 새로운 친구 데이터를 기존 리스트에 추가
       setAllFriends((prevFriends) => {
         const newFriends = data.content.filter(
@@ -28,14 +28,9 @@ const MessageForm = ({ onSendMessage, onClose, initialRecipient, userId }) => {
         );
         return [...prevFriends, ...newFriends];
       });
-      queryClient.invalidateQueries(["friends"]);
+
       // 총 페이지 수를 로컬 스토리지에 저장
       localStorage.setItem("totalFriendsPages", data.totalPages);
-
-      // 마지막 페이지에 도달했는지 확인
-      if (data.last) {
-        console.log("모든 친구 데이터를 불러왔습니다.");
-      }
 
       // 데이터 로딩이 완료되면 선택된 수신자가 없을 경우 첫 번째 친구를 기본값으로 설정
       if (!recipient && data.content.length > 0) {
@@ -84,7 +79,7 @@ const MessageForm = ({ onSendMessage, onClose, initialRecipient, userId }) => {
           ) : status === "error" ? (
             <option>오류 발생: {error.message}</option>
           ) : (
-            allFriends.map((friend) => (
+            allFriends?.map((friend) => (
               <option key={friend.id} value={friend.email}>
                 {friend.nickName}
               </option>
@@ -92,7 +87,6 @@ const MessageForm = ({ onSendMessage, onClose, initialRecipient, userId }) => {
           )}
         </select>
       </div>
-      {/* content.body */}
       <div>
         <label
           htmlFor="message"

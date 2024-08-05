@@ -265,9 +265,9 @@ export const searchFriends = async (name, page = 0, size = 20) => {
  * @returns
  */
 export const addFriends = async (friend_id) => {
-  const response = await axiosInstance.post(`/friends/${friend_id}`, {
+  const response = await axiosInstance.post(`/friends/${friend_id}`, null, {
     params: {
-      friend_id,
+      friend_id: friend_id,
     },
   });
   return response.data;
@@ -319,9 +319,13 @@ export const deleteFriends = async (user_id) => {
 
 /**
  * 메세지 전송
+ * @param {number} to_id
  */
-export const postMessage = async () => {
-  const response = await axiosInstance.post("/messages");
+export const postMessage = async (to_id, quote_id, title) => {
+  const response = await axiosInstance.post(`/messages/${to_id}`, {
+    quote_id: quote_id,
+    title: title,
+  });
   return response.data;
 };
 

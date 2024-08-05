@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import styled from "styled-components";
 import { searchFriends } from "../apis/api";
-import SearchResult from "./SearchResult"; // 새로 만들 컴포넌트
+import SearchResult from "./SearchResult"; // 수정된 컴포넌트 이름
 
 const SearchContainer = styled.div`
   display: flex;
@@ -40,7 +40,7 @@ const SearchIcon = styled(FaSearch)`
 
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [searchResult, setSearchResult] = useState(null);
+  const [searchResults, setSearchResults] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleInputChange = (e) => {
@@ -50,7 +50,7 @@ const Search = () => {
   const handleSearch = async () => {
     try {
       const res = await searchFriends(searchTerm);
-      setSearchResult(res[0]);
+      setSearchResults(res);
       setIsModalOpen(true);
       setSearchTerm("");
     } catch (e) {
@@ -79,7 +79,7 @@ const Search = () => {
       <SearchResult
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        searchResult={searchResult}
+        searchResults={searchResults}
       />
     </>
   );
