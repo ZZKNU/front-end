@@ -1,11 +1,51 @@
 import { FaPen } from "react-icons/fa";
 import CreateForm from "../components/CreateForm";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
+import { editBestQuote, getUserInfo } from "../apis/api";
 
 const EditPage = () => {
-  const handleSubmit = (formData) => {
-    // function : POST API작성 //
-    console.log("Form submitted:", formData);
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const queryClient = useQueryClient();
+  const [userInfo, setUserInfo] = useState(null);
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        const info = await getUserInfo();
+        setUserInfo(info);
+      } catch (error) {
+        console.error("Error fetching user info:", error);
+        // TODO: Handle error (e.g., redirect to login page)
+      }
+    };
+    fetchUserInfo();
+  }, []);
+
+  const handleSubmit = async (formData) => {
+    if (!userInfo) {
+      console.error("User not logged in");
+      // TODO: Handle case where user is not logged in
+      return;
+    }
+    try {
+      const result = await editBestQuote(
+        id,
+        formData.title,
+        formData.quoteType,
+        formData.content,
+        userInfo.nickname
+      );
+      console.log("Form submitted:", result);
+      queryClient.invalidateQueries(["quotes"]);
+      //navigate("/bestlist");
+    } catch (error) {
+      console.error("Error submitting post:", error);
+      // TODO: Handle error (e.g., show error message to user)
+    }
   };
 
   return (
@@ -41,7 +81,7 @@ const EditPage = () => {
           transition={{ delay: 0.2, duration: 0.5 }}
           className="bg-white shadow-lg rounded-lg overflow-hidden"
         >
-          <CreateForm onSubmit={handleSubmit} editing={true}/>
+          <CreateForm onSubmit={handleSubmit} editing={true} />
         </motion.div>
         <motion.div
           initial={{ opacity: 0 }}

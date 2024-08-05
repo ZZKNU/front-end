@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { FaPen } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
+import { getQuoteDetail } from "../apis/api";
 
 const CreateForm = ({ onSubmit, editing = false, userInfo }) => {
   const navigate = useNavigate();
@@ -16,6 +17,20 @@ const CreateForm = ({ onSubmit, editing = false, userInfo }) => {
   useEffect(() => {
     if (editing && id) {
       console.log(`Fetching data for post with id: ${id}`);
+      const fetchData = async () => {
+        try {
+          const data = await getQuoteDetail(id); // API 호출
+          setFormData({
+            title: data.title,
+            content: data.content,
+            quoteType: data.quoteType || "NONE", // 기본값 설정
+            author: data.author || userInfo.nickname, // 사용자 정보로 설정
+          });
+        } catch (error) {
+          console.error("Error fetching post data:", error);
+        }
+      };
+      fetchData();
       // TODO: Fetch existing post data and update formData
     } else if (userInfo) {
       setFormData((prevData) => ({
@@ -36,6 +51,7 @@ const CreateForm = ({ onSubmit, editing = false, userInfo }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit(formData);
+    navigate(-1);
   };
 
   return (
