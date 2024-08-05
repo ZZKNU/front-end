@@ -9,12 +9,18 @@ const ShowPage = () => {
   const { id } = useParams();
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const getPost = (id) => {
-    getBestQuoteDetail(id).then((res) => {
-      setPost(res.data);
-      setLoading(false);
-    });
+    getBestQuoteDetail(id)
+      .then((res) => {
+        setPost(res);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
   };
 
   useEffect(() => {
@@ -29,26 +35,24 @@ const ShowPage = () => {
     return <LoadingSpinner />;
   }
 
+  if (error) {
+    return <div className="container mt-5">Error: {error}</div>;
+  }
+
   return (
-    <>
-      <div className="container mt-5">
-        <div className="d-flex">
-          <h1 className="flex-grow-1">{post.title}</h1>
-          <div>
-            <Link className="btn btn-primary" to={`/list/${id}/edit`}>
-              Edit
-            </Link>
-          </div>
-        </div>
-        <small className="text-muted">
-          Created At: {printDate(post.createdAt)}
-        </small>
-        <hr />
-        <p>{post.body}</p>
+    <div className="container mt-5">
+      <div className="d-flex justify-content-between align-items-center">
+        <h1>{post.title}</h1>
+        <Link className="btn btn-primary" to={`/list/${id}/edit`}>
+          Edit
+        </Link>
       </div>
-      <div className="container flex items-center justify-center min-h-screen">
+      글쓴이 : <small className="text-muted">{post.author}</small>
+      <hr />
+      <p>{post.content}</p>
+      <div className="mt-4">
         <button
-          className="btn btn-danger"
+          className="btn btn-secondary"
           onClick={() => {
             navigate(-1);
           }}
@@ -56,7 +60,7 @@ const ShowPage = () => {
           Back
         </button>
       </div>
-    </>
+    </div>
   );
 };
 
