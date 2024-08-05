@@ -2,6 +2,8 @@ import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import styled from "styled-components";
 import { searchFriends } from "../apis/api";
+import SearchResult from "./SearchResult"; // 새로 만들 컴포넌트
+
 const SearchContainer = styled.div`
   display: flex;
   align-items: center;
@@ -38,19 +40,19 @@ const SearchIcon = styled(FaSearch)`
 
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [searchResult, setSearchResult] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleInputChange = (e) => {
     setSearchTerm(e.target.value);
   };
 
-  // event handler : 검색 이벤트 처리//
   const handleSearch = async () => {
     try {
-      // function : 검색 API호출 //
       const res = await searchFriends(searchTerm);
-      console.log(res[0]);
+      setSearchResult(res[0]);
+      setIsModalOpen(true);
       setSearchTerm("");
-      // navigate('/searchPage')
     } catch (e) {
       console.error(e);
     }
@@ -64,15 +66,22 @@ const Search = () => {
   };
 
   return (
-    <SearchContainer>
-      <SearchInput
-        placeholder="Search..."
-        value={searchTerm}
-        onChange={handleInputChange}
-        onKeyPress={handleKeyPress}
+    <>
+      <SearchContainer>
+        <SearchInput
+          placeholder="Search..."
+          value={searchTerm}
+          onChange={handleInputChange}
+          onKeyPress={handleKeyPress}
+        />
+        <SearchIcon onClick={handleSearch} />
+      </SearchContainer>
+      <SearchResult
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        searchResult={searchResult}
       />
-      <SearchIcon onClick={handleSearch} />
-    </SearchContainer>
+    </>
   );
 };
 
