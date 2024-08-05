@@ -48,9 +48,9 @@ const CreateForm = ({ onSubmit, editing = false, userInfo }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSubmit(formData);
+    await onSubmit(formData);
     navigate(-1);
   };
 
