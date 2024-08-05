@@ -110,8 +110,10 @@ export const editBestQuote = async (title, quoteType, content, author) => {
  * 베스트 도전 글 조회
  * @returns
  */
-export const getBestQuoteList = async () => {
-  const response = await axiosInstance.get("/challenges");
+export const getBestQuoteList = async (params) => {
+  const response = await axiosInstance.get("/challenges", {
+    params,
+  });
   return response.data;
 };
 
@@ -161,8 +163,10 @@ export const searchQuote = async (author) => {
  * 모든 일반 글귀 조회
  * @returns
  */
-export const getAllQuoteList = async () => {
-  const response = await axiosInstance.get("/quotes");
+export const getAllQuoteList = async (params) => {
+  const response = await axiosInstance.get("/quotes", {
+    params,
+  });
   return response.data;
 };
 
