@@ -15,7 +15,9 @@ const ListForm2 = ({ isBest = false, name }) => {
   const limit = 6;
   const [searchParams, setSearchParams] = useSearchParams();
   const initialPage = parseInt(searchParams.get("page")) || 1;
-  const [searchText, setSearchText] = useState(searchParams.get("search") || ""); // 검색어 초기화
+  const [searchText, setSearchText] = useState(
+    searchParams.get("search") || ""
+  ); // 검색어 초기화
   const [allPosts, setAllPosts] = useState([]); // 모든 게시글 상태 추가
 
   const { currentPage, numberOfPages, setCurrentPage, setNumberOfPosts } =
@@ -37,7 +39,7 @@ const ListForm2 = ({ isBest = false, name }) => {
     setCurrentPage(initialPage);
   }, [initialPage, setCurrentPage]);
 
-  const filteredPosts = allPosts.filter(post =>
+  const filteredPosts = allPosts.filter((post) =>
     post.title.toLowerCase().includes(searchText.toLowerCase())
   );
 
@@ -85,7 +87,13 @@ const ListForm2 = ({ isBest = false, name }) => {
         <div>No posts found</div>
       ) : (
         <>
-          <RenderList posts={filteredPosts.slice((currentPage - 1) * limit, currentPage * limit)} onClick={handlePostClick} />
+          <RenderList
+            posts={filteredPosts.slice(
+              (currentPage - 1) * limit,
+              currentPage * limit
+            )}
+            onClick={handlePostClick}
+          />
           {numberOfFilteredPages > 1 && (
             <Pagination
               currentPage={currentPage}

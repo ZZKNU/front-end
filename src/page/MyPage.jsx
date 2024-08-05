@@ -146,11 +146,6 @@ const MyPage = () => {
                 생년월일: {userInfo.birthdate}
               </p>
             </div>
-            <img
-              src="/api/placeholder/150/150"
-              alt="프로필 이미지"
-              className="w-20 h-20 rounded-full border-4 border-white"
-            />
           </div>
         </div>
 

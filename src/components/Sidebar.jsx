@@ -1,10 +1,10 @@
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import Search from "./Search";
 import FortuneModal from "./FortuneModal";
 import MessageModal from "./MessageForm";
-import { useState } from "react";
 import { useAuthStore } from "../store";
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
@@ -23,20 +23,20 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             animate={{ x: 0 }}
             exit={{ x: "-100%" }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="fixed top-0 left-0 h-full bg-indigo-300 w-64 z-40 flex flex-col p-4"
+            className="fixed top-0 left-0 h-full bg-gradient-to-b from-amber-100 to-amber-200 w-64 z-40 flex flex-col p-4 shadow-lg"
           >
             <div className="flex justify-between items-center mb-8">
               <Link
                 to="/"
-                className="text-2xl font-bold tracking-wider no-underline text-white"
+                className="text-2xl font-bold tracking-wider no-underline text-amber-800"
               >
                 Quote
               </Link>
               <button
                 onClick={toggleSidebar}
-                className="text-white hover:text-indigo-200"
+                className="text-amber-700 hover:text-amber-900 transition-colors duration-300"
               >
-                <FaTimes />
+                <FaTimes size={24} />
               </button>
             </div>
             <div className="flex flex-col gap-4">
@@ -63,7 +63,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                   </NavLink>
                   <button
                     onClick={toggleFortuneModal}
-                    className="text-white hover:text-indigo-200"
+                    className="text-amber-700 hover:text-amber-900 transition-colors duration-300 text-left"
                   >
                     운세 보기
                   </button>
@@ -80,9 +80,9 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
       {!isOpen && (
         <button
           onClick={toggleSidebar}
-          className="fixed top-4 left-4 z-50 text-white bg-indigo-500 p-2 rounded-md"
+          className="fixed top-4 left-4 z-50 text-amber-800 bg-amber-100 p-2 rounded-full shadow-md hover:bg-amber-200 transition-colors duration-300"
         >
-          <FaBars />
+          <FaBars size={24} />
         </button>
       )}
       <MessageModal
@@ -102,10 +102,10 @@ const NavLink = ({ to, children, onClick }) => (
   <Link
     to={to}
     onClick={onClick}
-    className="no-underline text-base relative text-white transition-all duration-300 ease-in-out hover:text-indigo-200 group"
+    className="no-underline text-base relative text-amber-700 transition-all duration-300 ease-in-out hover:text-amber-900 group"
   >
     {children}
-    <span className="absolute w-0 h-0.5 bg-indigo-200 bottom-[-5px] left-0 transition-all duration-300 ease-in-out group-hover:w-full"></span>
+    <span className="absolute w-0 h-0.5 bg-amber-500 bottom-[-5px] left-0 transition-all duration-300 ease-in-out group-hover:w-full"></span>
   </Link>
 );
 
