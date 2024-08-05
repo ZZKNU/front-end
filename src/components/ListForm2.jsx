@@ -5,7 +5,7 @@ import RenderList from "./RenderList";
 import Pagination from "./Pagination";
 import { usePagination } from "../hooks/usePagination";
 import { Link, useSearchParams } from "react-router-dom";
-import { getAllQuoteList } from "../apis/api";
+import { getBestQuoteList } from "../apis/api";
 
 // eslint-disable-next-line react/prop-types
 const ListForm2 = ({ isBest = false, name }) => {
@@ -22,7 +22,7 @@ const ListForm2 = ({ isBest = false, name }) => {
     error,
   } = useQuery({
     queryKey: ["quotes", currentPage, limit, isBest],
-    queryFn: () => getAllQuoteList({ page: currentPage, limit, isBest }),
+    queryFn: () => getBestQuoteList({ page: currentPage, limit, isBest }),
     keepPreviousData: true,
     staleTime: 60000, // 1분
     gcTime: 300000, // 5분 (cacheTime이 gcTime으로 변경됨)
@@ -48,8 +48,6 @@ const ListForm2 = ({ isBest = false, name }) => {
     setSearchParams({ page: page.toString() });
   };
 
-  const quotes = posts?.quotes || [];
-
   return (
     <>
       <div className="flex items-center justify-center mt-4">
@@ -69,11 +67,11 @@ const ListForm2 = ({ isBest = false, name }) => {
       <div className="container mt-4">
         <h1 className="container d-flex justify-content-between">{name}</h1>
         <hr />
-        {quotes.length === 0 ? (
+        {posts.length === 0 ? (
           <div>No posts found</div>
         ) : (
           <>
-            <RenderList posts={quotes} />
+            <RenderList posts={posts} />
             {numberOfPages > 1 && (
               <Pagination
                 currentPage={currentPage}
