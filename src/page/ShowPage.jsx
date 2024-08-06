@@ -41,12 +41,10 @@ const ShowPage = () => {
       alert("로그인이 필요합니다.");
       return;
     }
-
-    if (post.nickname !== user?.nickname) {
+    if (user.authority !== "ADMIN" && post.nickname !== user.nickname) {
       alert("자신이 작성한 글만 삭제할 수 있습니다.");
       return;
     }
-
     if (window.confirm("정말로 이 글을 삭제하시겠습니까?")) {
       try {
         await deleteQuote(id);
@@ -86,7 +84,7 @@ const ShowPage = () => {
         <div className="p-6">
           <div className="flex justify-between items-center mb-4">
             <h1 className="text-3xl font-bold text-gray-800">{post.title}</h1>
-            {post.nickname === user?.nickname ? (
+            {user.authority === "ADMIN" || post.nickname === user?.nickname ? (
               <div className="space-x-2">
                 <Link
                   to={`/list/${id}/edit`}
