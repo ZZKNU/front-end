@@ -34,6 +34,7 @@ const FriendList = ({ onFriendSelect, showUnfollowButton = false }) => {
       setIsLoading(true);
       try {
         await deleteFriends(friendId);
+        setFollow((prevList) => prevList.filter(friend => friend.id !== friendId));
       } catch (err) {
         setError("언팔로우에 실패했습니다. 다시 시도해 주세요.");
         console.error("Error unfollowing user:", err);
@@ -82,7 +83,7 @@ const FriendList = ({ onFriendSelect, showUnfollowButton = false }) => {
           }`}
           onClick={() => setActiveTab("follow")}
         >
-          팔로우
+          팔로잉
         </button>
         <button
           className={`flex-1 py-2 ${
@@ -96,9 +97,9 @@ const FriendList = ({ onFriendSelect, showUnfollowButton = false }) => {
 
       {activeTab === "follow" ? (
         <div>
-          <h3 className="font-bold mb-2">팔로우</h3>
+          <h3 className="font-bold mb-2">팔로잉</h3>
           {follow.length === 0 ? (
-            <p>팔로우 목록이 비어 있습니다.</p>
+            <p>팔로잉 목록이 비어 있습니다.</p>
           ) : (
             renderFriendList(follow, true)
           )}

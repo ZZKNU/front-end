@@ -40,7 +40,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
               </button>
             </div>
             <div className="flex flex-col gap-4">
-              <Search />
+              {accessToken ? <Search /> : <></>}
               <NavLink to="/" onClick={toggleSidebar}>
                 홈
               </NavLink>
