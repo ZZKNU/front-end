@@ -38,14 +38,6 @@ const MessageDetailPage = () => {
     }
   };
 
-  const handleReply = () => {
-    navigate("/new-message", {
-      state: {
-        recipient: message.sender_nickName,
-      },
-    });
-  };
-
   if (loading) return <div className="p-4 text-center">로딩 중...</div>;
   if (error) return <div className="p-4 text-center text-red-500">{error}</div>;
   if (!message)
@@ -62,10 +54,6 @@ const MessageDetailPage = () => {
           <h1 className="text-xl font-semibold">메시지 상세</h1>
         </div>
         <div className="flex items-center">
-          <FiMail
-            className="h-6 w-6 mr-4 cursor-pointer text-blue-500"
-            onClick={handleReply}
-          />
           <FiTrash2
             className="h-6 w-6 cursor-pointer text-red-500"
             onClick={handleDelete}
