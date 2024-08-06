@@ -1,11 +1,5 @@
 import { useState } from "react";
-import {
-  FaListUl,
-  FaHeart,
-  FaUserFriends,
-  FaCog,
-  FaPencilAlt,
-} from "react-icons/fa";
+import { FaHeart, FaUserFriends, FaCog, FaPencilAlt } from "react-icons/fa";
 import { FaComments } from "react-icons/fa6";
 import Modal from "../components/Modal";
 import { useNavigate } from "react-router-dom";
@@ -29,7 +23,6 @@ const MenuItem = ({ icon, text, onClick }) => (
   </div>
 );
 
-
 const LikeListModal = ({ isOpen, onClose, likeList = [] }) => {
   const navi = useNavigate();
 
@@ -43,7 +36,9 @@ const LikeListModal = ({ isOpen, onClose, likeList = [] }) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
       <div className="bg-white rounded-lg p-6 shadow-lg max-w-md w-full max-h-[80%] overflow-auto">
-        <h2 className="text-xl font-bold mb-4 text-center">내가 좋아하는 글들</h2>
+        <h2 className="text-xl font-bold mb-4 text-center">
+          내가 좋아하는 글들
+        </h2>
         <ul className="container flex flex-col items-center space-y-3">
           {likeList.map((item) => (
             <li
@@ -53,7 +48,9 @@ const LikeListModal = ({ isOpen, onClose, likeList = [] }) => {
             >
               <h3 className="font-semibold text-lg">{item.title}</h3>
               <p className="text-gray-700">{item.content}</p>
-              <span className="text-sm text-gray-500">작성자: {item.author}</span>
+              <span className="text-sm text-gray-500">
+                작성자: {item.author}
+              </span>
             </li>
           ))}
         </ul>
@@ -67,7 +64,6 @@ const LikeListModal = ({ isOpen, onClose, likeList = [] }) => {
     </div>
   );
 };
-
 
 const MyPage = () => {
   const navigate = useNavigate();
@@ -124,7 +120,7 @@ const MyPage = () => {
   const handleLikeList = async () => {
     try {
       const res = await getUserLike();
-      console.log(res)
+      console.log(res);
       setLikeList(res);
       setModalOpen(true);
     } catch (err) {
@@ -170,7 +166,7 @@ const MyPage = () => {
     );
   }
 
-  return userInfo.nickname === "dummyAdmin" ? (
+  return userInfo.authority === "ADMIN" ? (
     <AdminPage />
   ) : (
     <div className="container mx-auto px-4 py-8">

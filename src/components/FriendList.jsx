@@ -33,14 +33,7 @@ const FriendList = ({ onFriendSelect, showUnfollowButton = false }) => {
     if (window.confirm("정말로 이 사용자를 언팔로우하시겠습니까?")) {
       setIsLoading(true);
       try {
-        const response = await deleteFriends(friendId);
-        console.log(friendId);
-        if (response.status === 200) {
-          // 성공적으로 언팔로우되었을 때
-          await fetchFriends(); // 친구 목록 재조회
-        } else {
-          throw new Error("Unfollow operation failed");
-        }
+        await deleteFriends(friendId);
       } catch (err) {
         setError("언팔로우에 실패했습니다. 다시 시도해 주세요.");
         console.error("Error unfollowing user:", err);
@@ -60,12 +53,7 @@ const FriendList = ({ onFriendSelect, showUnfollowButton = false }) => {
           key={friend.id}
           className="flex justify-between items-center p-2 bg-gray-100 rounded"
         >
-          <span
-            onClick={() => onFriendSelect(friend)}
-            className="cursor-pointer hover:text-blue-500"
-          >
-            {friend.nickName}
-          </span>
+          <span>{friend.nickName}</span>
           {showUnfollowButton && isFollowList && (
             <button
               onClick={() => handleUnfollow(friend.id)}
