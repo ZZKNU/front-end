@@ -42,7 +42,7 @@ const ShowPage = () => {
       return;
     }
 
-    if (post.author !== user?.nickname) {
+    if (post.nickname !== user?.nickname) {
       alert("자신이 작성한 글만 삭제할 수 있습니다.");
       return;
     }
