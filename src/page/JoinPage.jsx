@@ -17,7 +17,7 @@ const JoinPage = () => {
             transition={{ delay: 0.2, duration: 0.5 }}
             className="text-5xl font-bold text-amber-900 mb-6"
           >
-            수정해야합니두
+            Wellness를 위한 첫 걸음
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, x: -20 }}
@@ -25,7 +25,7 @@ const JoinPage = () => {
             transition={{ delay: 0.3, duration: 0.5 }}
             className="text-amber-900 text-xl"
           >
-            수정해야합니두
+            "지금 가입하고 더 나은 삶을 만들어보세요."
           </motion.p>
         </div>
         <div className="w-full lg:w-1/2 p-12">
