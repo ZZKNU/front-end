@@ -62,7 +62,7 @@ const EditPage = () => {
             transition={{ duration: 0.3 }}
             className="text-4xl font-bold text-gray-800 flex items-center justify-center"
           >
-            <FaPen className="mr-3 text-indigo-600" size={32} />
+            <FaPen className="mr-3 text-amber-600" size={32} />
             <span>더 좋은 생각이 떠올랐나요?</span>
           </motion.h1>
           <motion.p

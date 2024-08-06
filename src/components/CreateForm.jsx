@@ -56,7 +56,7 @@ const CreateForm = ({ onSubmit, editing = false, userInfo }) => {
 
   return (
     <div>
-      <div className="bg-indigo-600 p-6">
+      <div className="bg-amber-600 p-6">
         <h2 className="text-2xl font-bold text-white flex items-center">
           <FaPen className="mr-2" size={24} />
           {editing ? "글 수정하기" : "새 글 작성"}
@@ -76,7 +76,7 @@ const CreateForm = ({ onSubmit, editing = false, userInfo }) => {
             type="text"
             value={formData.title}
             onChange={handleChange}
-            className="w-full px-4 py-2 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-300"
+            className="w-full px-4 py-2 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition duration-300"
             placeholder="제목을 입력해주세요"
             required
           />
@@ -93,7 +93,7 @@ const CreateForm = ({ onSubmit, editing = false, userInfo }) => {
             name="quoteType"
             value={formData.quoteType}
             onChange={handleChange}
-            className="w-full px-4 py-2 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-300"
+            className="w-full px-4 py-2 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition duration-300"
           >
             <option value="NONE">선택안함</option>
             <option value="BOOK">도서</option>
@@ -112,9 +112,9 @@ const CreateForm = ({ onSubmit, editing = false, userInfo }) => {
             name="content"
             value={formData.content}
             onChange={handleChange}
-            className="w-full px-4 py-2 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-300 resize-none"
+            className="w-full px-4 py-2 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition duration-300 resize-none"
             placeholder="내용을 입력해주세요"
-            rows="6"
+            rows="4"
             required
           />
           <input type="hidden" name="author" value={formData.author} />
@@ -129,7 +129,7 @@ const CreateForm = ({ onSubmit, editing = false, userInfo }) => {
           </button>
           <button
             type="submit"
-            className="px-6 py-2 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 transition duration-300"
+            className="px-6 py-2 bg-amber-600 text-white font-medium rounded-lg hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-opacity-50 transition duration-300"
           >
             {editing ? "수정하기" : "글 발행"}
           </button>

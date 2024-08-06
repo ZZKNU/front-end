@@ -58,7 +58,7 @@ const CreatePage = () => {
             transition={{ duration: 0.3 }}
             className="text-4xl font-bold text-gray-800 flex items-center justify-center"
           >
-            <FaPen className="mr-3 text-indigo-600" size={32} />
+            <FaPen className="mr-3 text-amber-600" size={32} />
             <span>새로운 이야기 시작하기</span>
           </motion.h1>
           <motion.p
