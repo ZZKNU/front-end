@@ -126,7 +126,7 @@ const SignupForm = () => {
             <button
               type="button"
               onClick={handleNicknameCheck}
-              className="mt-1 px-1 py-0 bg-amber-700 text-black rounded-md shadow-sm hover:bg-amber-700/70  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="mt-1 px-3 py-1 bg-amber-600 text-white rounded-md shadow-sm hover:bg-amber-500 transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 whitespace-nowrap"
             >
               중복 확인
             </button>
@@ -157,7 +157,7 @@ const SignupForm = () => {
             <button
               type="button"
               onClick={handleEmailCheck}
-              className="mt-1 px-1 py-0 bg-amber-700 text-black rounded-md shadow-sm hover:bg-amber-700/70 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="mt-1 px-3 py-1 bg-amber-600 text-white rounded-md shadow-sm hover:bg-amber-500 transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 whitespace-nowrap"
             >
               중복 확인
             </button>
