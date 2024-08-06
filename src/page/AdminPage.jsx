@@ -37,6 +37,9 @@ const AdminPage = () => {
     try {
       await promoteQuote(id, auth);
       console.log(`Quote ${id} promoted successfully`);
+      setPromotablePosts((prevPosts) =>
+        prevPosts.filter((post) => post.id !== id)
+      );
     } catch (error) {
       console.error(`Failed to promote quote ${id}`, error);
     }
@@ -180,110 +183,117 @@ const AdminPage = () => {
       </div>
 
       <div className="bg-white rounded-lg shadow overflow-hidden mb-6">
-        <h2 className="text-2xl font-bold mb-4">승격 가능한 글 목록</h2>
-        <table className="min-w-full">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                ID
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                제목
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                유형
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                내용
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                작가
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                인증됨
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                좋아요
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                작업
-              </th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {promotablePosts.map((post) => (
-              <tr key={post.id}>
-                <td className="px-6 py-4 whitespace-nowrap">{post.id}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{post.title}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{post.type}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{post.content}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{post.author}</td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {post.certified ? "Yes" : "No"}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">{post.liked}</td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <button
-                    onClick={() => handlePromoteQuote(post.id)}
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
-                  >
-                    승격
-                  </button>
-                </td>
+        <h2 className="text-2xl font-bold mt-2 ml-2">✅ 승격 가능한 글 목록</h2>
+        <div className="overflow-x-auto">
+          <table className="min-w-full">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  ID
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  제목
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  유형
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  내용
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  글쓴이
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  인증됨
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  좋아요
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  작업
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {promotablePosts.map((post) => (
+                <tr key={post.id}>
+                  <td className="px-6 py-4 whitespace-nowrap">{post.id}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{post.title}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{post.type}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {post.content}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">{post.author}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {post.certified ? "Yes" : "No"}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">{post.liked}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <button
+                      onClick={async () => handlePromoteQuote(post.id)}
+                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
+                    >
+                      승격
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <div className="bg-white rounded-lg shadow overflow-hidden">
-        <h2 className="text-2xl font-bold mb-4">사용자 목록</h2>
-        <table className="min-w-full">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                ID
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                이메일
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                닉네임
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                생년월일
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                권한
-              </th>
-              {/* <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+        <h2 className="text-2xl font-bold mt-2 ml-2">✅ 사용자 목록</h2>
+        <div className="overflow-x-auto">
+          <table className="min-w-full">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  ID
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  이메일
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  닉네임
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  생년월일
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  권한
+                </th>
+                {/* <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 작업
               </th> */}
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {users.map((user) => (
-              <tr key={user.id}>
-                <td className="px-6 py-4 whitespace-nowrap">{user.id}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{user.email}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{user.nickname}</td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {user.birthdate}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <select
-                    value={user.authority}
-                    onChange={(e) =>
-                      handleAuthorityChange(user.id, e.target.value)
-                    }
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                  >
-                    <option value="USER">USER</option>
-                    <option value="AUTHOR">AUTHOR</option>
-                    <option value="ADMIN">ADMIN</option>
-                  </select>
-                </td>
-                {/* <td className="px-6 py-4 whitespace-nowrap">
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {users.map((user) => (
+                <tr key={user.id}>
+                  <td className="px-6 py-4 whitespace-nowrap">{user.id}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{user.email}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {user.nickname}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {user.birthdate}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <select
+                      value={user.authority}
+                      onChange={(e) =>
+                        handleAuthorityChange(user.id, e.target.value)
+                      }
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    >
+                      <option value="USER">USER</option>
+                      <option value="AUTHOR">AUTHOR</option>
+                      <option value="ADMIN">ADMIN</option>
+                    </select>
+                  </td>
+                  {/* <td className="px-6 py-4 whitespace-nowrap">
                   {user.authority === "USER" ? (
                     <button
                       onClick={() => handleAuthorityChange(user.id, "AUTHOR")}
@@ -295,10 +305,11 @@ const AdminPage = () => {
                     <p />
                   )}
                 </td> */}
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
