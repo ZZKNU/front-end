@@ -99,12 +99,14 @@ const MessageListPage = () => {
             !message.read ? "text-blue-600" : "text-gray-700"
           }`}
         >
-          {activeTab === "received"
-            ? message.sender_nickName
-            : message.receiver_nickName}
+          {message.message_title}
         </p>
         <div className="flex items-center text-gray-500 text-sm">
-          <p className="mr-1 truncate max-w-[200px]">{message.message_title}</p>
+          <p className="mr-1 truncate max-w-[200px]">
+            {activeTab === "received"
+              ? message.sender_nickName
+              : message.receiver_nickName}
+          </p>
           <p>· {new Date(message.createdAt).toLocaleString()}</p>
         </div>
       </div>

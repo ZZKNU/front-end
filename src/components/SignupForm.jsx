@@ -126,7 +126,7 @@ const SignupForm = () => {
             <button
               type="button"
               onClick={handleNicknameCheck}
-              className="mt-1 px-1 py-0 bg-indigo-600 text-white rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="mt-1 px-1 py-0 bg-amber-700 text-black rounded-md shadow-sm hover:bg-amber-700/70  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               중복 확인
             </button>
@@ -157,7 +157,7 @@ const SignupForm = () => {
             <button
               type="button"
               onClick={handleEmailCheck}
-              className="mt-1 px-1 py-0 bg-indigo-600 text-white rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="mt-1 px-1 py-0 bg-amber-700 text-black rounded-md shadow-sm hover:bg-amber-700/70 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               중복 확인
             </button>
@@ -223,10 +223,10 @@ const SignupForm = () => {
           <button
             type="submit"
             disabled={!isEmailChecked || !isNicknameChecked}
-            className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${
+            className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-black ${
               !isNicknameChecked || !isEmailChecked
                 ? "bg-gray-400 cursor-not-allowed"
-                : "bg-indigo-600 hover:bg-indigo-700"
+                : "bg-amber-600/40 hover:bg-amber-700"
             } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
           >
             {isLoading ? <LoadingSpinner /> : "회원가입"}

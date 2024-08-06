@@ -1,7 +1,6 @@
 import { FaHeart } from "react-icons/fa6";
-import LikeButton from "./LikeBtn";
-import ShareBtn from "./ShareBtn";
 
+// eslint-disable-next-line react/prop-types
 const Card = ({ title, liked, onClick = () => {}, children = null }) => {
   return (
     <div className="card mb-3 cursor-pointer" onClick={onClick}>
