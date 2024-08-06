@@ -19,7 +19,7 @@ const ListForm2 = ({ isBest = false, name }) => {
     searchParams.get("search") || ""
   ); // 검색어 초기화
   const [allPosts, setAllPosts] = useState([]); // 모든 게시글 상태 추가
-
+  const [loading, setLoading] = useState(true);
   const { currentPage, numberOfPages, setCurrentPage, setNumberOfPosts } =
     usePagination(limit);
 
@@ -29,6 +29,7 @@ const ListForm2 = ({ isBest = false, name }) => {
       : await getAllQuoteList({ page: 0, size: limit * 100 }); // 동일하게
     setAllPosts(data); // 모든 게시글 저장
     setNumberOfPosts(data.length); // 총 게시글 수 설정
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -52,7 +53,7 @@ const ListForm2 = ({ isBest = false, name }) => {
     navigate(`/list/${postId}`);
   };
 
-  if (!allPosts.length) return <LoadingSpinner />;
+  if (loading) return <LoadingSpinner />;
 
   const onSearch = (e) => {
     if (e.key === "Enter") {
