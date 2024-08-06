@@ -10,12 +10,12 @@ const JoinPage = () => {
         transition={{ duration: 0.5 }}
         className="w-full max-w-6xl bg-white rounded-3xl shadow-xl overflow-hidden flex"
       >
-        <div className="w-1/2 bg-indigo-600/40 p-12 hidden lg:block">
+        <div className="w-1/2 bg-cream-50 p-12 hidden lg:block">
           <motion.h1
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2, duration: 0.5 }}
-            className="text-5xl font-bold text-white mb-6"
+            className="text-5xl font-bold text-amber-900 mb-6"
           >
             수정해야합니두
           </motion.h1>
@@ -23,7 +23,7 @@ const JoinPage = () => {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.3, duration: 0.5 }}
-            className="text-white text-xl"
+            className="text-amber-900 text-xl"
           >
             수정해야합니두
           </motion.p>
