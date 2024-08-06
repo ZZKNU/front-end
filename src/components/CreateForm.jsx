@@ -11,6 +11,7 @@ const CreateForm = ({ onSubmit, editing = false, userInfo }) => {
     content: "",
     quoteType: "NONE",
     author: "",
+    nickname: "",
   });
   const { id } = useParams();
 
@@ -24,7 +25,8 @@ const CreateForm = ({ onSubmit, editing = false, userInfo }) => {
             title: data.title,
             content: data.content,
             quoteType: data.type || "NONE", // 기본값 설정
-            author: data.author || userInfo.nickname, // 사용자 정보로 설정
+            author: data.author,
+            nickname: data.nickname,
           });
         } catch (error) {
           console.error("Error fetching post data:", error);
@@ -35,7 +37,6 @@ const CreateForm = ({ onSubmit, editing = false, userInfo }) => {
     } else if (userInfo) {
       setFormData((prevData) => ({
         ...prevData,
-        author: userInfo.nickname,
       }));
     }
   }, [editing, id, userInfo]);
@@ -78,6 +79,24 @@ const CreateForm = ({ onSubmit, editing = false, userInfo }) => {
             onChange={handleChange}
             className="w-full px-4 py-2 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition duration-300"
             placeholder="제목을 입력해주세요"
+            required
+          />
+        </div>
+        <div>
+          <label
+            htmlFor="author"
+            className="block text-sm font-medium text-gray-700 mb-2"
+          >
+            작가
+          </label>
+          <input
+            id="author"
+            name="author"
+            type="text"
+            value={formData.author}
+            onChange={handleChange}
+            className="w-full px-4 py-2 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition duration-300"
+            placeholder="작가를 입력해주세요"
             required
           />
         </div>

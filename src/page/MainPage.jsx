@@ -8,6 +8,7 @@ import {
 } from "framer-motion";
 import { Sun, Heart, MessageCircle, ChevronDown } from "lucide-react";
 import { aphorisms } from "../util/Aphorism";
+import { useAuthStore } from "../store";
 
 const AnimatedText = ({ children, className }) => {
   const { scrollYProgress } = useScroll();
@@ -72,6 +73,7 @@ const QuoteBox = ({ quote, author }) => (
 const MainPage = () => {
   const [showQuote, setShowQuote] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const { accessToken } = useAuthStore();
   useEffect(() => {
     setShowQuote(aphorisms[Math.floor(Math.random() * aphorisms.length)]);
   }, []);
@@ -82,38 +84,44 @@ const MainPage = () => {
           <AnimatedText className="text-3xl mb-8 text-amber-900 text-center max-w-2xl">
             매일의 순간을 특별하게 만드는 따뜻한 메시지들
           </AnimatedText>
-          <motion.div
-            className="space-y-4 flex flex-col items-center"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-          >
-            <Link
-              to="/alllist"
-              className="bg-gradient-to-r from-amber-300 to-orange-400 text-white px-8 py-3 rounded-full hover:from-amber-600 hover:to-orange-600 transition text-lg font-semibold shadow-lg"
-            >
-              오늘의 메시지 보기
-            </Link>
-            <motion.button
-              onClick={() => setIsOpen(!isOpen)}
-              className="text-amber-700 flex items-center"
-              whileHover={{ scale: 1.1 }}
-            >
-              {isOpen ? "숨기기" : "오늘의 한마디 보기"}{" "}
-              <ChevronDown
-                className={`ml-1 transform ${isOpen ? "rotate-180" : ""}`}
-              />
-            </motion.button>
-          </motion.div>
-          <AnimatePresence>
-            {isOpen && (
-              <QuoteBox
-                key={showQuote.id}
-                author={showQuote.author}
-                quote={showQuote.quote}
-              />
-            )}
-          </AnimatePresence>
+          {accessToken ? (
+            <>
+              <motion.div
+                className="space-y-4 flex flex-col items-center"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+              >
+                <Link
+                  to="/alllist"
+                  className="bg-gradient-to-r from-amber-300 to-orange-400 text-white px-8 py-3 rounded-full hover:from-amber-600 hover:to-orange-600 transition text-lg font-semibold shadow-lg"
+                >
+                  오늘의 메시지 보기
+                </Link>
+                <motion.button
+                  onClick={() => setIsOpen(!isOpen)}
+                  className="text-amber-700 flex items-center"
+                  whileHover={{ scale: 1.1 }}
+                >
+                  {isOpen ? "숨기기" : "오늘의 한마디 보기"}{" "}
+                  <ChevronDown
+                    className={`ml-1 transform ${isOpen ? "rotate-180" : ""}`}
+                  />
+                </motion.button>
+              </motion.div>
+              <AnimatePresence>
+                {isOpen && (
+                  <QuoteBox
+                    key={showQuote.id}
+                    author={showQuote.author}
+                    quote={showQuote.quote}
+                  />
+                )}
+              </AnimatePresence>
+            </>
+          ) : (
+            <></>
+          )}
         </ContentSection>
 
         <ContentSection title="우리의 특징">
