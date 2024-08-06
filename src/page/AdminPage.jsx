@@ -91,13 +91,13 @@ const AdminPage = () => {
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-6">베스트 도전 관리자 대시보드</h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 mb-6">
         <div className="bg-white p-4 rounded-lg shadow">
           <div className="flex items-center">
             <FiFileText className="text-blue-500 text-3xl mr-2" />
             <div>
               <p className="text-gray-500">총 게시물</p>
-              <p className="text-2xl font-bold">{summary.total}</p>
+              <p className="text-2xl font-bold">{promotablePosts.length}</p>
             </div>
           </div>
         </div>
@@ -105,26 +105,8 @@ const AdminPage = () => {
           <div className="flex items-center">
             <FiCheckCircle className="text-green-500 text-3xl mr-2" />
             <div>
-              <p className="text-gray-500">승인됨</p>
-              <p className="text-2xl font-bold">{summary.accepted}</p>
-            </div>
-          </div>
-        </div>
-        <div className="bg-white p-4 rounded-lg shadow">
-          <div className="flex items-center">
-            <FiXCircle className="text-red-500 text-3xl mr-2" />
-            <div>
-              <p className="text-gray-500">거절됨</p>
-              <p className="text-2xl font-bold">{summary.rejected}</p>
-            </div>
-          </div>
-        </div>
-        <div className="bg-white p-4 rounded-lg shadow">
-          <div className="flex items-center">
-            <FiClock className="text-yellow-500 text-3xl mr-2" />
-            <div>
-              <p className="text-gray-500">대기 중</p>
-              <p className="text-2xl font-bold">{summary.pending}</p>
+              <p className="text-gray-500">사용자 수</p>
+              <p className="text-2xl font-bold">{users.length}</p>
             </div>
           </div>
         </div>
