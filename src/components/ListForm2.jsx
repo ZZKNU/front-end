@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
 import LoadingSpinner from "./LoadingSpinner";
 import RenderList from "./RenderList";
 import Pagination from "./Pagination";
 import { usePagination } from "../hooks/usePagination";
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { getAllQuoteList, getBestQuoteList } from "../apis/api";
-import axiosInstance from "../apis/axiosInstance";
 import { useQueryClient } from "@tanstack/react-query";
 
 const ListForm2 = ({ isBest = false, name }) => {
