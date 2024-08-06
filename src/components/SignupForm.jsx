@@ -121,12 +121,12 @@ const SignupForm = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500"
             />
             <button
               type="button"
               onClick={handleNicknameCheck}
-              className="mt-1 px-3 py-1 bg-amber-600 text-white rounded-md shadow-sm hover:bg-amber-500 transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 whitespace-nowrap"
+              className="mt-1 px-3 py-1 bg-amber-600 text-white rounded-md shadow-sm hover:bg-amber-500 transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 whitespace-nowrap"
             >
               중복 확인
             </button>
@@ -152,12 +152,12 @@ const SignupForm = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500"
             />
             <button
               type="button"
               onClick={handleEmailCheck}
-              className="mt-1 px-3 py-1 bg-amber-600 text-white rounded-md shadow-sm hover:bg-amber-500 transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 whitespace-nowrap"
+              className="mt-1 px-3 py-1 bg-amber-600 text-white rounded-md shadow-sm hover:bg-amber-500 transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 whitespace-nowrap"
             >
               중복 확인
             </button>
@@ -182,7 +182,7 @@ const SignupForm = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500"
           />
         </div>
         <div>
@@ -199,7 +199,7 @@ const SignupForm = () => {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
-            className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500"
           />
         </div>
         <div>
@@ -215,7 +215,7 @@ const SignupForm = () => {
             value={birthDate}
             onChange={(e) => setBirthDate(e.target.value)}
             required
-            className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500"
           />
         </div>
         {errorMessage && <p className="text-red-500 text-sm">{errorMessage}</p>}
@@ -227,7 +227,7 @@ const SignupForm = () => {
               !isNicknameChecked || !isEmailChecked
                 ? "bg-gray-400 cursor-not-allowed"
                 : "bg-amber-600/40 hover:bg-amber-700"
-            } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
+            } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500`}
           >
             {isLoading ? <LoadingSpinner /> : "회원가입"}
           </button>
@@ -237,7 +237,7 @@ const SignupForm = () => {
         이미 계정이 있으신가요?{" "}
         <Link
           to="/login"
-          className="font-medium text-indigo-600 hover:text-indigo-500"
+          className="font-medium text-amber-600 hover:text-amber-500"
         >
           로그인
         </Link>

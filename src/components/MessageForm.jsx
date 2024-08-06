@@ -70,7 +70,7 @@ const MessageForm = ({ onSendMessage, onClose, initialRecipient, userId }) => {
           id="recipient"
           value={recipient}
           onChange={(e) => setRecipient(e.target.value)}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-amber-300 focus:ring focus:ring-amber-200 focus:ring-opacity-50"
           required
         >
           <option value="">친구를 선택하세요</option>
@@ -99,13 +99,13 @@ const MessageForm = ({ onSendMessage, onClose, initialRecipient, userId }) => {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           rows={4}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-amber-300 focus:ring focus:ring-amber-200 focus:ring-opacity-50"
           required
         ></textarea>
       </div>
       <button
         type="submit"
-        className="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        className="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500"
       >
         쪽지 보내기
       </button>
@@ -113,7 +113,7 @@ const MessageForm = ({ onSendMessage, onClose, initialRecipient, userId }) => {
         <button
           onClick={loadMore}
           disabled={status === "loading"}
-          className="mt-4 w-full py-2 px-4 border border-transparent text-sm font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200"
+          className="mt-4 w-full py-2 px-4 border border-transparent text-sm font-medium rounded-md text-amber-700 bg-amber-100 hover:bg-amber-200"
         >
           {status === "loading" ? "로딩 중..." : "더 많은 친구 불러오기"}
         </button>
@@ -133,7 +133,7 @@ const MessageModal = ({
     <Modal isOpen={isOpen} onClose={onClose} title="쪽지 보내기">
       <div className="flex justify-end">
         <Link
-          className="bg-indigo-600 text-white rounded-full px-3 py-1 hover:bg-indigo-700 no-underline"
+          className="bg-amber-600 text-white rounded-full px-3 py-1 hover:bg-amber-700 no-underline"
           to="/messagelist"
           onClick={() => {
             onClose();
