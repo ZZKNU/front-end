@@ -151,11 +151,6 @@ const MyPage = () => {
 
         <div className="divide-y divide-gray-200">
           <MenuItem
-            icon={<FaListUl className="text-gray-600" />}
-            text="내가 쓴 글"
-            onClick={() => handleMenuClick("내가 쓴 글")}
-          />
-          <MenuItem
             icon={<FaHeart className="text-gray-600" />}
             text="좋아요 누른 글"
             onClick={handleLikeList}
