@@ -408,8 +408,17 @@ export const deleteMessage = async (message_id) => {
  * @param {number} quote_id
  * @returns
  */
-export const promoteQuote = async (quote_id) => {
-  const response = await axiosInstance.put(`/admin/promotion/${quote_id}`);
+export const promoteQuote = async (quote_id, pos) => {
+  const response = await axiosInstance.put(
+    `/admin/promotion/${quote_id}`,
+    JSON.stringify(pos),
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
   return response.data;
 };
 

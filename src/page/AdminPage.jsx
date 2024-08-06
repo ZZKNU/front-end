@@ -33,9 +33,9 @@ const AdminPage = () => {
     );
   };
 
-  const handlePromoteQuote = async (id) => {
+  const handlePromoteQuote = async (id, auth = true) => {
     try {
-      await promoteQuote(id);
+      await promoteQuote(id, auth);
       console.log(`Quote ${id} promoted successfully`);
     } catch (error) {
       console.error(`Failed to promote quote ${id}`, error);

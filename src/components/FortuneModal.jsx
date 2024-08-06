@@ -1,13 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-
-const fortunes = [
-  "오늘은 당신의 날입니다. 새로운 기회를 잡으세요!",
-  "힘들 때일수록 앞으로 나아가세요. 그것이 올바른 방향입니다.",
-  "당신의 노력이 곧 결실을 맺을 것입니다.",
-  "작은 친절이 누군가의 하루를 밝게 만들 수 있습니다.",
-  "자신을 믿으세요. 당신은 생각보다 더 강합니다.",
-];
+import { fortunes } from "../util/Fortune";
 
 const FortuneModal = ({ isOpen, onClose }) => {
   const [fortune, setFortune] = useState("");
