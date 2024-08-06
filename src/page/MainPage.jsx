@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   motion,
@@ -7,6 +7,7 @@ import {
   AnimatePresence,
 } from "framer-motion";
 import { Sun, Heart, MessageCircle, ChevronDown } from "lucide-react";
+import { aphorisms } from "../util/Aphorism";
 
 const AnimatedText = ({ children, className }) => {
   const { scrollYProgress } = useScroll();
@@ -63,14 +64,17 @@ const QuoteBox = ({ quote, author }) => (
     animate={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.5 }}
   >
-    <p className="text-xl italic mb-4">"{quote}"</p>
+    <p className="text-xl italic mb-4">{quote}</p>
     <p className="text-right font-semibold">- {author}</p>
   </motion.div>
 );
 
 const MainPage = () => {
-  const [showQuote, setShowQuote] = useState(false);
-
+  const [showQuote, setShowQuote] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  useEffect(() => {
+    setShowQuote(aphorisms[Math.floor(Math.random() * aphorisms.length)]);
+  }, []);
   return (
     <div className="relative">
       <div className="relative z-10">
@@ -91,21 +95,22 @@ const MainPage = () => {
               오늘의 메시지 보기
             </Link>
             <motion.button
-              onClick={() => setShowQuote(!showQuote)}
+              onClick={() => setIsOpen(!isOpen)}
               className="text-amber-700 flex items-center"
               whileHover={{ scale: 1.1 }}
             >
-              {showQuote ? "숨기기" : "오늘의 한마디 보기"}{" "}
+              {isOpen ? "숨기기" : "오늘의 한마디 보기"}{" "}
               <ChevronDown
-                className={`ml-1 transform ${showQuote ? "rotate-180" : ""}`}
+                className={`ml-1 transform ${isOpen ? "rotate-180" : ""}`}
               />
             </motion.button>
           </motion.div>
           <AnimatePresence>
-            {showQuote && (
+            {isOpen && (
               <QuoteBox
-                quote="당신의 하루가 당신의 인생이 됩니다. 오늘을 알차게 보내세요."
-                author="짐 론"
+                key={showQuote.id}
+                author={showQuote.author}
+                quote={showQuote.quote}
               />
             )}
           </AnimatePresence>
