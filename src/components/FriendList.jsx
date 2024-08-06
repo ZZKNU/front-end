@@ -34,6 +34,7 @@ const FriendList = ({ onFriendSelect, showUnfollowButton = false }) => {
       setIsLoading(true);
       try {
         const response = await deleteFriends(friendId);
+        console.log(friendId);
         if (response.status === 204) {
           // 성공적으로 언팔로우되었을 때
           await fetchFriends(); // 친구 목록 재조회
