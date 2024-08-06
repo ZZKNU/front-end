@@ -30,7 +30,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                 to="/"
                 className="text-2xl font-bold tracking-wider no-underline text-amber-800"
               >
-                Quote
+                Pooguel
               </Link>
               <button
                 onClick={toggleSidebar}

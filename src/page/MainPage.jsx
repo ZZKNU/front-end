@@ -70,13 +70,27 @@ const QuoteBox = ({ quote, author }) => (
   </motion.div>
 );
 
+const ScrollPrompt = ( {string} ) => (
+  <motion.div
+    className="absolute bottom-4 flex flex-col items-center justify-center text-center"
+    initial={{ opacity: 0, y: -20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.5 }}
+  >
+    <p className="text-amber-800 mb-2">{string}</p>
+    <ChevronDown className="animate-bounce text-amber-700" size={40} />
+  </motion.div>
+);
+
 const MainPage = () => {
   const [showQuote, setShowQuote] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const { accessToken } = useAuthStore();
+
   useEffect(() => {
     setShowQuote(aphorisms[Math.floor(Math.random() * aphorisms.length)]);
   }, []);
+
   return (
     <div className="relative">
       <div className="relative z-10">
@@ -84,6 +98,7 @@ const MainPage = () => {
           <AnimatedText className="text-3xl mb-8 text-amber-900 text-center max-w-2xl">
             매일의 순간을 특별하게 만드는 따뜻한 메시지들
           </AnimatedText>
+          <ScrollPrompt string={"아래로 스크롤하여 더 많은 내용을 확인하세요!"}/>
           {accessToken ? (
             <>
               <motion.div
@@ -142,7 +157,9 @@ const MainPage = () => {
               description="사용자들이 서로 응원하고 격려할 수 있는 커뮤니티를 제공합니다."
             />
           </div>
+          <ScrollPrompt string={"시작해 볼까요?"}/>
         </ContentSection>
+        
 
         <ContentSection title="함께 시작해요">
           <AnimatedText className="text-2xl mb-6 text-amber-900 text-center">
