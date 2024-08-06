@@ -18,9 +18,9 @@ const SearchResult = ({ isOpen, onClose, searchResults }) => {
           searchResults.map((result) => (
             <div key={result.id} className="result-item">
               <p>
-                <strong>Nickname:</strong> {result.nickName}
+                <strong>Nickname:</strong> <span className="ms-12">{result.nickName}</span>
                 <button
-                  className="btn btn-primary "
+                  className="btn btn-primary ms-12"
                   onClick={() => addFriendHandler(result.id)}
                 >
                   친구 추가

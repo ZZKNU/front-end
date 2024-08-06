@@ -105,12 +105,16 @@ const ShowPage = () => {
               <p></p>
             )}
           </div>
-          <p className="text-sm text-gray-600 mb-4">
+          <small className="text-muted">
+            Created At: {post.createdAt}
+          </small>
+          <hr />
+          <div className="text-sm text-gray-600 mb-4">
             <p className="font-normal">
               작가:<span className="font-semibold">{post.author}</span>{" "}
             </p>
             글쓴이: <span className="font-semibold">{post.nickname}</span>
-          </p>
+          </div>
           <div className="border-t border-gray-200 pt-4">
             <p className="text-gray-700 leading-relaxed">{post.content}</p>
           </div>

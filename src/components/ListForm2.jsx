@@ -68,7 +68,7 @@ const ListForm2 = ({ isBest = false, name }) => {
         <Link to="/alllist" className="btn btn-outline-primary mx-2">
           전체
         </Link>
-        <Link to="/bestlist" className="btn btn-outline-primary mx-2">
+        <Link to="/bestlist?" className="btn btn-outline-primary mx-2">
           베스트 도전
         </Link>
       </div>

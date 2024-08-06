@@ -17,16 +17,14 @@ const LikeButton = ({ isLiked: initialIsLiked }) => {
 
   const toggleLike = async () => {
     setLiked((prevLiked) => !prevLiked);
-    if (!liked) {
-      setIsAnimating(true);
-      try {
-        await likeNormalQuote(id);
-        queryClient.invalidateQueries(["quotes"]);
-        console.log(id);
-      } catch (e) {
-        console.error(e);
-        setLiked(false);
-      }
+    setIsAnimating(true);
+    try {
+      await likeNormalQuote(id);
+      queryClient.invalidateQueries(["quotes"]);
+      console.log(id);
+    } catch (e) {
+      console.error(e);
+      setLiked(false);
     }
   };
 

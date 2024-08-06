@@ -70,7 +70,7 @@ const QuoteBox = ({ quote, author }) => (
   </motion.div>
 );
 
-const ScrollPrompt = ( {string} ) => (
+const ScrollPrompt = ({ string }) => (
   <motion.div
     className="absolute bottom-4 flex flex-col items-center justify-center text-center"
     initial={{ opacity: 0, y: -20 }}
@@ -98,7 +98,9 @@ const MainPage = () => {
           <AnimatedText className="text-3xl mb-8 text-amber-900 text-center max-w-2xl">
             매일의 순간을 특별하게 만드는 따뜻한 메시지들
           </AnimatedText>
-          <ScrollPrompt string={"아래로 스크롤하여 더 많은 내용을 확인하세요!"}/>
+          <ScrollPrompt
+            string={"아래로 스크롤하여 더 많은 내용을 확인하세요!"}
+          />
           {accessToken ? (
             <>
               <motion.div
@@ -157,23 +159,24 @@ const MainPage = () => {
               description="사용자들이 서로 응원하고 격려할 수 있는 커뮤니티를 제공합니다."
             />
           </div>
-          <ScrollPrompt string={"시작해 볼까요?"}/>
+          {!accessToken && <ScrollPrompt string={"시작해 볼까요?"} />}
         </ContentSection>
-        
 
-        <ContentSection title="함께 시작해요">
-          <AnimatedText className="text-2xl mb-6 text-amber-900 text-center">
-            지금 바로 당신의 하루를 밝혀줄 메시지를 만나보세요
-          </AnimatedText>
-          <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-            <Link
-              to="/login"
-              className="bg-gradient-to-r from-amber-300 to-orange-400 text-white px-8 py-3 rounded-full hover:from-amber-600 hover:to-orange-600  transition text-lg font-semibold shadow-lg"
-            >
-              시작하기
-            </Link>
-          </motion.div>
-        </ContentSection>
+        {!accessToken && (
+          <ContentSection title="함께 시작해요">
+            <AnimatedText className="text-2xl mb-6 text-amber-900 text-center">
+              지금 바로 당신의 하루를 밝혀줄 메시지를 만나보세요
+            </AnimatedText>
+            <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+              <Link
+                to="/login"
+                className="bg-gradient-to-r from-amber-300 to-orange-400 text-white px-8 py-3 rounded-full hover:from-amber-600 hover:to-orange-600  transition text-lg font-semibold shadow-lg"
+              >
+                시작하기
+              </Link>
+            </motion.div>
+          </ContentSection>
+        )}
       </div>
     </div>
   );
