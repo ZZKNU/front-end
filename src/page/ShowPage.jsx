@@ -81,7 +81,7 @@ const ShowPage = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto mt-8 px-4">
+    <div className="p-10 max-w-4xl mx-auto mt-8 px-4">
       <div className="bg-white shadow-md rounded-lg overflow-hidden">
         <div className="p-6">
           <div className="flex justify-between items-center mb-4">
