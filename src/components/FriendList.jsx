@@ -53,7 +53,12 @@ const FriendList = ({ onFriendSelect, showUnfollowButton = false }) => {
           key={friend.id}
           className="flex justify-between items-center p-2 bg-gray-100 rounded"
         >
-          <span>{friend.nickName}</span>
+          <span
+            onClick={() => onFriendSelect(friend)}
+            className="cursor-pointer hover:text-blue-500"
+          >
+            {friend.nickName}
+          </span>
           {showUnfollowButton && isFollowList && (
             <button
               onClick={() => handleUnfollow(friend.id)}
