@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiChevronLeft, FiEdit, FiChevronRight } from "react-icons/fi";
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { getUserInfo, getReceiveMessage, getPostMessage } from "../apis/api";
 import MessageModal from "../components/MessageForm";
 const MessageListPage = () => {
@@ -68,10 +68,10 @@ const MessageListPage = () => {
     setActiveTab(activeTab === "received" ? "sent" : "received");
   };
 
-  const openModal = (message = null) => {
-    setSelectedMessage(message);
-    setIsModalOpen(true);
-  };
+  // const openModal = (message = null) => {
+  //   setSelectedMessage(message);
+  //   setIsModalOpen(true);
+  // };
 
   const closeModal = () => {
     setIsModalOpen(false);
