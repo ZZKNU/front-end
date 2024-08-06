@@ -44,11 +44,12 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
               <NavLink to="/" onClick={toggleSidebar}>
                 홈
               </NavLink>
-              <NavLink to="/alllist" onClick={toggleSidebar}>
-                전체 게시글
-              </NavLink>
+
               {accessToken ? (
                 <>
+                  <NavLink to="/alllist" onClick={toggleSidebar}>
+                    전체 게시글
+                  </NavLink>
                   <NavLink to="/create" onClick={toggleSidebar}>
                     글쓰기
                   </NavLink>

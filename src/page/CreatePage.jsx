@@ -31,6 +31,7 @@ const CreatePage = () => {
         formData.title,
         formData.quoteType,
         formData.content,
+        formData.author,
         userInfo.nickname
       );
       console.log("Form submitted:", result);
