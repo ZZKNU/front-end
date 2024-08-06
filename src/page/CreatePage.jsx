@@ -1,12 +1,10 @@
 import { FaPen } from "react-icons/fa";
 import CreateForm from "../components/CreateForm";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
 import { getUserInfo, writeBestQuote } from "../apis/api";
 import { useState, useEffect } from "react";
 
 const CreatePage = () => {
-  const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState(null);
 
   useEffect(() => {
