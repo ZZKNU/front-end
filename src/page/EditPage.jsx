@@ -2,12 +2,11 @@ import { FaPen } from "react-icons/fa";
 import CreateForm from "../components/CreateForm";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 import { editBestQuote, getUserInfo } from "../apis/api";
 
 const EditPage = () => {
-  const navigate = useNavigate();
   const { id } = useParams();
   const queryClient = useQueryClient();
   const [userInfo, setUserInfo] = useState(null);
